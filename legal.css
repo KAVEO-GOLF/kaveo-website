@@ -1,0 +1,68 @@
+@font-face{font-family:Manrope;src:url("/assets/fonts/Manrope_400Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:Manrope;src:url("/assets/fonts/Manrope_500Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:Manrope;src:url("/assets/fonts/Manrope_600SemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
+@font-face{font-family:Manrope;src:url("/assets/fonts/Manrope_700Bold.ttf") format("truetype");font-weight:700;font-display:swap}
+
+:root{
+  --charcoal:#0D0D0D;
+  --ink:#EDEDED;
+  --muted:#9A9A9A;
+  --line:rgba(255,255,255,.12);
+  --green:#045C3C;
+  --green-light:#3FA37B;
+  --surface:rgba(255,255,255,.03);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--charcoal);color:var(--ink);
+  font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:17px;line-height:1.7;font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--green-light);text-decoration:none;border-bottom:1px solid rgba(63,163,123,.35)}
+a:hover{border-bottom-color:var(--green-light)}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.5rem}
+
+header.site{border-bottom:1px solid var(--line);padding:1.25rem 0}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{font-weight:700;letter-spacing:.16em;font-size:.8rem;text-transform:uppercase;color:var(--ink);border:0}
+.brand:hover{color:#fff}
+.back{font-size:.82rem;color:var(--muted);border:0}
+.back:hover{color:var(--ink)}
+
+.lede{padding:4rem 0 2.5rem;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem}
+h1{font-size:clamp(2rem,5vw,2.75rem);line-height:1.15;font-weight:700;margin:0 0 1rem;letter-spacing:-.02em}
+.stand{color:var(--muted);font-size:.9rem;margin:0}
+
+main{padding:3rem 0 1rem}
+h2{font-size:1.35rem;font-weight:700;line-height:1.3;margin:3.25rem 0 1rem;letter-spacing:-.01em;scroll-margin-top:2rem}
+h2:first-of-type{margin-top:0}
+h3{font-size:1.02rem;font-weight:600;margin:2.25rem 0 .65rem;color:#fff}
+p{margin:0 0 1.15rem}
+ul{margin:0 0 1.15rem;padding-left:1.15rem}
+li{margin-bottom:.6rem}
+strong{font-weight:600;color:#fff}
+address{font-style:normal;margin:0 0 1.15rem;line-height:1.6}
+
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 1.5rem;border:1px solid var(--line);border-radius:.5rem;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:34rem;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:.85rem 1rem;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:#fff;white-space:nowrap;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+
+.callout{border-left:2px solid var(--green);background:var(--surface);padding:1.1rem 1.25rem;margin:0 0 1.5rem;border-radius:0 .4rem .4rem 0}
+.callout p:last-child{margin-bottom:0}
+.callout strong{color:#fff}
+
+footer.site{border-top:1px solid var(--line);margin-top:4rem;padding:2rem 0 3.5rem;color:var(--muted);font-size:.85rem}
+footer.site .links{display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:1rem}
+footer.site a{color:var(--muted);border:0}
+footer.site a:hover{color:var(--ink)}
+
+@media (max-width:34rem){
+  body{font-size:16px}
+  .lede{padding:2.5rem 0 2rem}
+  main{padding:2.25rem 0 1rem}
+}

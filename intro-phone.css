@@ -1,0 +1,52 @@
+/* One untransformed chapter owns both sticky layers. Only the viewport clips media. */
+.intro-scene { position:relative; isolation:isolate }
+.intro-backdrop-track { position:absolute; inset:0; z-index:0; pointer-events:none }
+.intro-backdrop { position:sticky; top:0; height:100svh; overflow:clip; isolation:isolate }
+.intro-scene > section { position:relative; z-index:1; background:transparent }
+.intro-scene::after { content:""; position:absolute; bottom:0; left:0; right:0; height:160px; z-index:0; pointer-events:none; background:linear-gradient(transparent,#0d0d0d) }
+.intro-backdrop .hero-landscape { z-index:0 }
+.intro-backdrop .hero-shade { z-index:1; background:linear-gradient(180deg,rgba(13,13,13,.36),rgba(13,13,13,.4) 28%,rgba(13,13,13,.22) 54%,rgba(13,13,13,.12) 85%,rgba(13,13,13,.24)) }
+.intro-dimming,.intro-curtain { position:absolute; inset:0; z-index:2; background:#0d0d0d }
+.intro-dimming { opacity:var(--intro-dim,0) }
+.intro-curtain { opacity:var(--intro-exit,0) }
+.intro-scene.video-ready .hero-video { opacity:1 }
+.intro-scene .manifesto { text-shadow:0 2px 28px rgba(0,0,0,.25) }
+.intro-scene .assembly-sticky { background:transparent }
+.intro-scene .features > .section-heading { text-shadow:0 2px 28px rgba(0,0,0,.25) }
+/* Opaque card bodies keep stacked copy legible; the shared film shows around them. */
+.intro-scene .features .feature-surface { background:#151515; border-color:rgba(255,255,255,.14) }
+
+/* Original alpha PNG = physical hardware; existing HTML = the live display. */
+.app-device {
+  --phone-width:352px;
+  --phone-u:calc(var(--phone-width) / 352);
+  width:var(--phone-width); height:calc(var(--phone-width) * 2);
+  padding:0; border:0; border-radius:0; background:none; overflow:visible;
+}
+.device-hardware { position:absolute; inset:0; width:100%; height:100%; max-width:none; pointer-events:none; transform:translateZ(5px) }
+.app-device .device-photo,.device-screen { position:absolute; left:10.15%; right:10.15%; top:2.4%; bottom:4.15%; border-radius:calc(var(--phone-u) * 34) }
+.app-device .device-photo { transform:translateZ(-1px); background:linear-gradient(rgba(13,13,13,.35),rgba(13,13,13,.35)),url('assets/dusk.jpg') center/cover }
+.device-screen { padding:calc(var(--phone-u) * 48) calc(var(--phone-u) * 12) 0; overflow:visible; transform-style:preserve-3d }
+.app-device .app-head { height:calc(var(--phone-u) * 58); padding:calc(var(--phone-u) * 10); gap:calc(var(--phone-u) * 8); border-radius:calc(var(--phone-u) * 18); transform:none }
+.app-device .app-avatar { width:calc(var(--phone-u) * 28); height:calc(var(--phone-u) * 28); font-size:calc(var(--phone-u) * 10) }
+.app-device .app-greeting { font-size:calc(var(--phone-u) * 9) }
+.app-device .app-greeting strong { font-size:calc(var(--phone-u) * 14) }
+.app-device .app-head .icon { width:calc(var(--phone-u) * 14); height:calc(var(--phone-u) * 14) }
+.app-device .app-grid { gap:calc(var(--phone-u) * 10); margin-top:calc(var(--phone-u) * 16) }
+.app-device .app-tile { height:calc(var(--phone-u) * 120); border-radius:calc(var(--phone-u) * 18) }
+.app-device .app-tile img { width:calc(var(--phone-u) * 68); height:calc(var(--phone-u) * 68) }
+.app-device .app-tile > span:not(.tile-glass) { font-size:calc(var(--phone-u) * 12); margin-top:calc(var(--phone-u) * 4) }
+.app-device .app-pages { margin-top:calc(var(--phone-u) * 18); gap:calc(var(--phone-u) * 6) }
+.app-device .app-pages i { width:calc(var(--phone-u) * 4); height:calc(var(--phone-u) * 4) }
+.app-device .app-dock { left:calc(var(--phone-u) * 24); right:calc(var(--phone-u) * 24); bottom:calc(var(--phone-u) * 28); padding:calc(var(--phone-u) * 5); transform:none }
+.app-device .app-dock > span { width:calc(var(--phone-u) * 48); height:calc(var(--phone-u) * 32) }
+.app-device .app-dock .icon { width:calc(var(--phone-u) * 17); height:calc(var(--phone-u) * 17) }
+.device-home-indicator { position:absolute; bottom:calc(var(--phone-u) * 10); width:34%; height:calc(var(--phone-u) * 3); left:33%; border-radius:8px; background:rgba(255,255,255,.75) }
+.has-motion.spatial-enabled .assembly-visual { height:min(704px,calc(100svh - 220px)) }
+@media(min-width:1200px) {
+  .assembly-inner { grid-template-columns:.8fr 1.2fr; gap:48px }
+  .assembly-copy { max-width:380px }
+  .assembly-copy h2 { font-size:clamp(64px,5.3vw,84px) }
+}
+@media(max-width:1199px) and (min-width:721px) { .app-device { --phone-width:312px } }
+@media(max-width:720px) { .app-device { --phone-width:min(352px,calc(100vw - 48px)) } }

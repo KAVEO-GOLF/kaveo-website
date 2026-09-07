@@ -1,0 +1,99 @@
+/* Spatial chapter. Existing photography and approved assets stay untouched. */
+.app-device,.app-grid,.app-tile { transform-style:preserve-3d }
+.app-tile { position:relative; will-change:auto }
+.app-tile > .tile-glass,.preview-glass { position:absolute; inset:0; margin:0; border-radius:inherit; pointer-events:none; transform:translateZ(0) }
+.app-tile > img,.app-tile > span:not(.tile-glass) { position:relative; transform:translateZ(var(--tile-icon-z,0px)) }
+.app-tile > span:not(.tile-glass) { transform:translateZ(calc(var(--tile-icon-z,0px) * .35)) }
+.device-plane { position:absolute; inset:-1px; border-radius:inherit; pointer-events:none; opacity:var(--stage-spread,0); background:rgba(21,21,21,.30) }
+.device-plane-back { transform:translate3d(0,0,calc(var(--stage-spread,0) * -100px)) rotateZ(calc(var(--stage-spread,0) * -5deg)) }
+.device-plane-middle { transform:translate3d(0,0,calc(var(--stage-spread,0) * -48px)) rotateZ(calc(var(--stage-spread,0) * 3deg)) }
+.app-device .app-head { transform:translateZ(calc(var(--stage-spread,0) * 24px)) }
+.app-device .app-dock { transform:translateZ(calc(var(--stage-spread,0) * 38px)) }
+.tile-glass::after,.preview-glass::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; background:linear-gradient(135deg,rgba(255,255,255,.13),transparent 46%,rgba(4,92,60,.06)); opacity:var(--material-light,.45) }
+.assembly-background::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at 75% 45%,rgba(4,92,60,.16),transparent 60%); opacity:var(--stage-spread,0) }
+.app-device { --stage-spread:0; --tile-icon-z:0px }
+.app-device .device-photo,.app-device .app-head,.app-device .app-dock,.app-device .app-pages { opacity:1 }
+.assembly-steps p { border-left:1px solid var(--line); padding-left:16px; transition:color .8s,border-color .8s }
+.assembly-steps p.is-active { border-color:rgba(255,255,255,.8) }
+
+/* Layout shells are never tilted or filtered: sticky measurements stay stable. */
+.feature-card { display:block; min-height:0; border:0; background:none; overflow:visible; transform:none; filter:none }
+.feature-surface { position:relative; display:grid; grid-template-columns:1fr 1fr; min-height:560px; border-radius:inherit; background:var(--raised); border:1px solid var(--line); transform:scale(var(--card-scale,1)); transform-origin:50% 112px }
+.feature-surface::after { content:""; position:absolute; inset:0; z-index:5; border-radius:inherit; pointer-events:none; background:#0d0d0d; opacity:var(--card-shade,0) }
+.feature-copy { border-radius:inherit; min-width:0 }
+.feature-art { border-radius:0 27px 27px 0; perspective:1100px; isolation:auto; overflow:clip; z-index:0 }
+.feature-photo { inset:-24px; z-index:0; border-radius:inherit; transform:translate3d(0,var(--art-photo-y,0px),0) scale(1.035) }
+.feature-object { position:relative; width:min(100%,320px); transform-style:preserve-3d; transform:translate3d(0,var(--art-y,0px),var(--art-z,0px)) rotateX(calc(var(--art-rx,0deg) + var(--tilt-x,0deg))) rotateY(var(--tilt-y,0deg)); transition:transform .65s var(--ease) }
+.feature-object[data-glare] { isolation:auto }
+.feature-object[data-glare]::before { display:none }
+.round-preview,.growth-preview,.community-tile { position:relative; transform-style:preserve-3d; max-width:100% }
+.round-preview > :not(.preview-glass),.growth-preview > :not(.preview-glass),.community-tile > :not(.preview-glass) { position:relative }
+.round-preview > img,.growth-focus > img,.community-tile > img { transform:translate3d(0,calc(var(--art-icon-z,0px) * -.12),var(--art-icon-z,0px)); transition:transform .8s var(--ease) }
+.round-preview > strong,.round-preview .preview-label,.round-preview .preview-row,.growth-preview > .preview-label,.growth-preview strong,.community-tile > span:not(.preview-glass) { transform:translateZ(10px) }
+.preview-glass::before { content:""; position:absolute; inset:0; border-radius:inherit; background:radial-gradient(340px circle at var(--pointer-x,50%) var(--pointer-y,50%),rgba(255,255,255,.14),transparent 70%); opacity:var(--glare-opacity,0); transition:opacity .8s var(--ease); pointer-events:none }
+.community-tiles.feature-object { width:min(100%,340px); --tilt-base:-4deg; transform:translate3d(0,var(--art-y,0px),var(--art-z,0px)) rotateX(calc(var(--art-rx,0deg) + var(--tilt-x,0deg))) rotateY(var(--tilt-y,0deg)) rotateZ(-4deg) }
+.community-tile:nth-child(1) { transform:translateZ(calc(var(--community-depth,0) * 28px)) }
+.community-tile:nth-child(2) { transform:translate3d(0,64px,calc(var(--community-depth,0) * 64px)) rotate(10deg) }
+.community-tile:nth-child(3) { transform:translate3d(24px,0,calc(var(--community-depth,0) * 42px)) rotate(-4deg) }
+.growth-focus { display:flex; flex-direction:column; align-items:center; padding-block:12px 24px; transform-style:preserve-3d }
+.growth-focus > img { width:128px; height:128px }
+.growth-focus > span { font-size:12px; color:var(--secondary); margin-top:8px }
+.art-footnote { z-index:2 }
+
+/* Second chapter transition: a framed landscape opens behind the live controls. */
+.mood { background:var(--surface) }
+.mood-window { position:absolute; inset:0; z-index:-1; isolation:isolate; clip-path:inset(var(--window-inset,0px) round var(--window-radius,0px)) }
+.mood-window-edge { position:absolute; inset:var(--window-inset,0px); border:1px solid rgba(255,255,255,.12); border-radius:var(--window-radius,0px); z-index:-1; pointer-events:none }
+.mood-panel { transform:perspective(1200px) translate3d(0,var(--panel-y,0px),0) rotateX(calc(var(--panel-rx,0deg) + var(--tilt-x,0deg))) rotateY(var(--tilt-y,0deg)) scale(var(--panel-scale,1)); transition:transform .8s var(--ease) }
+.mood-panel:focus-within { transform:none; transition:none }
+
+/* Enhanced pinning requires enough room and a precise pointer; ordinary flow otherwise. */
+.has-motion .assembly { height:auto }
+.has-motion .assembly-sticky { position:relative; height:auto; min-height:0 }
+.has-motion .assembly-inner { height:auto; min-height:860px; padding-block:72px }
+.has-motion .assembly-visual { height:auto }
+.has-motion .app-device { position:relative; top:auto; left:auto; transform:none }
+.has-motion .assembly-caption { position:static; white-space:normal }
+.has-motion .feature-stack { display:grid; padding-bottom:0 }
+.has-motion .feature-card { position:relative; top:auto; margin-bottom:0 }
+@media(min-width:901px) and (min-height:760px) {
+  .has-motion.spatial-enabled .assembly { height:280svh }
+  .has-motion.spatial-enabled .assembly-sticky { position:sticky; top:0; height:100svh; min-height:0 }
+  .has-motion.spatial-enabled .assembly-inner { min-height:0; height:100svh; padding-top:112px; padding-bottom:64px }
+  .has-motion.spatial-enabled .assembly-visual { height:min(640px,calc(100svh - 220px)) }
+  .has-motion.spatial-enabled .app-device { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) perspective(1200px) rotateX(var(--device-rx,0deg)) rotateY(var(--device-ry,0deg)) rotateZ(var(--device-rz,0deg)) scale(var(--device-scale,1)) }
+  .has-motion.spatial-enabled .assembly-caption { position:absolute; bottom:-36px; white-space:nowrap }
+  .has-motion.stack-enabled .feature-stack { display:block; padding-bottom:80px }
+  .has-motion.stack-enabled .feature-card { position:sticky; top:calc(112px + var(--card-index)*16px); margin-bottom:32px; z-index:calc(1 + var(--card-index)) }
+  .has-motion.stack-enabled .feature-card:last-child { margin-bottom:0 }
+}
+@media(max-width:1000px) { .feature-surface { min-height:560px } }
+@media(max-width:720px) {
+  .has-motion .assembly-inner { min-height:0; padding-block:72px }
+  .feature-surface { grid-template-columns:1fr; min-height:0 }
+  .feature-art { border-radius:0 0 23px 23px }
+  .feature-object { max-width:240px }
+  .community-tiles.feature-object { max-width:260px }
+  .community-tile:nth-child(2) { transform:translateY(48px) rotate(10deg) }
+  .community-tile:nth-child(3) { transform:translateX(16px) rotate(-4deg) }
+  .growth-focus { padding-block:8px 16px }
+  .growth-focus > img { width:96px; height:96px }
+  .feature-photo { transform:none; inset:0 }
+}
+/* JS-off, pause and user preferences are complete, readable end states. */
+.motion-paused .feature-surface { transform:none }
+.motion-paused .feature-surface::after { opacity:0 }
+.motion-paused .feature-object,.motion-paused .mood-panel { transform:none; transition:none }
+.motion-paused .app-head,.motion-paused .app-dock,.motion-paused .app-tile > img,.motion-paused .app-tile > span:not(.tile-glass) { transform:none }
+.motion-paused .device-plane { opacity:0 }
+.motion-paused .feature-photo { transform:none }
+.motion-paused .round-preview > img,.motion-paused .growth-focus > img,.motion-paused .community-tile > img { transform:none; transition:none }
+.motion-paused .mood-window { clip-path:none }
+.motion-paused .mood-window-edge { inset:0; border-radius:0 }
+.motion-paused .preview-glass::before { opacity:0; transition:none }
+@media(prefers-reduced-motion:reduce) {
+  .feature-object,.mood-panel,.feature-surface,.app-tile > img,.app-tile > span:not(.tile-glass),.app-head,.app-dock { transform:none!important }
+  .device-plane { display:none }
+  .mood-window { clip-path:none }
+  .mood-window-edge { inset:0; border-radius:0 }
+}

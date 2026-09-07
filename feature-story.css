@@ -1,0 +1,49 @@
+/* New independent photos; the one continuous movie remains outside the cards. */
+.art-rounds .feature-photo,.art-community .feature-photo,.art-growth .feature-photo { background-image:none }
+.feature-photo > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50% }
+.feature-photo::after { background:linear-gradient(180deg,rgba(13,13,13,.10),rgba(13,13,13,.18) 72%,rgba(13,13,13,.48)) }
+.art-community .feature-photo > img { object-position:72% 50% }
+.art-growth .feature-photo > img { object-position:70% 50% }
+
+/* Reuse the approved logo alpha, never recreate the mark. Both source files stay intact.
+   A shared square cover-plane keeps photo and imprint registered at every crop size. */
+.feature-photo--branded { container-type:size }
+.putting-plane { position:absolute; width:max(100cqw,100cqh); height:max(100cqw,100cqh); left:70%; top:50%; transform:translate(-70%,-50%); isolation:isolate }
+.putting-plane > img { position:absolute; inset:0; width:100%; height:100%; max-width:none }
+.ball-mark {
+  position:absolute; left:60.287081%; top:63.237640%; width:7.177033%; height:7.177033%;
+  background:#045c3c; opacity:.92; mix-blend-mode:multiply; pointer-events:none;
+  -webkit-mask:url('assets/kaveo-ball-mark.png') center / contain no-repeat;
+  mask:url('assets/kaveo-ball-mark.png') center / contain no-repeat;
+}
+@supports not (width:1cqw) {
+  .putting-plane { inset:0; width:100%; height:100%; transform:none }
+  .putting-plane > img { object-fit:cover; object-position:70% 50% }
+  .ball-mark { display:none }
+}
+
+/* Put glass into quiet turf/sky areas, leaving people and equipment unobscured. */
+.art-community,.art-growth { align-items:flex-start; justify-content:flex-start; padding:40px }
+.art-community .community-tiles.feature-object { width:min(100%,280px) }
+.art-growth .feature-object { width:min(100%,272px) }
+.art-growth .growth-preview { width:100%; padding:20px }
+.art-growth .growth-focus { padding-block:8px 16px }
+.art-growth .growth-focus > img { width:96px; height:96px }
+.art-growth .growth-preview strong { font-size:22px }
+@media(max-width:1100px) {
+  .art-community,.art-growth { padding:28px }
+  .art-community .community-tiles.feature-object,.art-growth .feature-object { width:min(100%,240px) }
+  .art-community .community-tile img { width:80px; height:80px }
+  .art-growth .growth-focus > img { width:88px; height:88px }
+  .art-growth .growth-bottom img { width:44px; height:44px }
+}
+@media(max-width:720px) {
+  .art-community,.art-growth { min-height:460px; padding:24px }
+  .art-growth { min-height:560px }
+  .art-community .community-tiles.feature-object,.art-growth .feature-object { width:min(100%,220px) }
+  .art-community .community-tile img { width:72px; height:72px }
+  .art-growth .growth-preview { padding:16px }
+  .art-growth .growth-focus > img { width:80px; height:80px }
+  .art-growth .growth-preview strong { font-size:20px }
+  .art-growth .growth-bottom img { width:40px; height:40px }
+}

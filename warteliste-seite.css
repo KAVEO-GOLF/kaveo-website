@@ -1,0 +1,36 @@
+/* KAVEO — die beiden kleinen Seiten hinter den Links in der Mail.
+   Bewusst eigenständig: Sie sollen auch dann tragen, wenn der Rest der
+   Startseite gerade umgebaut wird. Aussehen wie legal.css, nur schmaler. */
+@font-face{font-family:Manrope;src:url("/reference/assets/fonts/Manrope_400Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:Manrope;src:url("/reference/assets/fonts/Manrope_500Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:Manrope;src:url("/reference/assets/fonts/Manrope_700Bold.ttf") format("truetype");font-weight:700;font-display:swap}
+:root{--charcoal:#0D0D0D;--ink:#EDEDED;--muted:#9A9A9A;--line:rgba(255,255,255,.12);--green:#045C3C;--green-light:#3FA37B}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--charcoal);color:var(--ink);
+  font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--green-light);text-decoration:none;border-bottom:1px solid rgba(63,163,123,.35)}
+a:hover{border-bottom-color:var(--green-light)}
+.wrap{max-width:34rem;margin:0 auto;padding:0 1.5rem;width:100%}
+header.site{border-bottom:1px solid var(--line);padding:1.25rem 0}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{font-weight:700;letter-spacing:.16em;font-size:.8rem;text-transform:uppercase;color:var(--ink);border:0}
+.brand:hover{color:#fff}
+.back{font-size:.82rem;color:var(--muted);border:0}
+.back:hover{color:var(--ink)}
+main{flex:1;display:flex;align-items:center;padding:3.5rem 0}
+.eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem}
+h1{font-size:clamp(1.8rem,5vw,2.4rem);line-height:1.2;font-weight:700;margin:0 0 1rem;letter-spacing:-.02em}
+p{margin:0 0 1.15rem;color:#c8ccc9}
+p.leise{color:var(--muted);font-size:.9rem}
+.knopf{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:#fff;border:0;border-radius:999px;
+  padding:.85rem 1.5rem;font:inherit;font-weight:500;cursor:pointer;margin:.5rem 0 1.25rem}
+.knopf:hover:not(:disabled){background:#05714a}
+.knopf:disabled{opacity:.45;cursor:default}
+[hidden]{display:none!important}
+footer.site{border-top:1px solid var(--line);padding:1.75rem 0 2.5rem;color:var(--muted);font-size:.85rem}
+footer.site .links{display:flex;flex-wrap:wrap;gap:1.25rem}
+footer.site a{color:var(--muted);border:0}
+footer.site a:hover{color:var(--ink)}
+@media (max-width:34rem){body{font-size:16px}main{padding:2.25rem 0}}

@@ -1,7 +1,12 @@
-@font-face{font-family:Manrope;src:url("/assets/fonts/Manrope_400Regular.ttf") format("truetype");font-weight:400;font-display:swap}
-@font-face{font-family:Manrope;src:url("/assets/fonts/Manrope_500Medium.ttf") format("truetype");font-weight:500;font-display:swap}
-@font-face{font-family:Manrope;src:url("/assets/fonts/Manrope_600SemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
-@font-face{font-family:Manrope;src:url("/assets/fonts/Manrope_700Bold.ttf") format("truetype");font-weight:700;font-display:swap}
+/* Die Schriftdateien liegen unter /reference/assets/fonts/ -- dort, wo der
+   Rest der Website sie auch holt. Der frueher hier stehende Pfad
+   /assets/fonts/ existiert auf dem Server nicht; die Rechtsseiten fielen
+   deshalb still auf die Systemschrift zurueck. (15.09.2026)
+*/
+@font-face{font-family:Manrope;src:url("/reference/assets/fonts/Manrope_400Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:Manrope;src:url("/reference/assets/fonts/Manrope_500Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:Manrope;src:url("/reference/assets/fonts/Manrope_600SemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
+@font-face{font-family:Manrope;src:url("/reference/assets/fonts/Manrope_700Bold.ttf") format("truetype");font-weight:700;font-display:swap}
 
 :root{
   --charcoal:#0D0D0D;

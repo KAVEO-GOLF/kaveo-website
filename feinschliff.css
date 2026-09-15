@@ -70,5 +70,11 @@
    Zwei Reihen brauchen danach eine andere Ausrichtung, weil sie mit
    "space-between" auf zwei Enden gerechnet hatten.
    ------------------------------------------------------------------ */
-.network-home .study-bottom{justify-content:flex-end}
 .network-home .intro{justify-content:flex-start}
+/* Die Fusszeile des Netzes ist leer -- Text und "Zur Roadmap" sind raus, die
+   Roadmap steht in der Hauptnavigation. Der Pausenknopf darin bleibt im
+   Markup, weil network-preview.mjs ihn ungeprueft anspricht; ausgeblendet
+   statt geloescht. Bewegung laesst sich weiterhin ueber die
+   Systemeinstellung "Bewegung reduzieren" abschalten -- dafuer gibt es in
+   network-stage.css eine eigene Regel. */
+.network-home .study-bottom{display:none}

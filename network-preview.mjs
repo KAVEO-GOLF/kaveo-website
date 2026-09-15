@@ -132,7 +132,7 @@ function detail(group=null,index=null){
   const item=index!==null?group?.features[index]:null;
   $('selection-label').textContent=item?`${group.label.toUpperCase()} · GEPLANT`:group?`${group.audience??'Aus der Produktvision'} · Geplant`:'SECHS BEREICHE. EIN ZUSAMMENHANG.';
   $('selection-title').textContent=item?.title??group?.title??'Wo möchtest du anfangen?';
-  $('selection-copy').textContent=item?.description??group?.description??'Wähle einen Bereich. Entdecke, welche Ideen dahinterstecken.';
+  $('selection-copy').textContent=item?.description??group?.description??'';
   if(motionAllowed())$('selection').animate([{opacity:.35,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{duration:420,easing:'cubic-bezier(.22,1,.36,1)'});
 }
 

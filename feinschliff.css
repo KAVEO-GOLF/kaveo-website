@@ -64,3 +64,11 @@
 @media(min-width:901px){
   .network-home .study-bottom{padding-right:208px}
 }
+
+/* ------------------------------------------------------------------
+   5 — Fuenf Nebentexte sind am 15.09. entfernt worden (Gruenderwunsch).
+   Zwei Reihen brauchen danach eine andere Ausrichtung, weil sie mit
+   "space-between" auf zwei Enden gerechnet hatten.
+   ------------------------------------------------------------------ */
+.network-home .study-bottom{justify-content:flex-end}
+.network-home .intro{justify-content:flex-start}

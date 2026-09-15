@@ -1,4 +1,4 @@
-import {GROUPS,CENTER,GROUP_POSITIONS,FEATURE_POSITIONS,clamp,ease,layoutFor,interpolatePose,curvePath,branchFor} from './network-model.mjs';
+import {GROUPS,CENTER,GROUP_POSITIONS,FEATURE_POSITIONS,CROSS_LINKS,clamp,ease,layoutFor,interpolatePose,curvePath,branchFor} from './network-model.mjs';
 import {cardMatrix,projectPoint,connectionGeometry,bezier3D} from './network-space.mjs';
 import {createElasticLinks} from './network-elastic.mjs';
 import {floatPose} from './network-float.mjs';
@@ -61,20 +61,25 @@ function draw(){
   categoryButtons.forEach(({position,box},i)=>paintPose(position,poses.groups[i],box));
   featureButtons.forEach(({position,box},i)=>paintPose(position,poses.features[i],box));
   const activeIndex=GROUPS.findIndex(group=>group.id===selected);
-  const edges=selected?poses.features.map((point,i)=>({a:poses.groups[activeIndex],b:point,boxA:categoryButtons[activeIndex].box,boxB:featureButtons[i]?.box??{width:224,height:120},opacity:point.opacity})):
-    poses.groups.map((point,i)=>({a:poses.hub,b:point,boxA:hubBox,boxB:categoryButtons[i].box,opacity:point.opacity*poses.hub.opacity}));
+  const edges=selected?poses.features.map((point,i)=>({a:poses.groups[activeIndex],b:point,boxA:categoryButtons[activeIndex].box,boxB:featureButtons[i]?.box??{width:224,height:120},opacity:point.opacity})):[
+    // Speichen zur Mitte: die Hauptaussage.
+    ...poses.groups.map((point,i)=>({a:poses.hub,b:point,boxA:hubBox,boxB:categoryButtons[i].box,opacity:point.opacity*poses.hub.opacity,port:branchFor(i,false)})),
+    // Querverbindungen: schwaecher gezeichnet, siehe .is-cross in feinschliff.css.
+    ...CROSS_LINKS.map(link=>({a:poses.groups[link.a],b:poses.groups[link.b],boxA:categoryButtons[link.a].box,boxB:categoryButtons[link.b].box,
+      opacity:Math.min(poses.groups[link.a].opacity,poses.groups[link.b].opacity)*poses.hub.opacity,port:link.port,cross:true}))
+  ];
   while(wires.children.length>edges.length)wires.lastElementChild.remove();
   while(wires.children.length<edges.length)wires.append(makeWire());
   const links=[];let moving=false;
   edges.forEach((edge,i)=>{
-    const geometry=connectionGeometry(edge.a,edge.b,edge.boxA,edge.boxB,width,height,camera,branchFor(i,Boolean(selected)));
+    const geometry=connectionGeometry(edge.a,edge.b,edge.boxA,edge.boxB,width,height,camera,edge.port??branchFor(i,Boolean(selected)));
     const id=`${selected??'overview'}:${i}`,spring=elastic.update(id,geometry,dt,immediate);
     moving ||= spring.moving;
     const points=Array.from({length:37},(_,n)=>bezier3D(spring.controls,n/36));
     const projected=points.map(point=>projectPoint(point,width,height,camera));
     const d=projected.map((p,n)=>`${n?'L':'M'}${p.x.toFixed(3)},${p.y.toFixed(3)}`).join(' ');
     links.push({id,points,opacity:edge.opacity,active:Boolean(selected)&&feature===i});
-    const node=wires.children[i];node.style.opacity=edge.opacity;node.classList.toggle('is-active',Boolean(selected)&&feature===i);
+    const node=wires.children[i];node.style.opacity=edge.opacity;node.classList.toggle('is-active',Boolean(selected)&&feature===i);node.classList.toggle('is-cross',Boolean(edge.cross));
     node.style.setProperty('--wire-depth',String(clamp((geometry.depth+100)/220)));
     for(let p=0;p<3;p++)node.children[p].setAttribute('d',d);
     for(const [n,point] of [[3,projected[0]],[4,projected.at(-1)]]){node.children[n].setAttribute('cx',point.x);node.children[n].setAttribute('cy',point.y);}

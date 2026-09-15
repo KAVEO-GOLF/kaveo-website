@@ -32,6 +32,20 @@ export const GROUPS = [
   ]}
 ];
 
+// Querverbindungen in der Uebersicht. Jede beschreibt einen Weg, den ein
+// Golfer wirklich geht -- keine Dekoration. Die Anordnung ist zwei Spalten,
+// also laufen die Linien AUSSEN HERUM: senkrecht in der Spalte, waagerecht
+// oben und unten. Keine Linie kreuzt die Mitte, wo die KAVEO-Scheibe liegt.
+//   a ist die Karte, an deren Rand die Linie beginnt; bei port 2 (senkrecht)
+//   muss a die OBERE sein, bei port 0 liegt b links von a, bei port 1 rechts.
+export const CROSS_LINKS = [
+  {a:0,b:1,port:2,why:'Wer die Grundlagen hat, sucht den ersten Kurs.'},
+  {a:1,b:2,port:2,why:'Startzeit gebucht, Runde gespielt.'},
+  {a:2,b:5,port:1,why:'Gespielt wird auf der Anlage eines Clubs.'},
+  {a:4,b:5,port:2,why:'Clubs und Trainer veranstalten Turniere und Ligen.'},
+  {a:3,b:0,port:0,why:'Aus dem Lernweg wird gezieltes Training.'}
+];
+
 export const CENTER = {x:.5,y:.48,z:46,rx:0,ry:0};
 export const GROUP_POSITIONS = [{x:.20,y:.19,z:72,rx:3,ry:-8},{x:.18,y:.50,z:-48,rx:-2,ry:-5},{x:.21,y:.81,z:52,rx:3,ry:-7},{x:.80,y:.19,z:-62,rx:-3,ry:7},{x:.79,y:.50,z:92,rx:2,ry:8},{x:.79,y:.81,z:-32,rx:-3,ry:6}];
 // Fixed left/right branches in overview; three distinct branches in a detail view.

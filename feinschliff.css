@@ -78,3 +78,14 @@
    Systemeinstellung "Bewegung reduzieren" abschalten -- dafuer gibt es in
    network-stage.css eine eigene Regel. */
 .network-home .study-bottom{display:none}
+
+/* ------------------------------------------------------------------
+   6 — Querverbindungen im Netz (CROSS_LINKS in network-model.mjs).
+   Sie sind der Beweis fuer "Viele Verbindungen" -- aber die Speichen zur
+   Mitte bleiben die Hauptaussage. Deshalb duenner, blasser und ohne
+   auffaellige Endpunkte. Wird das Bild unruhig, zuerst hier daempfen.
+   ------------------------------------------------------------------ */
+.network-home .is-cross .wire-shadow{stroke:rgba(0,0,0,.13);stroke-width:1.5}
+.network-home .is-cross .wire-body{stroke:rgba(132,138,145,.32);stroke-width:1}
+.network-home .is-cross .wire-light{stroke:rgba(220,224,232,calc(.12 + var(--wire-depth,.5)*.14));stroke-width:.45}
+.network-home .is-cross .wire-port{opacity:.2}

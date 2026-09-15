@@ -185,8 +185,7 @@ function renderFeatures(group){
   if(!group)return;
   featureButtons=group.features.map((item,index)=>{
     const position=make('div','node-position feature-position');
-    const button=make('button',`network-node feature-node${item.icon?'':' no-icon'}`);button.type='button';button.setAttribute('aria-pressed','false');button.setAttribute('aria-controls','feature-detail');button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-expanded','false');
-    if(item.icon){const img=make('img');img.src=`/assets/icons/${item.icon}.png`;img.alt='';img.width=192;img.height=192;button.append(img);}
+    const button=make('button','network-node feature-node');button.type='button';button.setAttribute('aria-pressed','false');button.setAttribute('aria-controls','feature-detail');button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-expanded','false');
     append(button,append(make('span'),make('span','node-title',item.title),make('span','node-subtitle','Geplant · Details')));
     button.addEventListener('click',()=>openFeatureDetail(group,index,button));
     button.disabled=true;position.append(button);$('feature-nodes').append(position);return {position,button,box:{width:224,height:120}};

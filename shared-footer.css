@@ -1,0 +1,41 @@
+/* Shared content, camera and reversible finale; no one-shot entrance classes. */
+.site-closing{position:relative;isolation:isolate;background:#0d0d0d}
+.footer-finale{position:relative;isolation:isolate}
+.footer-backdrop{display:none;position:absolute;inset:0;z-index:-1;pointer-events:none}
+.footer-scene-media{position:sticky;top:0;width:100%;height:100svh;overflow:hidden}
+.footer-scene-image,.footer-scene-shade,.site-closing .footer-ball{position:absolute;inset:0;width:100%;height:100%;max-width:none;pointer-events:none}
+.footer-scene-image{object-fit:cover;object-position:64% 58%}
+.footer-scene-shade{background:linear-gradient(180deg,#0d0d0d,transparent 18%),linear-gradient(0deg,#0d0d0d,transparent 32%),rgba(13,13,13,var(--footer-scene-shade,.8))}
+.site-closing .footer-ball{display:block;animation:none!important;transition:none!important}
+.site-closing .footer-ball[hidden]{display:none}
+.site-closing .signup-finale .signup-shade{background:linear-gradient(180deg,#0d0d0d,transparent 18%,transparent 76%,#0d0d0d),linear-gradient(90deg,rgba(13,13,13,.8),rgba(13,13,13,.76))}
+.site-closing .signup-finale .signup-inner{min-height:min(900px,100svh);padding-block:clamp(72px,8svh,104px)}
+.site-closing .signup-finale .signup-copy h2{font-size:clamp(52px,6vw,88px);margin-top:24px}
+.site-closing .signup-finale .signup-copy>p:not(.eyebrow){margin-top:24px}
+@media(prefers-reduced-motion:no-preference){
+  .site-closing.footer-text-motion .signup-finale .signup-copy{opacity:var(--signup-copy-opacity,1);transform:translateY(var(--signup-copy-y,0px));transition:none;animation:none}
+  .site-closing.footer-text-motion .signup-finale .signup-form{opacity:var(--signup-form-opacity,1);transform:translateY(var(--signup-form-y,0px));transition:none;animation:none}
+  .site-closing .signup-finale:focus-within .signup-copy,.site-closing .signup-finale:focus-within .signup-form{opacity:1!important;transform:none!important}
+}
+@media(min-width:721px) and (prefers-reduced-motion:no-preference){
+  .footer-ball-motion .footer-backdrop{display:block}
+  .footer-ball-motion .ball-brand-moment{display:block;height:clamp(320px,55svh,500px);pointer-events:none}
+  /* Direct signup links enter at the completed handoff, not mid-approach. */
+  .site-closing.footer-ball-motion .signup-finale{isolation:auto;scroll-margin-top:calc(100px - 25svh)}
+  .site-closing.footer-ball-motion .signup-image{visibility:hidden}
+  .site-closing.footer-ball-motion .signup-shade{display:none}
+  .site-closing.footer-ball-motion .signup-inner{min-height:100svh;padding-block:clamp(64px,8svh,96px)}
+  .site-closing.footer-ball-motion .signup-ball-anchor{display:block;width:clamp(160px,16vw,220px);aspect-ratio:1;margin-top:32px;pointer-events:none}
+}
+@media(min-width:721px) and (max-height:760px) and (prefers-reduced-motion:no-preference){
+  .site-closing .signup-finale .signup-copy h2{font-size:52px}
+  .site-closing.footer-ball-motion .signup-ball-anchor{width:144px;margin-top:24px}
+}
+@media(max-width:720px){
+  .site-closing .signup-finale .signup-inner{min-height:0;padding-block:72px 48px}
+  .site-closing .signup-finale .signup-copy h2{font-size:clamp(44px,10vw,64px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .site-closing .signup-finale .signup-copy,.site-closing .signup-finale .signup-form{opacity:1;transform:none;transition:none;animation:none}
+}
+@media print{.footer-backdrop,.site-closing .ball-brand-moment{display:none!important}.site-closing .signup-finale .signup-copy,.site-closing .signup-finale .signup-form{opacity:1!important;transform:none!important}}

@@ -1,0 +1,77 @@
+/* Approved rectangular portrait, with the landing kept clear before its entrance. */
+.story-founder { padding-top:clamp(144px,18svh,240px); padding-bottom:112px }
+.story-opening .story-portrait {
+  width:100%;
+  max-width:440px;
+  justify-self:center;
+  padding:12px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:28px;
+  background:rgba(21,24,22,.64);
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  box-shadow:0 24px 72px rgba(0,0,0,.2);
+}
+.story-portrait .story-portrait-field {
+  height:auto;
+  aspect-ratio:1792 / 2400;
+  border:0;
+  border-radius:18px;
+  overflow:hidden;
+  background:#202820;
+  mask-image:none;
+}
+.story-portrait .story-portrait-field img {
+  display:block;
+  position:static;
+  inset:auto;
+  width:100%;
+  height:auto;
+  max-width:100%;
+}
+.story-portrait figcaption { margin:0; padding:16px 8px 6px; font-size:12px; line-height:1.6; color:#d0d0c9 }
+@media(min-width:721px) and (prefers-reduced-motion:no-preference) {
+  .story-founder.has-scroll-reveal .story-founder-copy {
+    opacity:var(--founder-copy-opacity,1);
+    transform:translateY(calc(var(--founder-copy-offset,0px) + var(--founder-exit-offset,0px)));
+    transition:none;
+  }
+  .story-founder.has-scroll-reveal .story-portrait {
+    opacity:var(--founder-exit-opacity,1);
+    /* Move the complete card, including person and grounded shadow, together. */
+    transform:translateY(var(--founder-exit-offset,0px));
+    transition:none;
+    clip-path:inset(var(--founder-image-cut,0%) 0 0 0);
+  }
+  @supports (mask-image:linear-gradient(#000,#000)) or (-webkit-mask-image:linear-gradient(#000,#000)) {
+    .story-founder.has-scroll-reveal .story-portrait {
+      clip-path:none;
+      /* Entrance keeps its narrow reveal edge; exit fades the complete card. */
+      -webkit-mask-image:linear-gradient(to bottom,transparent calc(var(--founder-image-edge,-2%) - 2%),#000 var(--founder-image-edge,-2%));
+      mask-image:linear-gradient(to bottom,transparent calc(var(--founder-image-edge,-2%) - 2%),#000 var(--founder-image-edge,-2%));
+    }
+  }
+  .story-founder.has-scroll-reveal.is-founder-cleared > .story-founder-copy,
+  .story-founder.has-scroll-reveal.is-founder-cleared > .story-portrait { pointer-events:none }
+  /* Like Stage 1, keyboard access restores copy without hiding its semantics. */
+  .story-founder.has-scroll-reveal > .story-founder-copy:focus-within {
+    opacity:1;
+    transform:none;
+    pointer-events:auto;
+  }
+}
+/* Normal reading order, full uncropped photograph, no added scroll gap on mobile. */
+@media(max-width:720px) {
+  .story-founder { padding-top:56px; padding-bottom:64px }
+  .story-opening .story-portrait { max-width:400px; border-radius:24px; padding:10px }
+  .story-portrait .story-portrait-field { border-radius:15px }
+}
+@media(prefers-reduced-motion:reduce) {
+  .story-founder { padding-top:96px }
+}
+@media(prefers-reduced-motion:reduce) and (max-width:720px) {
+  .story-founder { padding-top:56px }
+}
+@supports not (backdrop-filter:blur(18px)) {
+  .story-opening .story-portrait { background:rgba(21,24,22,.94) }
+}

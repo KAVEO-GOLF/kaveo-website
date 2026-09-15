@@ -1,0 +1,203 @@
+{
+  "kind": "Mechanical web encodes of existing approved assets; originals retained",
+  "entries": [
+    {
+      "source": "media/inselgruen-logo-poster-v04.webp",
+      "output": "media/optimized/inselgruen-poster.webp",
+      "sourceSha256": "5e7ba63401a9bb68f89a053a0a87987652f3a64555f0b7fe71d34d8081f24d87",
+      "sourceBytes": 638136,
+      "bytes": 577040,
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "source": "media/kaveo-about-philipp-putter-v01-poster-4x5.png",
+      "output": "media/optimized/philipp-putter-poster.webp",
+      "sourceSha256": "88a72bd8a6ad9924e26b68cd2656063dd141289eb0017b0bbbccb6d00beb94a8",
+      "sourceBytes": 1637236,
+      "bytes": 108984,
+      "width": 752,
+      "height": 941
+    },
+    {
+      "source": "media/philipp-portrait-v03.png",
+      "output": "media/optimized/philipp-portrait.webp",
+      "sourceSha256": "a0c6bcfb5d671b17726966e7758b97f6278153fd4ad1332d2331c7deaa756c3c",
+      "sourceBytes": 5438600,
+      "bytes": 126626,
+      "width": 1000,
+      "height": 1339
+    },
+    {
+      "source": "media/kaveo-smartphone-assembled-v01.png",
+      "output": "media/optimized/smartphone-assembled.webp",
+      "sourceSha256": "7b133764a7a56c9988f2e157211335ed296735a1b7dc23add8d46e383311ded0",
+      "sourceBytes": 1257546,
+      "bytes": 52492,
+      "width": 800,
+      "height": 1700
+    },
+    {
+      "source": "media/homescreen-dusk-v01.png",
+      "output": "media/optimized/homescreen-dusk.webp",
+      "sourceSha256": "ae79922b8098068316d8a82b2422314314806c8230166c4dbccf1e6aadb6b7a7",
+      "sourceBytes": 1714817,
+      "bytes": 71758,
+      "width": 853,
+      "height": 1844
+    },
+    {
+      "source": "media/philipp-blick-v01-start.png",
+      "output": "media/optimized/philipp-blick-start.webp",
+      "sourceSha256": "d471a717cd29b7c98febea880e801520b267e775cf9c24b462cae77f47a880b2",
+      "sourceBytes": 246846,
+      "bytes": 54272,
+      "width": 718,
+      "height": 960
+    },
+    {
+      "source": "media/philipp-blick-v01-end.png",
+      "output": "media/optimized/philipp-blick-end.webp",
+      "sourceSha256": "d6038391be5358dc21daf63377964eff91ae9c4e4cf68127672cec95a99255ad",
+      "sourceBytes": 252947,
+      "bytes": 56272,
+      "width": 718,
+      "height": 960
+    },
+    {
+      "source": "media/assembly-icon-Chat.png",
+      "output": "media/optimized/assembly-icon-Chat.webp",
+      "sourceSha256": "a345cdc87a18001df4b85dfa2276e4828dc5779c75aaa3cafc2b1376cc11cb8d",
+      "sourceBytes": 472662,
+      "bytes": 5078,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "media/assembly-icon-Einstellungen.png",
+      "output": "media/optimized/assembly-icon-Einstellungen.webp",
+      "sourceSha256": "21d114514cccec9c36f9f039d59875fdc3ef49461e983dc32261f366b9f2fa2e",
+      "sourceBytes": 490161,
+      "bytes": 5666,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "media/assembly-icon-Freunde.png",
+      "output": "media/optimized/assembly-icon-Freunde.webp",
+      "sourceSha256": "19ccc5026946910f0bd9c9dad1d86cf430b5266b4a69c55b301ec6635f75f601",
+      "sourceBytes": 323796,
+      "bytes": 4816,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "media/assembly-icon-Gruppen.png",
+      "output": "media/optimized/assembly-icon-Gruppen.webp",
+      "sourceSha256": "2e9968cc896affbfb19a1832f50a8d58f64c8eae4f6048b00c35b6bcc8910eab",
+      "sourceBytes": 472256,
+      "bytes": 5594,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "media/assembly-icon-Regeln.png",
+      "output": "media/optimized/assembly-icon-Regeln.webp",
+      "sourceSha256": "4cda6ec9fe0e0e38cc9cba7edf02df12395be892b8c2914bd97272fd5b8bc2f9",
+      "sourceBytes": 489390,
+      "bytes": 5296,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "media/assembly-icon-Runden.png",
+      "output": "media/optimized/assembly-icon-Runden.webp",
+      "sourceSha256": "0322716c7e0379cae6d58c89f7ba2b650859884c96b0291c9ddce540f7abfb8a",
+      "sourceBytes": 334100,
+      "bytes": 6232,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "media/assembly-icon-Training.png",
+      "output": "media/optimized/assembly-icon-Training.webp",
+      "sourceSha256": "cb575cecbe0d43e20be181e5711c46e638f9380ca5e1d09813914cae03d14720",
+      "sourceBytes": 536138,
+      "bytes": 5944,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "media/assembly-icon-Turniere.png",
+      "output": "media/optimized/assembly-icon-Turniere.webp",
+      "sourceSha256": "bb46c5d71a217ebb1da822585f76f71b30654bccd1a915515ca9c7a59bf49ad3",
+      "sourceBytes": 358459,
+      "bytes": 5642,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "media/assembly-icon-Wetter.png",
+      "output": "media/optimized/assembly-icon-Wetter.webp",
+      "sourceSha256": "2f9a397994eab3beca771840c1ecc3a0c58342487e673cfa7a67fba552b56ba6",
+      "sourceBytes": 375934,
+      "bytes": 5350,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "../Glass_Story_v1/assets/icons/rules.png",
+      "output": "media/optimized/icon-rules.webp",
+      "sourceSha256": "1b4d2cf77fa21c1b63b0a50eb6078dc763031a8c276a7b69dd26c75b455eea5f",
+      "sourceBytes": 33341,
+      "bytes": 8910,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "../Glass_Story_v1/assets/icons/nav-home.png",
+      "output": "media/optimized/icon-nav-home.webp",
+      "sourceSha256": "e5d0f9b9e192626499178ade598c3ec6713792c8dc1eebc8585cc9e25a310e2a",
+      "sourceBytes": 45236,
+      "bytes": 11010,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "../Glass_Story_v1/assets/icons/rounds.png",
+      "output": "media/optimized/icon-rounds.webp",
+      "sourceSha256": "1a884e1310807dc9cbf2e5124e2e40b22958c46a3aa013bb51349f2fd3889993",
+      "sourceBytes": 31993,
+      "bytes": 10590,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "../Glass_Story_v1/assets/icons/training.png",
+      "output": "media/optimized/icon-training.webp",
+      "sourceSha256": "6033658f35af5b818b4e389a4e97c09ee8d5382d7576cd36b734ebc9e84b5588",
+      "sourceBytes": 46591,
+      "bytes": 11060,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "../Glass_Story_v1/assets/icons/friends.png",
+      "output": "media/optimized/icon-friends.webp",
+      "sourceSha256": "7d5bf82a856fedd1a9ca69cd22cf233babc3683980ef1ef0d25a09f408f0950e",
+      "sourceBytes": 30320,
+      "bytes": 8362,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "source": "../Glass_Story_v1/assets/icons/groups.png",
+      "output": "media/optimized/icon-groups.webp",
+      "sourceSha256": "4516600e5ce793a602352940f806b9302645a00cca57f2ee65a5713337afe20a",
+      "sourceBytes": 41526,
+      "bytes": 10006,
+      "width": 192,
+      "height": 192
+    }
+  ]
+}

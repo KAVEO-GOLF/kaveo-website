@@ -1,0 +1,72 @@
+/* Founder-only refinement; photo pixels and existing reveal motion are retained. */
+.story-founder .story-body { color:#d1d3d0 }
+.story-founder .story-body + .story-body { margin-top:28px }
+.story-founder .story-about-button {
+  margin-top:28px;
+  min-width:192px;
+  justify-content:space-between;
+  background:rgba(21,24,22,.64);
+  border-color:rgba(255,255,255,.24);
+  color:#dededb;
+}
+.story-founder .story-about-note {
+  margin-top:10px;
+  color:#b9bdb8;
+  font-size:12px;
+  line-height:1.6;
+}
+.story-founder .story-founder-idea strong {
+  display:block;
+  margin-top:8px;
+  color:#fff;
+  font-size:clamp(18px,1.4vw,22px);
+  font-weight:400;
+  line-height:1.55;
+}
+.story-founder .story-portrait {
+  box-sizing:border-box;
+  max-width:384px;
+  padding:8px;
+  border-color:rgba(255,255,255,.12);
+  border-radius:24px;
+  background:rgba(21,24,22,.56);
+  box-shadow:0 16px 48px rgba(0,0,0,.16);
+}
+.story-founder .story-portrait-field { border-radius:16px }
+.story-founder .story-portrait figcaption {
+  padding:14px 8px 6px;
+  color:#d1d3d0;
+  font-size:14px;
+  line-height:1.6;
+}
+.story-founder .story-portrait figcaption strong { color:#fff; font-weight:500 }
+@media(min-width:721px) {
+  .story-founder {
+    margin-top:-112px;
+    --founder-page-gutter:max(64px,calc((100vw - 1280px)/2));
+    --founder-card-width:min(384px,calc(36vw - 48px));
+  }
+  .story-founder .story-portrait {
+    width:var(--founder-card-width);
+    justify-self:end;
+    position:relative;
+    top:-24px;
+    /* Resting ball lies just left of 64vw in the approved cover-cropped scene.
+       Reserve its vertical corridor without moving the ball or adding a clock.
+       The card remains at least 24px inside the viewport's right edge. */
+    margin-right:min(0px,calc(36vw - var(--founder-page-gutter) - var(--founder-card-width) - 24px));
+  }
+}
+@media(min-width:721px) and (max-width:1199px) {
+  .story-founder { --founder-page-gutter:48px }
+}
+@media(min-width:721px) and (max-width:900px) {
+  .story-founder { --founder-page-gutter:32px }
+}
+@media(max-width:720px) {
+  .story-founder .story-portrait { max-width:352px; border-radius:22px }
+  .story-founder .story-portrait-field { border-radius:14px }
+}
+@supports not (backdrop-filter:blur(18px)) {
+  .story-founder .story-portrait { background:rgba(21,24,22,.94) }
+}

@@ -3,21 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0d0d0d">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="KAVEO GOLF. Runden, Community und deine Entwicklung. Ein neuer Blick auf dein Golfleben.">
-  <title>KAVEO GOLF — Dein Spiel. Deine Welt.</title>
+  <title>KAVEO GOLF — Inselgrün · Philipp</title>
   <link rel="icon" href="assets/favicon.png">
-  <link rel="preload" href="assets/fonts/Manrope_400Regular.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="assets/fairway-loop-v2-poster.webp" as="image" media="(min-width: 721px)" fetchpriority="high">
-  <link rel="preload" href="assets/fairway-loop-v2-poster-mobile.webp" as="image" media="(max-width: 720px)" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="spatial.css">
-  <link rel="stylesheet" href="intro-phone.css">
-  <link rel="stylesheet" href="feature-story.css">
-  <script src="hero-video.js" defer></script>
-  <script src="spatial-model.js" defer></script>
-  <script src="motion.js" defer></script>
+  <link rel="preload" href="reference/assets/fonts/Manrope_400Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="reference/styles.css">
+  <link rel="stylesheet" href="reference/copy-v2.css">
+  <link rel="stylesheet" href="reference/feature-story.css">
+  <link rel="stylesheet" href="opening.css">
+  <link rel="stylesheet" href="background.css">
+  <link rel="stylesheet" href="plan-background.css">
+  <link rel="stylesheet" href="green-ball.css">
+  <link rel="stylesheet" href="founder-stage.css">
+  <script src="controls.js" defer></script>
+  <script src="ambient-video.js" defer></script>
+  <script type="module" src="green-ball.mjs"></script>
+  <script type="module" src="founder-stage.mjs"></script>
+  <link rel="stylesheet" href="founder-polish.css">
+  <link rel="stylesheet" href="hero-stage.css">
+  <script type="module" src="hero-stage.mjs"></script>
+  <link rel="stylesheet" href="button-shape.css">
+  <link rel="stylesheet" href="founder-video.css">
+  <script type="module" src="founder-video.mjs"></script>
+  <link rel="stylesheet" href="phone-assembly.css">
+  <script type="module" src="phone-assembly.mjs"></script>
+  <link rel="stylesheet" href="network-stage.css">
+  <script type="module" src="network-preview.mjs"></script>
+  <link rel="stylesheet" href="ball-finale.css">
+  <script type="module" src="ball-finale.mjs"></script>
+  <link rel="stylesheet" href="site-navigation.css">
+  <script type="module" src="site-navigation.mjs"></script>
+  <link rel="stylesheet" href="mobile-polish.css">
+  <link rel="stylesheet" href="footer-socials.css">
+  <script type="module" src="footer-controls.mjs"></script>
+  <link rel="stylesheet" href="site-background.css">
+  <link rel="stylesheet" href="feinschliff.css">
 </head>
 <body>
   <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -34,145 +55,138 @@
     <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   </defs></svg>
   <a class="skip-link" href="#inhalt">Zum Inhalt</a>
-
   <header class="site-header glass">
-    <a class="brand" href="#start" aria-label="KAVEO GOLF — zum Anfang"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131"></a>
-    <nav aria-label="Hauptnavigation"><a href="#erlebnis" class="nav-app">Die App</a><a href="#features" class="nav-roadmap">Roadmap</a></nav>
+    <a class="brand" href="/#start" aria-label="KAVEO GOLF — zur Startseite"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131"></a>
+    <nav class="site-navigation" id="site-navigation" aria-label="Hauptnavigation">
+      <a class="site-nav-home" href="/#start" data-nav-page="home" aria-current="page">Startseite</a>
+      <a href="funktionen.html" data-nav-page="functions">Funktionen</a>
+      <a href="roadmap.html" data-nav-page="roadmap">Roadmap</a>
+      <a href="ueber-uns-v2.html" data-nav-page="about">Über uns</a>
+      <div class="site-nav-language"><span>Deutsch</span><span>Englisch in Vorbereitung</span></div>
+    </nav>
     <div class="header-actions">
       <div class="language" aria-label="Sprache: Deutsch. Englisch in Vorbereitung"><span aria-current="true">DE</span><span class="unavailable" aria-disabled="true" title="Englische Version in Vorbereitung">EN</span></div>
       <a class="button button-small button-light" href="#fruehzugang">Frühzugang <svg class="icon"><use href="#arrow-up-right"/></svg></a>
+      <button class="site-menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Menü öffnen" hidden><span class="site-menu-label">Menü</span><span class="site-menu-icon" aria-hidden="true"><span></span><span></span></span></button>
     </div>
   </header>
-
   <main id="inhalt">
-    <div class="intro-scene" data-video-scene>
-      <div class="intro-backdrop-track" aria-hidden="true">
-      <div class="intro-backdrop">
-      <div class="hero-landscape" aria-hidden="true">
-        <picture class="hero-poster">
-          <source media="(max-width: 720px)" srcset="assets/fairway-loop-v2-poster-mobile.webp" width="720" height="1280">
-          <img src="assets/fairway-loop-v2-poster.webp" alt="" width="1920" height="1080" fetchpriority="high">
-        </picture>
-        <video id="hero-video" class="hero-video" data-src="assets/fairway-loop-v2-desktop.mp4" data-mobile-src="assets/fairway-loop-v2-mobile.mp4" data-poster="assets/fairway-loop-v2-poster.webp" data-mobile-poster="assets/fairway-loop-v2-poster-mobile.webp" muted playsinline loop preload="none" tabindex="-1"></video>
+<div class="story-world" id="story-world">
+  <div class="story-scene-backdrop" aria-hidden="true">
+    <div class="story-scene-media">
+      <img class="story-scene-still" src="media/inselgruen-logo-poster-v04.webp" width="1920" height="1080" alt="" fetchpriority="high">
+      <video id="story-ambient-video" class="story-scene-video" data-src="media/optimized/inselgruen-loop-720p.mp4" poster="media/inselgruen-logo-poster-v04.webp" width="1920" height="1080" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture disableremoteplayback></video>
+      <div class="finale-scene-shade" aria-hidden="true"></div>
+      <canvas id="story-green-ball" class="story-green-ball" aria-hidden="true" hidden></canvas>
+    </div>
+  </div>
+  <div class="story-video-controls">
+    <button class="story-video-toggle" type="button" aria-controls="story-ambient-video" aria-pressed="false" hidden>Hintergrund pausieren</button>
+  </div>
+<div class="story-opening" id="story-opening">
+  <section class="story-hero" id="start" aria-labelledby="story-hero-title">
+    <div class="story-width story-hero-inner">
+      <div class="story-hero-copy">
+        <h1 id="story-hero-title">Dein Golfleben<br>bekommt<br><span>einen Ort.</span></h1>
+        <p class="story-lead">Verabredungen im Chat. Ergebnisse in Tabellen.<br class="desktop-break"> Für alles andere eine eigene App. KAVEO bringt das zusammen — und entsteht gerade.</p>
+        <a class="button button-primary story-cta" href="#fruehzugang">Zum Frühzugang <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a>
       </div>
-      <div class="hero-shade" aria-hidden="true"></div>
-      <div class="intro-dimming"></div>
-      <div class="intro-curtain"></div>
-      </div>
-      </div>
-    <section class="hero" id="start" aria-labelledby="hero-title">
-      <div class="hero-content">
-        <p class="eyebrow hero-enter"><span class="status-dot"></span> KAVEO GOLF · IN ENTWICKLUNG</p>
-        <h1 id="hero-title"><span class="title-line"><span>Draußen zuhause.</span></span><span class="title-line"><span>Überall verbunden.</span></span></h1>
-        <p class="hero-copy hero-enter">Runden, Menschen und alles dazwischen.<br>Dein Golfleben. In einer App.</p>
-        <a class="button button-primary hero-enter" href="#erlebnis">KAVEO entdecken <svg class="icon"><use href="#arrow-down"/></svg></a>
-      </div>
-      <a class="hero-float hero-float-round glass" href="#spielen" data-glare>
-        <img src="assets/icons/rounds.png" width="192" height="192" alt="">
-        <span><span class="micro-label">DEIN SPIEL</span><strong>Die nächste Runde<br>beginnt bei dir.</strong></span>
-        <svg class="icon"><use href="#arrow-up-right"/></svg>
-      </a>
-      <a class="hero-float hero-float-community glass" href="#verbinden" data-glare>
-        <img src="assets/icons/friends.png" width="192" height="192" alt="">
-        <span><span class="micro-label">DEINE MENSCHEN</span><strong>Zusammen wird<br>mehr daraus.</strong></span>
-        <svg class="icon"><use href="#arrow-up-right"/></svg>
-      </a>
-      <div class="hero-bottom"><span>FÜR DAS SPIEL. UND ALLES DARUM.</span><a href="#erlebnis" class="scroll-cue" aria-label="Weiter zur App"><span></span> ENTDECKEN</a><span>ENTWURF 01 / GLASS STORY</span></div>
-    </section>
+    </div>
+  </section>
 
-    <section class="manifesto section-wrap" id="erlebnis" aria-labelledby="manifesto-title">
-      <div class="section-kicker reveal"><span class="index">01 — DIE IDEE</span><span>Ein Ort für dein Golfleben.</span></div>
-      <h2 id="manifesto-title" class="reading-reveal">Dein Spiel endet nicht am 18. Grün. Es lebt in deinen Runden. Deinen Menschen. Und allem, was noch kommt.</h2>
-      <div class="manifesto-foot reveal"><p>KAVEO bringt zusammen, was für dich zusammengehört.<br>Auf dem Platz. Und darüber hinaus.</p><svg class="icon"><use href="#arrow-down"/></svg></div>
-    </section>
-
-    <section class="assembly" id="deine-app" aria-labelledby="assembly-title">
-      <div class="assembly-sticky">
-        <div class="assembly-inner section-wrap">
-          <div class="assembly-copy">
-            <p class="eyebrow">DEIN PERSÖNLICHER STARTPUNKT</p>
-            <h2 id="assembly-title">Alles da.<br><span class="text-secondary">Ganz du.</span></h2>
-            <p>Deine wichtigsten Features. Dein Hintergrund. Dein eigener Homescreen.</p>
-            <div class="assembly-steps" aria-label="Das Homescreen-Konzept">
-              <p data-step="0" class="is-active"><span>01</span> Wähle, was dir wichtig ist.</p>
-              <p data-step="1"><span>02</span> Gib deinem Spiel Raum.</p>
-              <p data-step="2"><span>03</span> Mach KAVEO zu deinem.</p>
-            </div>
-            <span class="sample-note">Darstellung des App-Konzepts</span>
-          </div>
-          <div class="assembly-visual">
-            <div class="app-device" aria-label="App-Vorschau mit sechs individuell angeordneten Feature-Kacheln">
-              <div class="device-photo" aria-hidden="true"></div>
-              <div class="device-screen">
-              <div class="app-head glass"><span class="app-avatar">P</span><span class="app-greeting">Guten Morgen<strong>Philipp</strong></span><svg class="icon"><use href="#bell"/></svg><svg class="icon"><use href="#pencil"/></svg></div>
-              <div class="app-grid">
-                <div class="app-tile" data-x="-140" data-y="-70" data-rotation="-14"><span class="tile-glass glass" aria-hidden="true"></span><img src="assets/icons/rounds.png" alt="" width="192" height="192"><span>Runden</span></div>
-                <div class="app-tile" data-x="140" data-y="-95" data-rotation="13"><span class="tile-glass glass" aria-hidden="true"></span><img src="assets/icons/weather.png" alt="" width="192" height="192"><span>Wetter</span></div>
-                <div class="app-tile" data-x="-210" data-y="15" data-rotation="-9"><span class="tile-glass glass" aria-hidden="true"></span><img src="assets/icons/friends.png" alt="" width="192" height="192"><span>Freunde</span></div>
-                <div class="app-tile" data-x="160" data-y="25" data-rotation="10"><span class="tile-glass glass" aria-hidden="true"></span><img src="assets/icons/groups.png" alt="" width="192" height="192"><span>Gruppen</span></div>
-                <div class="app-tile" data-x="-120" data-y="115" data-rotation="-12"><span class="tile-glass glass" aria-hidden="true"></span><img src="assets/icons/rules.png" alt="" width="192" height="192"><span>Regeln</span></div>
-                <div class="app-tile" data-x="130" data-y="140" data-rotation="15"><span class="tile-glass glass" aria-hidden="true"></span><img src="assets/icons/training.png" alt="" width="192" height="192"><span>Training</span></div>
-              </div>
-              <div class="app-pages" aria-hidden="true"><i></i><i></i><i></i></div>
-              <div class="app-dock glass" aria-hidden="true"><span><svg class="icon"><use href="#home"/></svg></span><span><svg class="icon"><use href="#play"/></svg></span><span><svg class="icon"><use href="#message"/></svg></span></div>
-              <div class="device-home-indicator" aria-hidden="true"></div>
-              </div>
-              <img class="device-hardware" src="assets/phone-frame-v1.png" alt="" width="887" height="1774" loading="lazy" aria-hidden="true">
-            </div>
-            <div class="assembly-caption"><span class="fine-line"></span> EIN HOMESCREEN, DER ZU DIR PASST.</div>
-          </div>
+  <section class="story-founder story-width" id="erlebnis" aria-labelledby="story-founder-title">
+    <div class="story-founder-copy">
+      <p class="story-eyebrow">01 / DER ANFANG</p>
+      <h2 id="story-founder-title">Es fing mit einer<br><span>Excel-Tabelle an.</span></h2>
+      <p class="story-body">Meine Freunde und ich spielen eine private Golfliga. Unsere Ergebnisse haben wir bisher in einer Excel-Tabelle geführt.</p>
+      <p class="story-body story-founder-idea">Daraus entstand die Idee zu KAVEO: <strong>eine App, die unser Golfleben zusammenbringen soll.</strong></p>
+      <a class="button story-about-button" href="ueber-uns-v2.html">Über uns <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a>
+    </div>
+    <figure class="story-portrait story-portrait--video" data-original-src="media/optimized/philipp-portrait.webp">
+      <div class="story-portrait-field">
+        <img class="founder-landscape" src="media/inselgruen-logo-poster-v04.webp" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        <canvas class="founder-landscape-frame" aria-hidden="true" hidden></canvas>
+        <div class="founder-person-layer">
+          <picture>
+            <source media="(max-width:720px), (prefers-reduced-motion:reduce)" srcset="media/optimized/philipp-blick-end.webp">
+            <img class="founder-person-still" src="media/optimized/philipp-blick-start.webp" data-end-src="media/optimized/philipp-blick-end.webp" width="718" height="960" alt="Philipp steht auf dem Inselgrün; KI-gestützte Personenaufnahme" loading="lazy" decoding="async">
+          </picture>
+          <img class="founder-person-end" src="media/optimized/philipp-blick-end.webp" width="718" height="960" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <video id="story-founder-video" data-src="media/philipp-blick-v01-alpha.webm" width="718" height="960" muted playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture disableremoteplayback></video>
         </div>
-        <div class="assembly-progress" aria-hidden="true"><span></span></div>
       </div>
-    </section>
+      <figcaption><strong>Philipp</strong> · Gründer von KAVEO</figcaption>
+    </figure>
+  </section>
 
-    <section class="features section-wrap" id="features" aria-labelledby="features-title">
-      <div class="section-kicker reveal"><span class="index">02 — DEINE MÖGLICHKEITEN</span><span>Für jeden Teil deines Spiels.</span></div>
-      <h2 id="features-title" class="section-heading reveal">Auf dem Platz.<br><span class="text-secondary">Und mittendrin.</span></h2>
-      <div class="feature-stack">
-        <article class="feature-card" id="spielen" style="--card-index:0">
-          <div class="feature-surface">
-          <div class="feature-copy"><span class="index">01 / SPIELEN</span><h3>Jede Runde<br>ist deine.</h3><p>Vom ersten Abschlag bis zum letzten Putt. Starte deine Runde, erfasse deine Scores und behalte deine Historie im Blick.</p><div class="feature-tags"><span>Runden</span><span>Scores</span><span>Wetter</span></div></div>
-          <div class="feature-art art-rounds"><div class="feature-photo" aria-hidden="true"><img src="assets/feature-play-v1.webp" alt="" width="1254" height="1254" loading="lazy" decoding="async"></div><div class="feature-object" data-tilt data-glare><div class="round-preview"><span class="preview-glass glass" aria-hidden="true"></span><div class="preview-label"><span>DEIN NÄCHSTER ABSCHLAG</span><svg class="icon"><use href="#arrow-up-right"/></svg></div><img src="assets/icons/rounds.png" alt="" width="192" height="192"><strong>Zeit für eine Runde.</strong><div class="preview-divider"></div><div class="preview-row"><span>Dein Spiel</span><span>Dein Tempo</span></div></div></div><span class="art-footnote">VON DER VORFREUDE BIS ZUR ERINNERUNG.</span></div>
-          </div>
-        </article>
-        <article class="feature-card" id="verbinden" style="--card-index:1">
-          <div class="feature-surface">
-          <div class="feature-copy"><span class="index">02 / VERBINDEN</span><h3>Gutes Golf.<br>Gute Gesellschaft.</h3><p>Bleib mit deinen Leuten verbunden. Mit Freunden, Gruppen und Gesprächen, die auch nach der Runde weitergehen.</p><div class="feature-tags"><span>Freunde</span><span>Gruppen</span><span>Chat</span></div></div>
-          <div class="feature-art art-community"><div class="feature-photo" aria-hidden="true"><img src="assets/feature-connect-v1.webp" alt="" width="1254" height="1254" loading="lazy" decoding="async"></div><div class="community-tiles feature-object" data-tilt data-glare><div class="community-tile"><span class="preview-glass glass" aria-hidden="true"></span><img src="assets/icons/groups.png" alt="" width="192" height="192"><span>Deine Gruppen</span></div><div class="community-tile"><span class="preview-glass glass" aria-hidden="true"></span><img src="assets/icons/friends.png" alt="" width="192" height="192"><span>Deine Freunde</span></div><div class="community-tile"><span class="preview-glass glass" aria-hidden="true"></span><img src="assets/icons/chat.png" alt="" width="192" height="192"><span>Eure Gespräche</span></div></div><span class="art-footnote">DAS VERBINDET.</span></div>
-          </div>
-        </article>
-        <article class="feature-card" id="weiterkommen" style="--card-index:2">
-          <div class="feature-surface">
-          <div class="feature-copy"><span class="index">03 / WEITERKOMMEN</span><h3>Dein nächster<br>Schritt.</h3><p>Regelfragen, Training und Turniere. Raum für neue Ziele und die Dinge, die dich in deinem Spiel weiterbringen.</p><div class="feature-tags"><span>Regeln</span><span>Training</span><span>Turniere</span></div></div>
-          <div class="feature-art art-growth"><div class="feature-photo feature-photo--branded" aria-hidden="true"><div class="putting-plane"><img src="assets/feature-grow-v1.webp" alt="" width="1254" height="1254" loading="lazy" decoding="async"><span class="ball-mark"></span></div></div><div class="feature-object" data-tilt data-glare><div class="growth-preview"><span class="preview-glass glass" aria-hidden="true"></span><span class="preview-label">MEHR AUS DEINEM SPIEL</span><div class="growth-focus"><img src="assets/icons/training.png" alt="" width="192" height="192"><strong>Fokus auf dich.</strong><span>Training</span></div><div class="growth-bottom"><span><img src="assets/icons/rules.png" alt="" width="192" height="192">Regeln</span><span><img src="assets/icons/tournaments.png" alt="" width="192" height="192">Turniere</span></div></div></div><span class="art-footnote">SCHRITT FÜR SCHRITT WEITER.</span></div>
-          </div>
-        </article>
+  <section class="story-product story-product--assembly" id="deine-app" aria-labelledby="story-product-title">
+    <div class="story-width story-product-inner">
+      <div class="story-product-copy">
+        <p class="story-eyebrow"><span class="status-dot"></span>STAND HEUTE</p>
+        <h2 id="story-product-title">Dein Startpunkt. <span>So, wie du ihn brauchst.</span></h2>
+        <p class="story-body">Ordne deinen Homescreen, blende Kacheln aus, wähle deinen Hintergrund. Das funktioniert heute. Was hinter den Kacheln liegt, kommt Schritt für Schritt dazu — deshalb steht es dort.</p>
+        <div class="story-product-detail">
+          <span class="story-detail-index">01</span>
+          <div><h3>Dein Homescreen</h3><p>Was du siehst. Wo es liegt. Welche Atmosphäre dich empfängt.</p></div>
+        </div>
       </div>
+      <figure class="story-device-figure">
+        <div class="assembly-viewport">
+          <img class="assembly-fallback" src="media/optimized/smartphone-assembled.webp" width="800" height="1700" alt="KAVEO-3D-Handy mit Homescreen-Designansicht: Training, Regeln, Runden, Wetter, Freunde und Einstellungen; alle Kacheln mit Kommt später gekennzeichnet" loading="lazy">
+          <canvas class="assembly-canvas" aria-hidden="true" hidden></canvas>
+        </div>
+      </figure>
+    </div>
+  </section>
+</div>
+
+    <div class="story-plan">
+    <section class="network-home" id="features" aria-labelledby="features-title">
+      <div class="network-study">
+    <div class="intro">
+      <div><p class="eyebrow">DAS SOLL KAVEO VERBINDEN</p><h2 class="network-heading" id="features-title">Ein Ort. <span>Viele Verbindungen.</span></h2></div>
+      <p class="intro-note">Sechs Bereiche und wie sie zusammenhängen sollen.<br><span>Alles hier ist Plan, nicht Produkt.</span></p>
+    </div>
+    <div class="desktop-explorer" id="desktop-explorer" hidden>
+      <nav class="explorer-bar" aria-label="Position im KAVEO-Netz">
+        <div class="breadcrumbs"><button type="button" id="home-crumb" disabled>KAVEO</button><span id="group-crumb" hidden></span></div>
+        <button class="quiet-button back-button" id="back-button" type="button" hidden><span aria-hidden="true">←</span> Zur Übersicht</button>
+      </nav>
+      <section class="network-space" id="network-space" data-home-network="true" aria-label="KAVEO und seine sechs Produktbereiche">
+        <canvas class="network-canvas" id="network-canvas" aria-hidden="true" hidden></canvas>
+        <svg class="connections" id="connections" aria-hidden="true"></svg>
+        <div class="brand-hub" id="brand-hub"><div class="brand-glass"><img src="/assets/kaveo-ball-mark.png" alt="" width="267" height="267"><strong>KAVEO</strong><span>DEIN GOLFLEBEN</span></div></div>
+        <div id="category-nodes"></div>
+        <div id="feature-nodes"></div>
+      </section>
+      <section class="selection" id="selection" aria-label="Ausgewählter Bereich" aria-live="polite" aria-atomic="true">
+        <p class="eyebrow" id="selection-label">SECHS BEREICHE. EIN ZUSAMMENHANG.</p>
+        <div class="selection-body"><h2 id="selection-title">Wo möchtest du anfangen?</h2><p id="selection-copy">Wähle einen Bereich. Entdecke, welche Ideen dahinterstecken.</p></div>
+      </section>
+    </div>
+    <div class="mobile-explorer" id="mobile-explorer"></div>
+    <noscript><div class="no-script"><h2>Was KAVEO verbinden soll</h2><ul><li>Entdecken und Lernen: Golf verstehen, Lernpfad und Platzreife.</li><li>Planen und Angebote: Plätze und Startzeiten, Kurse und Indoorangebote, Ausrüstung vergleichen.</li><li>Spielen und Erfassen: GPS und Scorekarte, Spielmodi und Rundenrückblick.</li><li>Trainieren und Verbessern: Übungen und Trainingsplan, Videoanalyse und Trainerfeedback.</li><li>Community und Erlebnisse: Mitspieler und Gruppen, Turniere und Ligen, Beiträge und Austausch.</li><li>Partner und Betrieb – für Clubs, Trainer und Anbieter: Cluborganisation, Indoorbetrieb und Trainerbereich.</li></ul><p>Für das interaktive Netz bitte JavaScript aktivieren. Alle Funktionen sind geplant.</p></div></noscript>
+    <div class="study-bottom"><p>Das ist die Auswahl. In welcher Reihenfolge das entstehen soll, steht auf der Roadmap.</p><a class="quiet-button button button-small" href="/roadmap.html">Zur Roadmap <span aria-hidden="true">↗</span></a><button type="button" class="quiet-button" id="motion-toggle" aria-pressed="false" hidden>Netz pausieren <span aria-hidden="true">Ⅱ</span></button></div>
+  
+      </div>
+  <dialog class="feature-detail" id="feature-detail" aria-labelledby="feature-detail-title" aria-describedby="feature-detail-copy">
+    <div class="feature-detail-top"><p id="feature-detail-group"></p><button type="button" class="detail-close" id="feature-detail-close" aria-label="Detailkarte schließen">×</button></div>
+    <p class="detail-status">Geplant</p>
+    <h2 id="feature-detail-title" tabindex="-1"></h2>
+    <p class="detail-intro">Das ist vorgesehen</p>
+    <ul class="detail-points" id="feature-detail-points"></ul>
+    <div class="detail-benefit"><h3>Was dir das bringen soll</h3><p id="feature-detail-copy"></p></div>
+    <button type="button" class="quiet-button detail-back" id="feature-detail-back"><span aria-hidden="true">←</span> Zurück zu den Funktionen</button>
+  </dialog>
     </section>
+    </div>
+    <div class="story-finale" id="story-finale">
+      <div class="ball-brand-moment" aria-hidden="true"></div>
+<section class="signup signup-finale" id="fruehzugang" aria-labelledby="signup-title"><img class="signup-image" src="media/inselgruen-logo-poster-v04.webp" data-original-src="assets/island-wide.png" width="1920" height="1080" alt="KAVEO-Inselgrün" loading="lazy"><div class="signup-shade" aria-hidden="true"></div><div class="signup-inner section-wrap"><div class="signup-copy-column"><div class="signup-copy reveal"><p class="eyebrow">FRÜHZUGANG</p><h2 id="signup-title">Von Anfang<br>an dabei.</h2><p>Trag dich ein. Du hörst von uns, wenn die Tests starten — und wenn es etwas Wichtiges zu sehen gibt. Sonst nicht.</p></div><div class="signup-ball-anchor" id="signup-ball-anchor" aria-hidden="true"></div></div><form class="signup-form glass" id="signup-form" data-glare aria-describedby="form-note"><label for="signup-name">Name <span class="field-optional">(optional)</span></label><input id="signup-name" name="name" autocomplete="given-name" placeholder="Dein Name" maxlength="100"><label for="signup-email">E-Mail-Adresse</label><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="du@beispiel.de" required maxlength="254"><label class="consent" for="signup-consent"><input id="signup-consent" name="consent" type="checkbox" required><span>Ich möchte E-Mails zum Entwicklungsstand und zum Start von KAVEO erhalten. Ich kann die Einwilligung jederzeit widerrufen — der Link dafür steht in jeder Mail.</span></label><button class="button button-primary" type="submit" disabled>Eintragen <svg class="icon"><use href="#arrow-up-right"/></svg></button><p class="form-note" id="form-note" role="status" aria-live="polite">Das Formular ist noch nicht aktiv — wir bauen gerade daran. Es werden keine Daten übertragen oder gespeichert.</p><a class="privacy-link" href="/datenschutz/">Datenschutz</a></form></div></section>
 
     </div>
-    <section class="mood" id="dein-stil" aria-labelledby="mood-title" data-mood="dusk">
-      <div class="mood-window" aria-hidden="true">
-      <div class="mood-images" aria-hidden="true"><img class="mood-image" data-image="fairway" src="assets/fairway.jpg" alt="" width="853" height="1844" loading="lazy"><img class="mood-image is-active" data-image="dusk" src="assets/dusk.jpg" alt="" width="853" height="1844" loading="lazy"><img class="mood-image" data-image="mist" src="assets/mist.jpg" alt="" width="853" height="1844" loading="lazy"></div>
-      <div class="mood-shade" aria-hidden="true"></div>
-      </div>
-      <div class="mood-window-edge" aria-hidden="true"></div>
-      <div class="mood-top section-wrap reveal"><span class="index">03 — DEIN GEFÜHL</span><span>GLEICHE APP. DEINE PERSPEKTIVE.</span></div>
-      <div class="mood-panel glass" data-tilt data-glare>
-        <span class="eyebrow">SO PERSÖNLICH WIE DEIN SPIEL</span><h2 id="mood-title">Dein Blick.<br>Deine Atmosphäre.</h2><p>Ein ruhiger Morgen. Das letzte Licht.<br>Wähle den Hintergrund, der sich nach dir anfühlt.</p>
-        <div class="mood-controls" role="group" aria-label="Hintergrund-Vorschau wählen"><button type="button" data-mood-button="fairway" aria-pressed="false"><span class="swatch swatch-fairway"></span>Fairway</button><button type="button" data-mood-button="dusk" aria-pressed="true"><span class="swatch swatch-dusk"></span>Abendlicht</button><button type="button" data-mood-button="mist" aria-pressed="false"><span class="swatch swatch-mist"></span>Morgennebel</button></div>
-        <span class="sample-note">Hintergrund-Vorschau · wird nicht gespeichert</span>
-      </div>
-      <div class="mood-coordinate" aria-hidden="true"><span class="fine-line"></span><span id="mood-caption">02 — ABENDLICHT</span></div>
-    </section>
-
-    <section class="outlook section-wrap" aria-labelledby="outlook-title"><div class="outlook-label reveal"><span class="status-dot"></span> SCHRITT FÜR SCHRITT</div><div class="reveal"><h2 id="outlook-title">Eine Idee wächst.<br><span class="text-secondary">Du kannst dabei sein.</span></h2><p>KAVEO ist in Entwicklung. Unsere Roadmap zeigt dir, welche Features entstehen und wo wir gerade stehen.</p><a class="text-link" href="#features">Die Entwicklung verfolgen <svg class="icon"><use href="#arrow-up-right"/></svg></a></div></section>
-
-    <section class="signup" id="fruehzugang" aria-labelledby="signup-title"><img class="signup-image" src="assets/island-wide.png" width="1672" height="941" alt="Inselgrün im warmen Abendlicht" loading="lazy"><div class="signup-shade" aria-hidden="true"></div><div class="signup-inner section-wrap"><div class="signup-copy reveal"><p class="eyebrow">DER NÄCHSTE ABSCHLAG KOMMT.</p><h2 id="signup-title">Von Anfang<br>an dabei.</h2><p>Der Platz für deinen Frühzugang.<br>Wir bereiten gerade alles vor.</p><a class="text-link" href="mailto:info@kaveo-golf.app">Eine Frage an KAVEO? <svg class="icon"><use href="#arrow-up-right"/></svg></a></div><form class="signup-form glass" id="signup-form" data-glare><span class="index">FRÜHZUGANG</span><h3>Dein Interesse.<br>Unser Antrieb.</h3><label for="signup-name">Name</label><input id="signup-name" name="name" autocomplete="given-name" placeholder="Dein Name" required maxlength="100"><label for="signup-email">E-Mail-Adresse</label><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="du@beispiel.de" required maxlength="254"><label class="consent" for="signup-consent"><input id="signup-consent" name="consent" type="checkbox" required><span>Ich möchte Informationen zum Start von KAVEO per E-Mail erhalten. Die Einwilligung kann ich jederzeit widerrufen.</span></label><button class="button button-primary" type="submit" disabled>Vormerkung ansehen <svg class="icon"><use href="#arrow-up-right"/></svg></button><p class="form-note" id="form-note" role="status" aria-live="polite">Designvorschau — es werden keine Daten übertragen oder gespeichert.</p><noscript><p class="form-note">Das Formular bleibt in dieser Designvorschau inaktiv.</p></noscript><a class="privacy-link" href="/datenschutz/">Datenschutz</a></form></div></section>
+</div>
   </main>
-
-  <footer class="site-footer section-wrap"><div class="footer-top"><a class="brand" href="#start" aria-label="KAVEO GOLF — zum Anfang"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131" loading="lazy"></a><p>Dein Spiel. Deine Menschen. Deine Welt.</p><a class="back-to-top" href="#start" aria-label="Zurück nach oben"><svg class="icon"><use href="#arrow-up-right"/></svg></a></div><div class="footer-bottom"><span>© 2026 KAVEO GOLF · Designentwurf</span><nav aria-label="Weitere Informationen"><a href="#features">Roadmap</a><a href="mailto:info@kaveo-golf.app">Kontakt</a><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></nav></div></footer>
-  <button class="motion-control glass" id="motion-control" type="button" aria-label="Animationen pausieren" aria-pressed="false" hidden><svg class="icon"><use href="#pause"/></svg><span>Bewegung pausieren</span></button>
+  <footer class="site-footer section-wrap"><div class="footer-top"><div class="footer-identity"><a class="brand" href="#start" aria-label="KAVEO GOLF — zum Anfang"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131" loading="lazy"></a><p>KAVEO GOLF — in Entwicklung seit 2026.</p></div><div class="footer-connect"><nav class="footer-socials" aria-label="Social Media"><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener noreferrer" aria-label="KAVEO auf Instagram (öffnet in neuem Tab)"><svg class="social-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a><span class="social-pending">TikTok <span class="social-status">· folgt</span></span></nav><a class="back-to-top" href="#start" aria-label="Zurück nach oben"><svg class="icon"><use href="#arrow-up-right"/></svg></a></div></div><div class="footer-bottom"><span>© 2026 KAVEO GOLF</span><nav aria-label="Weitere Informationen"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><a href="mailto:info@kaveo-golf.app">Kontakt</a></nav><div class="footer-motion-slot" data-footer-motion-slot></div></div></footer>
 </body>
 </html>

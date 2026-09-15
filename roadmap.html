@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0d0d0d">
+  <meta name="description" content="Der geplante Weg von KAVEO GOLF: Startpaket, Ausbau und die Funktionen für Golfer, Clubs und Partner.">
+  <title>Roadmap — KAVEO GOLF</title>
+  <script src="roadmap-entry.js"></script>
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="preload" href="reference/assets/fonts/Manrope_400Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="reference/styles.css">
+  <link rel="stylesheet" href="reference/copy-v2.css">
+  <link rel="stylesheet" href="button-shape.css">
+  <link rel="stylesheet" href="roadmap.css">
+  <link rel="stylesheet" href="roadmap-glass.css">
+  <link rel="stylesheet" href="roadmap-rail.css">
+  <link rel="stylesheet" href="roadmap-scene.css">
+  <link rel="stylesheet" href="functions.css">
+  <link rel="stylesheet" href="ball-finale.css">
+  <link rel="stylesheet" href="shared-footer.css">
+  <link rel="stylesheet" href="footer-socials.css">
+  <script type="module" src="footer-controls.mjs"></script>
+  <script type="module" src="shared-footer.mjs"></script>
+  <script type="module" src="roadmap-shell.mjs"></script>
+  <script type="module" src="roadmap-glass.mjs"></script>
+  <script type="module" src="roadmap-rail.mjs"></script>
+  <link rel="stylesheet" href="roadmap-video.css">
+  <script type="module" src="roadmap-video.mjs"></script>
+  <link rel="stylesheet" href="site-navigation.css">
+  <script type="module" src="site-navigation.mjs"></script>
+  <link rel="stylesheet" href="mobile-polish.css">
+  <link rel="stylesheet" href="site-background.css">
+  <link rel="stylesheet" href="feinschliff.css">
+</head>
+<body class="roadmap-page">
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="arrow-up-right" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
+    <symbol id="arrow-down" viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></symbol>
+    <symbol id="arrow-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+    <symbol id="play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+    <symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3Zm6 10v-7h6v7"/></symbol>
+    <symbol id="bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+    <symbol id="pencil" viewBox="0 0 24 24"><path d="m16 3 5 5L8 21H3v-5Zm-2 2 5 5"/></symbol>
+    <symbol id="message" viewBox="0 0 24 24"><path d="M21 11a9 9 0 0 1-9 9 11 11 0 0 1-4-.8L3 21l1.8-5A9 9 0 1 1 21 11Z"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </defs></svg>
+  <a class="skip-link" href="#inhalt">Zum Inhalt</a>
+  <header class="site-header glass">
+    <a class="brand" href="/#start" aria-label="KAVEO GOLF — zur Startseite"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131"></a>
+    <nav class="site-navigation" id="site-navigation" aria-label="Hauptnavigation">
+      <a class="site-nav-home" href="/#start" data-nav-page="home">Startseite</a>
+      <a href="funktionen.html" data-nav-page="functions">Funktionen</a>
+      <a href="roadmap.html" data-nav-page="roadmap" aria-current="page">Roadmap</a>
+      <a href="ueber-uns-v2.html" data-nav-page="about">Über uns</a>
+      <div class="site-nav-language"><span>Deutsch</span><span>Englisch in Vorbereitung</span></div>
+    </nav>
+    <div class="header-actions">
+      <div class="language" aria-label="Sprache: Deutsch. Englisch in Vorbereitung"><span aria-current="true">DE</span><span class="unavailable" aria-disabled="true" title="Englische Version in Vorbereitung">EN</span></div>
+      <a class="button button-small button-light" href="#fruehzugang">Frühzugang <svg class="icon"><use href="#arrow-up-right"/></svg></a>
+      <button class="site-menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Menü öffnen" hidden><span class="site-menu-label">Menü</span><span class="site-menu-icon" aria-hidden="true"><span></span><span></span></span></button>
+    </div>
+  </header>
+  <div class="roadmap-landscape" aria-hidden="true"><img src="media/inselgruen-logo-poster-v04.webp" alt="" width="1920" height="1080" fetchpriority="high"></div>
+  <main id="inhalt" class="roadmap-main section-wrap" tabindex="-1">
+    <div class="roadmap-scroll-scene"><div class="roadmap-scene-sticky">
+    <section class="roadmap-intro" id="start" aria-labelledby="roadmap-title" tabindex="-1">
+      <nav class="roadmap-breadcrumb" aria-label="Seitenpfad"><a href="/">Startseite</a><span aria-hidden="true">/</span><span aria-current="page">Roadmap</span></nav>
+      <h1 id="roadmap-title">Der nächste<br>Schritt zählt.</h1>
+      <div class="roadmap-intro-bottom"><p>Eine gemeinsame Runde soll der Anfang sein. Hier siehst du, was darauf aufbauen soll – und welche Ideen wir für die weitere Golfwelt haben.</p><p class="roadmap-version">Konzeptstand<time datetime="2026-09">September 2026</time></p></div>
+      <nav class="roadmap-jumps" aria-label="Roadmap-Bereiche"><a class="button roadmap-outline" href="funktionen.html">Alle Produktbereiche <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a></nav>
+    </section>
+
+    <section class="roadmap-journey journey-open" id="entwicklungsweg" aria-labelledby="journey-title" tabindex="-1">
+      <div class="journey-sticky">
+        <div class="roadmap-section-head"><h2 id="journey-title">Schritt für Schritt.</h2><p>Die vorgeschlagene Reihenfolge aus unserem Konzept. Alle Pakete sind geplant; sie sind keine Aussage über bereits fertige Funktionen oder feste Veröffentlichungstermine.</p></div>
+        <nav class="journey-nav" aria-label="Entwicklungspakete"><a class="journey-stop" href="#paket-A" aria-label="A: Gemeinsam eine Runde spielen."><span>A</span></a><a class="journey-stop" href="#paket-B" aria-label="B: Aus einer Runde wird die nächste."><span>B</span></a><a class="journey-stop" href="#paket-C" aria-label="C: Mit echten Angeboten verbinden."><span>C</span></a><a class="journey-stop" href="#paket-D" aria-label="D: Mehr Möglichkeiten auf dem Platz."><span>D</span></a><a class="journey-stop journey-stop-branch" href="#paket-E" aria-label="E: Werkzeuge für den Golfbetrieb. – Eigene Entwicklungslinie"><span>E</span><span class="journey-branch-label">Eigene Linie</span></a><a class="journey-stop" href="#paket-F" aria-label="F: Technik, der man vertrauen kann."><span>F</span></a><a class="journey-stop" href="#paket-G" aria-label="G: Die Golfwelt weiter öffnen."><span>G</span></a></nav>
+        <div class="journey-window"><div class="roadmap-packages"><article class="roadmap-package " id="paket-A" aria-labelledby="paket-titel-A" tabindex="-1">
+  <header class="package-summary"><span class="package-index" aria-hidden="true">A</span><div class="package-title"><span class="package-name">Startpaket</span><h3 id="paket-titel-A">Gemeinsam eine Runde spielen.</h3><span class="package-when">Zuerst vorgesehen</span></div></header>
+  <div class="package-body"><p class="package-intro">Einladen, verabreden, Scores festhalten und auf die Runde zurückblicken. Ein klarer erster Nutzen für bestehende Spielgruppen.</p><ul><li>Profil und Sichtbarkeit bewusst wählen. Golf-Grundlagen und lokale Einstiegsmöglichkeiten finden.</li><li>Eine gemeinsame Runde mit Platz, Termin und Mitspielern planen. Zusagen von bestätigten Startzeiten unterscheiden.</li><li>Scores manuell eingeben, berichtigen und bei fehlender Verbindung lokal zwischenspeichern.</li><li>Die Gruppen-Scorekarte prüfen, privat zurückblicken und Ergebnisse gezielt teilen.</li></ul><p class="package-boundary">Der erste Ablauf soll ohne Geräteautomatik, DGV-Anbindung oder umfassende Clubsoftware funktionieren.</p></div>
+</article>
+<article class="roadmap-package " id="paket-B" aria-labelledby="paket-titel-B" tabindex="-1">
+  <header class="package-summary"><span class="package-index" aria-hidden="true">B</span><div class="package-title"><span class="package-name">Dranbleiben</span><h3 id="paket-titel-B">Aus einer Runde wird die nächste.</h3><span class="package-when">Danach vorgesehen</span></div></header>
+  <div class="package-body"><p class="package-intro">Runden, Verabredungen und Lernschritte wieder aufgreifen, statt jedes Mal neu anzufangen.</p><ul><li>Rundenarchiv und einfache Statistiken aus tatsächlich erfassten Daten.</li><li>Favoriten, Kalender und selbst steuerbare Hinweise.</li><li>Kleine private Ligen, Terminreihen und Freundesformate.</li><li>Ein kurzer Lernpfad für Einstieg, Platzreife und die erste Runde.</li></ul><p class="package-boundary">Private Aufzeichnungen und Gruppenwertungen sind keine offiziellen Handicap- oder Turnierergebnisse.</p></div>
+</article>
+<article class="roadmap-package " id="paket-C" aria-labelledby="paket-titel-C" tabindex="-1">
+  <header class="package-summary"><span class="package-index" aria-hidden="true">C</span><div class="package-title"><span class="package-name">Partnerpiloten</span><h3 id="paket-titel-C">Mit echten Angeboten verbinden.</h3><span class="package-when">Mit wenigen Partnern erproben</span></div></header>
+  <div class="package-body"><p class="package-intro">Clubs, Trainer und Indooranlagen zunächst mit überschaubaren Abläufen einbeziehen.</p><ul><li>Clubprofil, gepflegtes Angebot und eine nachvollziehbare Anfrage oder Buchungsbestätigung.</li><li>Trainerprofil, Kurs oder Übung, Termin und kurze Nachbereitung.</li><li>Indoorangebot mit passender Box, Zeitraum, Preis und klarem Buchungsstatus.</li></ul><p class="package-boundary">Partner, Pilotgebiet und konkrete Datenwege sind noch festzulegen. Es werden keine bestehenden Kooperationen behauptet.</p></div>
+</article>
+<article class="roadmap-package " id="paket-D" aria-labelledby="paket-titel-D" tabindex="-1">
+  <header class="package-summary"><span class="package-index" aria-hidden="true">D</span><div class="package-title"><span class="package-name">Spieler-Ausbau</span><h3 id="paket-titel-D">Mehr Möglichkeiten auf dem Platz.</h3><span class="package-when">Nach erprobtem Grundangebot</span></div></header>
+  <div class="package-body"><p class="package-intro">Die Rundenbegleitung erweitern, wenn sich der erste gemeinsame Ablauf im Alltag bewährt.</p><ul><li>GPS und verlässliche Informationen zu den Spielbahnen.</li><li>Weitere Spielmodi und umfangreichere private Turniere.</li><li>Papier-Scorekarten übernehmen und erkannte Werte prüfen.</li><li>Video- und Medienwerkzeuge für Spiel, Training und Rückblicke.</li></ul><p class="package-boundary">Aus Umfang und Reihenfolge folgt noch kein Veröffentlichungstermin.</p></div>
+</article>
+<article class="roadmap-package package-branch" id="paket-E" aria-labelledby="paket-titel-E" tabindex="-1">
+  <header class="package-summary"><span class="package-index" aria-hidden="true">E</span><div class="package-title"><span class="package-name">Betriebssysteme</span><h3 id="paket-titel-E">Werkzeuge für den Golfbetrieb.</h3><span class="package-when">Eigene Entwicklungslinie</span></div></header>
+  <div class="package-body"><p class="package-intro">Umfassende Club- und Anlagenorganisation braucht einen eigenen Ausbau neben der Spieler-App.</p><ul><li>Timetable, Startzeiten, Tarife, Sperrungen und Online-Check-in.</li><li>Live-Platzkarte mit Datenalter und gezielter Kommunikation.</li><li>Kasse, Warenwirtschaft, Rangebetrieb und Vermietungen.</li><li>Rollen, Zuständigkeiten und definierte Schnittstellen.</li></ul><p class="package-boundary">Diese Betriebslinie ist kein Pflichtschritt für das Startpaket und keine Zusage eines fertigen Clubsystems.</p></div>
+</article>
+<article class="roadmap-package " id="paket-F" aria-labelledby="paket-titel-F" tabindex="-1">
+  <header class="package-summary"><span class="package-index" aria-hidden="true">F</span><div class="package-title"><span class="package-name">Geräte, Verband und KI</span><h3 id="paket-titel-F">Technik, der man vertrauen kann.</h3><span class="package-when">Nach Qualitäts- und Partnerprüfung</span></div></header>
+  <div class="package-body"><p class="package-intro">Automatik und externe Daten erst dann einbeziehen, wenn Qualität, Freigaben und Korrekturwege geklärt sind.</p><ul><li>Schlagerkennung über unterstützte Geräte und nachvollziehbare Schlägerempfehlungen.</li><li>Smartwatch-, Simulator- und Messdatenanbindungen.</li><li>Mögliche DGV-Prozesse über autorisierte Datenwege.</li><li>Prüfbare KI-Hilfen für Regeln, Analyse und Trainingsnachbereitung.</li></ul><p class="package-boundary">Gewünschte Anbindungen sind keine zugesagten Zugänge. Automatische Vorschläge bleiben korrigierbar.</p></div>
+</article>
+<article class="roadmap-package " id="paket-G" aria-labelledby="paket-titel-G" tabindex="-1">
+  <header class="package-summary"><span class="package-index" aria-hidden="true">G</span><div class="package-title"><span class="package-name">Vergleich und Reichweite</span><h3 id="paket-titel-G">Die Golfwelt weiter öffnen.</h3><span class="package-when">Späterer Ausbau</span></div></header>
+  <div class="package-body"><p class="package-intro">Ausrüstung, Reisen, Inhalte und passende Partner in den Golfalltag einbinden.</p><ul><li>Händlerangebote und Golfreisen auffindbar und vergleichbar machen.</li><li>Marken, Sponsoren und Creator im passenden Zusammenhang einbeziehen.</li><li>Kooperations- und Veröffentlichungswerkzeuge weiter ausarbeiten.</li><li>Weitergehende Medienformate bis zum Livestreaming prüfen.</li></ul><p class="package-boundary">Käufe und Reisebuchungen werden beim jeweiligen Anbieter abgeschlossen. KAVEO verkauft die Produkte und Reisen nicht selbst.</p></div>
+</article></div></div>
+        <p class="roadmap-journey-note">Die Betriebssoftware ist eine eigene Entwicklungslinie. Erweiterungen mit Geräten, Verbänden und Anbietern hängen zusätzlich von Qualität, Datenzugängen und Partnern ab.</p>
+      </div>
+    </section>
+    </div></div>
+
+  </main>
+  <div class="site-closing" data-shared-footer>
+    <div class="footer-finale">
+      <div class="footer-backdrop" aria-hidden="true"><div class="footer-scene-media"><img class="footer-scene-image" src="media/inselgruen-logo-poster-v04.webp" data-original-src="assets/island-wide.png" width="1920" height="1080" alt="" loading="lazy"><div class="footer-scene-shade"></div><canvas class="footer-ball" width="1920" height="1080" hidden></canvas></div></div>
+      <div class="ball-brand-moment" aria-hidden="true"></div>
+<section class="signup signup-finale" id="fruehzugang" aria-labelledby="signup-title"><img class="signup-image" src="media/inselgruen-logo-poster-v04.webp" data-original-src="assets/island-wide.png" width="1920" height="1080" alt="KAVEO-Inselgrün" loading="lazy"><div class="signup-shade" aria-hidden="true"></div><div class="signup-inner section-wrap"><div class="signup-copy-column"><div class="signup-copy reveal"><p class="eyebrow">FRÜHZUGANG</p><h2 id="signup-title">Von Anfang<br>an dabei.</h2><p>Trag dich ein. Du hörst von uns, wenn die Tests starten — und wenn es etwas Wichtiges zu sehen gibt. Sonst nicht.</p></div><div class="signup-ball-anchor" id="signup-ball-anchor" aria-hidden="true"></div></div><form class="signup-form glass" id="signup-form" data-glare aria-describedby="form-note"><label for="signup-name">Name <span class="field-optional">(optional)</span></label><input id="signup-name" name="name" autocomplete="given-name" placeholder="Dein Name" maxlength="100"><label for="signup-email">E-Mail-Adresse</label><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="du@beispiel.de" required maxlength="254"><label class="consent" for="signup-consent"><input id="signup-consent" name="consent" type="checkbox" required><span>Ich möchte E-Mails zum Entwicklungsstand und zum Start von KAVEO erhalten. Ich kann die Einwilligung jederzeit widerrufen — der Link dafür steht in jeder Mail.</span></label><button class="button button-primary" type="submit" disabled>Eintragen <svg class="icon"><use href="#arrow-up-right"/></svg></button><p class="form-note" id="form-note" role="status" aria-live="polite">Das Formular ist noch nicht aktiv — wir bauen gerade daran. Es werden keine Daten übertragen oder gespeichert.</p><a class="privacy-link" href="/datenschutz/">Datenschutz</a></form></div></section>
+    </div>
+  <footer class="site-footer section-wrap"><div class="footer-top"><div class="footer-identity"><a class="brand" href="/#start" aria-label="KAVEO GOLF — zum Anfang"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131" loading="lazy"></a><p>KAVEO GOLF — in Entwicklung seit 2026.</p></div><div class="footer-connect"><nav class="footer-socials" aria-label="Social Media"><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener noreferrer" aria-label="KAVEO auf Instagram (öffnet in neuem Tab)"><svg class="social-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a><span class="social-pending">TikTok <span class="social-status">· folgt</span></span></nav><a class="back-to-top" href="#start" aria-label="Zurück nach oben"><svg class="icon"><use href="#arrow-up-right"/></svg></a></div></div><div class="footer-bottom"><span>© 2026 KAVEO GOLF</span><nav aria-label="Weitere Informationen"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><a href="mailto:info@kaveo-golf.app">Kontakt</a></nav><div class="footer-motion-slot" data-footer-motion-slot></div></div></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+/* The whole opening is the pinned stage. Card material and 3D poses remain
+   in roadmap-rail.css; only the old inner sticky boundary is replaced here. */
+.roadmap-scroll-scene.scene-horizontal{position:relative;height:var(--journey-height)}
+.scene-horizontal .roadmap-scene-sticky{position:sticky;top:0;display:flow-root}
+.scene-horizontal .journey-horizontal{height:auto}
+.scene-horizontal .journey-sticky{position:static}
+
+/* Measure the same complete composition before enabling the enhancement. */
+.scene-wide .roadmap-intro{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);column-gap:48px;padding:112px 0 24px}
+.scene-wide .roadmap-breadcrumb{grid-column:1 / -1;margin-bottom:12px}
+.scene-wide .roadmap-breadcrumb a{min-height:28px}
+.scene-wide .roadmap-intro h1{grid-column:1;grid-row:2 / 4;font-size:clamp(48px,4vw,64px);align-self:center}
+.scene-wide .roadmap-intro-bottom{grid-column:2;grid-row:2;display:block;margin-top:0}
+.scene-wide .roadmap-intro-bottom>p:first-child{font-size:16px;line-height:1.55}
+.scene-wide .roadmap-version{margin-top:10px}
+.scene-wide .roadmap-version time{display:inline;font-size:14px;margin-left:10px}
+.scene-wide .roadmap-jumps{grid-column:2;grid-row:3;margin-top:14px;gap:10px}
+.scene-wide .roadmap-jumps .button{min-height:44px;padding:12px 18px;gap:20px}
+@media(min-height:1280px){
+  .scene-wide .roadmap-intro{display:block;padding:120px 0 28px}
+  .scene-wide .roadmap-breadcrumb{margin-bottom:24px}
+  .scene-wide .roadmap-intro h1{font-size:84px}
+  .scene-wide .roadmap-intro-bottom{display:flex;margin-top:24px}
+  .scene-wide .roadmap-intro-bottom>p:first-child{font-size:18px;line-height:1.65}
+  .scene-wide .roadmap-version{margin-top:0}
+  .scene-wide .roadmap-version time{display:block;font-size:16px;margin:4px 0 0}
+  .scene-wide .roadmap-jumps{margin-top:24px}
+}

@@ -1,0 +1,66 @@
+/* KAVEO — Feinschliff.
+   Zuletzt geladen. Aendert nur Werte, keine Struktur, keine Szene, keine Animation.
+   Drei Themen: Lesbarkeit ueber der hellen Bildhaelfte, schmale Bildschirme,
+   Kollision der beiden fixierten Bedienknoepfe. */
+
+/* ------------------------------------------------------------------
+   1 — Die Landschaft trug Text bisher nur links.
+   Rechts stand sie auf 12 % Abdunklung, unten auf 14 %; genau dort liegt
+   das hellste Gras. Rechte Haelfte und unterer Rand bekommen Boden,
+   die Tiefe der Szene bleibt erhalten.
+   ------------------------------------------------------------------ */
+:root{
+  --kaveo-landscape-shade:
+    linear-gradient(90deg,rgba(13,13,13,.82),rgba(13,13,13,.63) 37%,rgba(13,13,13,.36) 78%,rgba(13,13,13,.40)),
+    linear-gradient(180deg,rgba(13,13,13,.22),rgba(13,13,13,.08) 36%,rgba(13,13,13,.50));
+}
+
+/* ------------------------------------------------------------------
+   2 — Text, der trotzdem ueber hellem Bild steht, traegt seinen
+   eigenen Schatten. Kein Kasten, keine Flaeche — die Schrift bleibt,
+   wie sie war, und wird nur ablesbar.
+   ------------------------------------------------------------------ */
+.story-lead,
+.story-hero h1,
+.network-home .network-heading,
+.network-home .intro-note,
+.network-home .selection h2,
+.network-home .selection-body p,
+.network-home .study-bottom>p,
+.roadmap-page .roadmap-section-head p,
+.roadmap-page .roadmap-intro-bottom p,
+.functions-page .roadmap-section-head p,
+.functions-page .functions-version,
+.roadmap-page .roadmap-breadcrumb,
+.functions-page .roadmap-breadcrumb{
+  text-shadow:0 1px 20px rgba(6,9,7,.88),0 0 3px rgba(6,9,7,.55);
+}
+
+/* Die vier hellgrauen Stellen lagen unter der Lesbarkeitsschwelle. */
+.network-home .intro-note{color:#e4eae6}
+.network-home .intro-note span{color:#b6c2ba}
+.network-home .selection-body p{color:#dde5df}
+.network-home .study-bottom>p{color:#b6c2ba}
+.functions-page .functions-version{color:#c3cdc6}
+
+/* ------------------------------------------------------------------
+   3 — Schmale Bildschirme. Die Ueberschrift stiess rechts an den Rand,
+   und der graue Teil stand ueber dem hellen Wasser.
+   ------------------------------------------------------------------ */
+@media(max-width:720px){
+  .story-hero h1{font-size:clamp(38px,12.4vw,54px)}
+  .story-hero h1 span{color:rgba(255,255,255,.9)}
+  .story-lead{max-width:none}
+}
+@media(max-width:370px){
+  .story-hero h1{font-size:clamp(34px,12.4vw,46px)}
+}
+
+/* ------------------------------------------------------------------
+   4 — Der fixierte Knopf "Hintergrund pausieren" sitzt unten rechts.
+   Dort lag auch "Netz pausieren" und der Weg zur Roadmap. Die Zeile
+   haelt jetzt Abstand, solange der fixierte Knopf nicht angedockt ist.
+   ------------------------------------------------------------------ */
+@media(min-width:901px){
+  .network-home .study-bottom{padding-right:208px}
+}

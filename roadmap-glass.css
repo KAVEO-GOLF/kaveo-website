@@ -1,0 +1,45 @@
+/* Quiet KAVEO glass, with the existing landscape behind the development path. */
+.roadmap-page .roadmap-landscape.has-journey-landscape{height:var(--journey-landscape-height);overflow:visible;overflow:clip}
+.roadmap-landscape-frame{position:sticky;top:0;height:100svh}
+.roadmap-landscape-frame:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,13,13,.72),rgba(13,13,13,.48)),linear-gradient(0deg,rgba(13,13,13,.26),transparent 65%)}
+.roadmap-page .roadmap-landscape.has-journey-landscape:after{inset:auto 0 0;height:180px;background:linear-gradient(0deg,#0d0d0d,transparent)}
+.roadmap-page .roadmap-packages{gap:30px;padding-right:8px}
+.roadmap-page .roadmap-package{
+  border-color:rgba(229,237,242,.24);
+  background:linear-gradient(125deg,rgba(224,234,243,.09),rgba(166,182,198,.015) 48%,rgba(220,230,239,.025)),rgba(22,27,30,.43);
+  backdrop-filter:blur(18px) saturate(.92);-webkit-backdrop-filter:blur(18px) saturate(.92);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 12px 30px rgba(0,0,0,.2);
+  transition:border-color .8s ease,box-shadow .8s ease;
+}
+/* Preserve the separate B2B connector in ::before and the outside A–G markers. */
+.roadmap-page .package-branch{border-style:solid}
+.roadmap-page .roadmap-package:after{content:"";position:absolute;top:0;left:24px;right:24px;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(246,251,255,.25) 24%,rgba(220,232,243,.08) 72%,transparent)}
+.roadmap-page .roadmap-package:hover{border-color:rgba(240,247,252,.38)}
+.roadmap-page .roadmap-package[open]{
+  border-color:rgba(234,242,248,.35);
+  background:linear-gradient(125deg,rgba(221,232,243,.11),rgba(164,185,201,.02) 48%,rgba(221,231,240,.035)),rgba(21,26,29,.48);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 16px 36px rgba(0,0,0,.24);
+}
+.roadmap-page .roadmap-package>summary{padding:30px 34px}
+.roadmap-page .roadmap-package .package-name{color:#d4dce0}
+.roadmap-page .roadmap-package .package-when{color:#c6d0d4}
+.roadmap-page .roadmap-package .disclosure-mark{transition:transform .8s cubic-bezier(.25,.1,.25,1)}
+.roadmap-page .roadmap-package[open] .package-body{border-top:1px solid rgba(226,239,248,.19)}
+.roadmap-page .roadmap-package .package-body{border-radius:0 0 23px 23px;background:linear-gradient(180deg,rgba(10,15,18,.07),rgba(10,15,18,.24));padding:30px 34px 34px}
+.roadmap-page .roadmap-package .package-intro{color:#e9edee}
+.roadmap-page .roadmap-package .package-body li{color:#d4dce0}
+.roadmap-page .roadmap-package .package-boundary{border-color:rgba(226,239,248,.17);color:#c4cdd1}
+.roadmap-page .package-fold{border-radius:0 0 23px 23px}
+.roadmap-page .has-plate-fold .package-body{animation:none!important}
+.roadmap-page .plate-is-moving .package-fold{overflow:hidden;overflow:clip}
+@media(max-width:760px){
+  .roadmap-page .roadmap-packages{gap:24px;padding-right:5px}
+  .roadmap-page .roadmap-package{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:inset 0 1px rgba(255,255,255,.13),0 8px 22px rgba(0,0,0,.18)}
+  .roadmap-page .roadmap-package[open]{box-shadow:inset 0 1px rgba(255,255,255,.18),0 12px 26px rgba(0,0,0,.22)}
+  .roadmap-page .roadmap-package>summary{padding:24px 20px}
+  .roadmap-page .roadmap-package .package-body{padding:24px 20px 26px;border-radius:0 0 19px 19px}
+  .roadmap-page .package-fold{border-radius:0 0 19px 19px}
+}
+@media(prefers-reduced-motion:reduce){.roadmap-page .roadmap-package,.roadmap-page .roadmap-package *{transition:none!important;animation:none!important}}
+@media(prefers-contrast:more){.roadmap-page .roadmap-package,.roadmap-page .roadmap-package[open]{background:#20262b;border-color:#edf4f9}.roadmap-page .roadmap-package .package-body{background:#192025}}
+@supports not (backdrop-filter:blur(18px)){.roadmap-page .roadmap-package,.roadmap-page .roadmap-package[open]{background:linear-gradient(125deg,#353e46,#20262b)}}

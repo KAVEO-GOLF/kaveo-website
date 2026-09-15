@@ -1,0 +1,17 @@
+/* Direct access to the existing six categories; no second scroll presentation. */
+.functions-intro{padding:132px 0 0;scroll-margin-top:120px}
+.functions-intro .roadmap-breadcrumb{margin-bottom:18px}
+.functions-title-row{display:flex;align-items:center;justify-content:space-between;gap:28px}
+.functions-title-row h1{font-size:clamp(36px,4.4vw,64px);font-weight:400;line-height:1.12}
+.functions-title-row .button{flex:none}
+.functions-version{margin-top:18px;font-size:14px;color:var(--roadmap-secondary)}
+.functions-page .roadmap-catalog{margin-top:36px;padding-top:28px;padding-bottom:72px}
+.functions-page .roadmap-section-head h2{font-size:clamp(28px,2.4vw,36px)}
+.roadmap-page .roadmap-outro-actions{display:grid;gap:12px;flex:0 0 350px}
+.roadmap-outro-actions .button{width:100%;gap:20px;justify-content:space-between}
+@media(max-width:760px){
+  .functions-intro{padding-top:116px}
+  .functions-title-row{align-items:flex-start;flex-direction:column;gap:18px}
+  .functions-page .roadmap-catalog{margin-top:28px;padding-top:24px}
+  .roadmap-page .roadmap-outro-actions{flex:auto;width:100%;max-width:420px}
+}

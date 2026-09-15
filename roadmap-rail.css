@@ -1,0 +1,50 @@
+/* Open reading cards first; horizontal movement is a height-checked enhancement. */
+.journey-open .package-summary{display:flex;align-items:flex-start;gap:22px;padding:26px 32px}
+.journey-open .package-title h3{font-size:clamp(26px,2.5vw,36px);line-height:1.2;letter-spacing:-.045em;font-weight:400}
+.journey-open .roadmap-package{scroll-margin-top:120px}
+.journey-open .roadmap-package:focus-visible{outline:2px solid #fff;outline-offset:5px}
+.roadmap-page .journey-open .package-body{border-top:1px solid rgba(226,239,248,.16);padding:22px 32px 26px}
+.journey-open .package-intro{font-size:16px;line-height:1.65;max-width:850px}
+.journey-open .package-body ul{gap:18px 32px;margin:20px 0}
+.journey-open .package-body li{line-height:1.65}
+.journey-open .package-boundary{padding-top:18px}
+.journey-nav{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 24px 64px}
+.journey-stop{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 14px;border:1px solid rgba(229,237,242,.22);border-radius:14px;background:rgba(22,27,30,.44);font-size:14px;line-height:1.2}
+.journey-stop:hover{background:rgba(229,237,242,.14)}
+.journey-stop[aria-current="location"]{color:#101313;background:#f0f3f3;border-color:#f0f3f3}
+.journey-stop-branch{margin-inline:10px}
+.journey-branch-label{font-size:14px;color:inherit;opacity:.8}
+/* Measure and render exactly the same candidate layout, never a hidden clone. */
+.journey-wide .roadmap-section-head{gap:40px;margin-bottom:18px;align-items:center}
+.journey-wide .roadmap-section-head h2{font-size:clamp(32px,3vw,44px)}
+.journey-wide .roadmap-section-head p{font-size:14px;line-height:1.65}
+.journey-wide .journey-nav{margin:0 0 20px}
+.journey-wide .journey-window{overflow:clip;padding:8px 8px 24px;perspective:1600px;perspective-origin:50% 50%}
+.roadmap-page .journey-wide .roadmap-packages{display:flex;align-items:stretch;gap:36px;padding:0;transform-style:preserve-3d;transform:translate3d(var(--journey-x,0px),0,0)}
+.journey-wide .roadmap-packages:before,.journey-wide .package-branch:before{display:none}
+.roadmap-page .journey-wide .roadmap-package{flex:0 0 min(1020px,calc(100% - 100px));margin:0}
+.journey-wide .package-index{position:static;flex:none;width:36px;height:36px;font-size:14px}
+.journey-wide .package-summary{padding:22px 28px;gap:18px}
+.journey-wide .package-title{gap:7px}
+.roadmap-page .journey-wide .package-body{padding:20px 28px 24px}
+.journey-wide .roadmap-journey-note{margin:0;max-width:100%;font-size:14px;line-height:1.6}
+.journey-wide .package-branch .package-when{width:fit-content;border-bottom:1px solid rgba(229,237,242,.5);padding-bottom:5px}
+.journey-horizontal{position:relative;height:var(--journey-height)}
+.journey-horizontal .journey-sticky{position:sticky;top:96px}
+/* Each glass face is a real transformed plane. Do not blur the card text or
+   flatten the shared track with opacity/filter/overflow:hidden. */
+.roadmap-page .journey-horizontal .roadmap-package{
+  transform:translate3d(0,var(--plate-y,0px),var(--plate-z,0px)) rotateY(var(--plate-rotate,0deg));
+  transform-origin:50% 50%;backface-visibility:hidden;opacity:var(--plate-opacity,1);
+  border-color:rgba(229,237,242,var(--plate-edge-alpha,.36));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),var(--plate-edge-x,0px) 1.5px 0 rgba(220,232,239,.2),0 var(--plate-shadow-y,20px) 34px rgba(0,0,0,.29);
+  transition:none;
+}
+@media(max-width:760px){
+  .journey-nav{margin-left:38px;gap:6px}.journey-stop{padding-inline:12px}.journey-stop-branch{margin-inline:4px}
+  .journey-open .package-summary{padding:24px 20px}
+  .roadmap-page .journey-open .package-body{padding:24px 20px 26px}
+  .journey-open .package-body ul{grid-template-columns:1fr}
+}
+@media print{.journey-nav{display:none}}
+@media(prefers-contrast:more){.roadmap-page .journey-horizontal .roadmap-package{border-color:#edf4f9;opacity:1}}

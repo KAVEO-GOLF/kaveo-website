@@ -1,0 +1,38 @@
+/* Shared two-row footer. Original KAVEO colours and logo, no external embeds. */
+.site-footer.section-wrap{padding-top:48px;padding-bottom:max(28px,env(safe-area-inset-bottom))}
+.site-footer .footer-top{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-bottom:28px}
+.site-footer .footer-identity{display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-width:0}
+.site-footer .brand img{width:170px;height:auto}
+.site-footer .footer-identity p{margin:0;font-size:14px;line-height:1.6;color:#a6adab}
+.site-footer .footer-connect{display:flex;align-items:center;gap:40px}
+.site-footer .footer-socials{display:flex;align-items:center;flex-wrap:wrap;gap:24px}
+.site-footer .footer-socials a,.site-footer .social-pending{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-size:15px;line-height:1.5}
+.site-footer a{color:#d6dada;transition:color .2s,border-color .2s}
+.site-footer a:hover{color:#fff}
+.site-footer a:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:4px}
+.site-footer .social-brand-icon{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.site-footer .social-pending,.site-footer .social-status{color:#a6adab}
+.site-footer .social-status{font-size:13px}
+.site-footer .back-to-top{width:48px;height:48px;flex:none;margin:0;order:0}
+.site-footer .back-to-top:focus-visible{border-radius:50%}
+.site-footer .footer-bottom{display:flex;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px 28px;margin-top:20px;font-size:13px;line-height:1.5;color:#a6adab}
+.site-footer .footer-bottom nav{display:flex;flex-wrap:wrap;gap:24px;margin-left:auto}
+.site-footer .footer-bottom nav a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
+.site-footer .footer-motion-slot{min-height:44px;min-width:202px;display:flex;align-items:center;justify-content:flex-end}
+.site-footer .footer-motion-slot>button{position:static;inset:auto;transform:none;z-index:auto;min-height:44px;margin:0;padding:10px 16px;border:1px solid rgba(255,255,255,.24);border-radius:16px;background:transparent;color:#d6dada;font:inherit;font-size:13px;backdrop-filter:none}
+.site-footer .footer-motion-slot>button:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.site-footer .footer-motion-slot>button:focus-visible{outline:2px solid #fff;outline-offset:4px}
+@media(max-width:820px){
+  .site-footer.section-wrap{padding-top:36px;padding-bottom:max(28px,env(safe-area-inset-bottom))}
+  .site-footer .footer-top{flex-direction:column;align-items:stretch;gap:24px;padding-bottom:20px}
+  .site-footer .footer-connect{justify-content:space-between;gap:16px}
+  .site-footer .footer-socials{gap:8px 20px}
+  .site-footer .back-to-top{position:absolute;top:36px;right:0}
+  .site-footer .footer-bottom{align-items:flex-start;gap:12px 20px}
+  .site-footer .footer-bottom nav{order:-1;width:100%;margin-left:0;gap:20px}
+  .site-footer .footer-motion-slot{margin-left:auto}
+}
+@media(max-width:720px),(prefers-reduced-motion:reduce){.site-footer .footer-motion-slot{display:none}}
+@media(prefers-reduced-motion:reduce){.site-footer a{transition:none}}
+@media(forced-colors:active){.site-footer a{color:LinkText}.site-footer .social-pending{color:GrayText}}
+@media print{.site-footer .footer-motion-slot{display:none}}

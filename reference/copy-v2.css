@@ -1,0 +1,44 @@
+/* Text fitting only. Existing scene shells, images and motion transforms are retained. */
+.hero-note { margin-top:18px; max-width:540px; font-size:14px; line-height:1.6; color:var(--secondary) }
+.hero-bottom { justify-content:center }
+.hero-bottom .scroll-cue { min-width:44px; justify-content:center }
+.manifesto-copy { max-width:760px }
+.manifesto-copy p + p { margin-top:24px }
+.manifesto-copy .copy-note { font-size:14px }
+.section-kicker > .index:only-child { display:block; color:var(--secondary); font-size:12px }
+.mood-top > .index:only-child { display:block }
+.current-features { display:grid; gap:16px; margin-top:24px; text-align:left }
+.current-features p { display:grid; grid-template-columns:20px 1fr; gap:4px 8px; line-height:1.5 }
+.current-features p > span { width:auto }
+.current-features strong { font-size:16px; font-weight:500; color:white }
+.current-features small { grid-column:2; font-size:14px; color:var(--secondary) }
+.assembly-copy > .current-summary { font-size:12px; line-height:1.6; margin-top:24px; text-transform:uppercase; letter-spacing:.06em }
+.assembly-caption { max-width:352px; text-align:center; white-space:normal!important; font-size:12px; letter-spacing:0; line-height:1.5 }
+.has-motion.spatial-enabled .assembly-caption { bottom:-52px }
+.features > .section-heading { margin-bottom:24px }
+.plan-intro { font-size:16px; line-height:1.6; color:var(--secondary); margin-bottom:64px }
+.feature-copy--plan h3 { padding-top:24px }
+.feature-copy--plan > .copy-note { font-size:14px; margin-top:12px }
+.feature-copy--plan .feature-tags { margin-top:20px }
+.plan-later { width:100%; margin-top:24px; padding-top:20px; border-top:0 }
+.plan-later h4 { font-size:16px; font-weight:500; line-height:1.5 }
+.plan-later h4 span { color:var(--secondary); white-space:nowrap }
+.feature-copy .plan-later p { font-size:14px; line-height:1.6; margin-top:10px }
+.outlook .founder-signature { font-size:14px; margin-top:24px }
+.signup-form > label:first-child { margin-top:0 }
+.field-optional { color:var(--secondary); font-weight:400 }
+.signup-form .button:disabled { opacity:.5; cursor:not-allowed }
+@media(max-width:720px) {
+  .hero-note { font-size:12px; max-width:300px }
+  .current-features { display:grid; margin-top:32px }
+  .plan-intro { font-size:14px; margin-bottom:40px }
+  .assembly-caption { padding-inline:12px }
+}
+
+/* Open section transitions: no standalone decorative rules or scroll-marker line.
+   Hide the entire marker link so it does not leave an invisible focus target.
+   Glass, form, phone and app-preview outlines remain unchanged. */
+.hero-bottom, .assembly-progress, .fine-line, .mood-window-edge { display:none }
+.section-kicker { border-top:0 }
+.assembly-steps p { border-left:0 }
+.footer-top { border-bottom:0 }

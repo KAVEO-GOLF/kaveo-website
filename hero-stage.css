@@ -1,0 +1,23 @@
+/* Only the approved opening copy. Existing typography, colors and layout stay. */
+.story-hero h1 > .hero-line {
+  display:inline-block;
+  color:inherit;
+}
+.story-hero-copy.has-hero-scroll {
+  opacity:var(--hero-scroll-opacity,1);
+  transform:var(--hero-scroll-transform,none);
+}
+.story-hero-copy.has-hero-scroll.is-hero-cleared { pointer-events:none }
+/* A keyboard-focused CTA must never be invisible or removed from reading order. */
+.story-hero-copy.has-hero-scroll:focus-within {
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+}
+@media(max-width:720px),(prefers-reduced-motion:reduce) {
+  .story-hero-copy.has-hero-scroll {
+    opacity:1;
+    transform:none;
+    pointer-events:auto;
+  }
+}

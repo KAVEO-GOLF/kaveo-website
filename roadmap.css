@@ -1,0 +1,113 @@
+/* KAVEO's existing glass and type, with a quiet, readable planning surface. */
+.roadmap-page{--roadmap-ink:#f5f6f6;--roadmap-secondary:#bec2c3;--roadmap-edge:rgba(255,255,255,.18);color:var(--roadmap-ink);isolation:isolate}
+.roadmap-page [hidden]{display:none!important}
+.roadmap-landscape{position:absolute;inset:0 0 auto;height:min(1200px,125svh);z-index:-1;overflow:hidden;pointer-events:none}
+.roadmap-landscape img{width:100%;height:100%;object-fit:cover;object-position:64% 40%}
+.roadmap-landscape:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,13,13,.84),rgba(13,13,13,.48)),linear-gradient(0deg,#0d0d0d,rgba(13,13,13,.18) 70%)}
+.roadmap-main{position:relative}
+.roadmap-main:focus,.roadmap-intro:focus,.roadmap-journey:focus,.roadmap-catalog:focus{outline:none}
+.roadmap-intro{padding:156px 0 76px}
+.roadmap-breadcrumb{display:flex;align-items:center;gap:16px;font-size:14px;color:var(--roadmap-secondary);margin-bottom:36px}
+.roadmap-breadcrumb a{display:flex;align-items:center;min-height:44px}
+.roadmap-breadcrumb a:hover{color:white}
+.roadmap-intro h1{font-size:clamp(56px,7.2vw,104px);line-height:1.03;max-width:950px;font-weight:400;letter-spacing:-.065em}
+.roadmap-intro-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:48px;margin-top:32px}
+.roadmap-intro-bottom>p:first-child{font-size:18px;line-height:1.65;max-width:620px;color:#d4d7d7}
+.roadmap-version{font-size:14px;color:#aeb4b2;flex:none}
+.roadmap-version time{display:block;font-size:16px;color:#edf0ed;margin-top:4px}
+.roadmap-jumps{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.roadmap-outline{border-color:rgba(255,255,255,.25);background:rgba(23,26,25,.65)}
+.roadmap-outline:hover{background:rgba(51,55,53,.85)}
+.roadmap-journey,.roadmap-catalog{scroll-margin-top:120px}
+.roadmap-section-head{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-bottom:36px}
+.roadmap-section-head h2{font-size:clamp(36px,4vw,56px);font-weight:400}
+.roadmap-section-head p{font-size:16px;line-height:1.75;color:var(--roadmap-secondary);max-width:620px}
+.roadmap-packages{position:relative;padding-left:64px;display:grid;gap:14px}
+.roadmap-packages:before{content:"";position:absolute;left:21px;top:35px;bottom:62px;width:1px;background:rgba(255,255,255,.2)}
+.roadmap-package{position:relative;border:1px solid var(--roadmap-edge);border-radius:24px;background:linear-gradient(115deg,rgba(67,71,70,.47),rgba(24,26,26,.78));box-shadow:inset 0 1px 0 rgba(255,255,255,.04);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.roadmap-package>summary{display:flex;align-items:center;gap:24px;padding:28px 34px;list-style:none;cursor:pointer;min-height:128px;border-radius:24px}
+.roadmap-package>summary::-webkit-details-marker,.roadmap-feature>summary::-webkit-details-marker{display:none}
+.roadmap-package>summary:focus-visible,.roadmap-feature>summary:focus-visible{outline:2px solid #fff;outline-offset:5px}
+.package-index{position:absolute;left:-64px;top:36px;width:42px;height:42px;display:grid;place-items:center;font-size:15px;color:#d7ded9;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:#191c1a}
+.package-title{display:grid;flex:1;gap:10px;min-width:0}
+.package-name{font-size:14px;color:#c5cbca}
+.package-title strong{font-size:clamp(24px,2.7vw,38px);line-height:1.2;letter-spacing:-.045em;font-weight:400}
+.package-when{font-size:14px;color:#bdc5c1}
+.disclosure-mark{display:grid;place-items:center;width:32px;height:32px;font-size:26px;font-weight:400;color:#c9cfcc;transition:transform .35s var(--ease);flex:none}
+details[open]>.disclosure-mark,details[open]>summary>.disclosure-mark{transform:rotate(45deg)}
+.roadmap-package[open]{border-color:rgba(255,255,255,.34);background:linear-gradient(125deg,rgba(74,79,77,.53),rgba(24,26,26,.86))}
+.roadmap-package[open]>.package-body{border-top:1px solid rgba(255,255,255,.12)}
+.package-body{padding:28px 34px 32px}
+.package-intro{font-size:18px;line-height:1.65;max-width:770px;color:#e0e4e2}
+.package-body ul{display:grid;grid-template-columns:1fr 1fr;column-gap:56px;row-gap:20px;list-style:none;padding:0;margin:28px 0}
+.package-body li{position:relative;padding-left:20px;font-size:16px;line-height:1.7;color:#cbd1cd}
+.package-body li:before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%;background:#a0aaa4}
+.package-boundary{font-size:14px;line-height:1.7;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);color:#b7bfba}
+.package-branch{margin-left:36px;border-style:dashed}
+.package-branch .package-index{left:-100px}
+.package-branch:before{content:"";position:absolute;left:-58px;top:57px;width:58px;border-top:1px dashed rgba(255,255,255,.28)}
+.roadmap-journey-note{font-size:14px;line-height:1.75;color:#b5bdb8;max-width:830px;margin:24px 0 0 64px}
+.roadmap-catalog{margin-top:120px;padding-top:64px;border-top:1px solid var(--line)}
+.roadmap-catalog-layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:56px;align-items:start}
+.roadmap-area-nav{position:sticky;top:128px;display:grid;gap:8px}
+.roadmap-area-nav a{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:60px;padding:14px 18px;border:1px solid transparent;border-radius:16px;color:#bfc5c2;font-size:16px;line-height:1.5;transition:background .25s,border-color .25s,color .25s}
+.roadmap-area-nav a>span:last-child{opacity:.45}
+.roadmap-area-nav a:hover{background:rgba(255,255,255,.035);color:#fff}
+.roadmap-area-nav a[aria-current]{border-color:rgba(255,255,255,.25);background:linear-gradient(125deg,rgba(84,90,87,.45),rgba(35,38,37,.72));color:white;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.roadmap-area{scroll-margin-top:124px;min-width:0}
+.roadmap-area+.roadmap-area{margin-top:64px}
+.roadmap-enhanced .roadmap-area+.roadmap-area{margin-top:0}
+.area-heading{padding:0 0 28px}
+.area-heading h3{font-size:clamp(26px,3vw,38px);line-height:1.2;font-weight:400}
+.area-heading h3:focus{outline:none}
+.area-heading p{font-size:16px;line-height:1.7;color:#bec5c1;margin-top:12px;max-width:600px}
+.roadmap-feature-list{border-top:1px solid var(--roadmap-edge)}
+.roadmap-feature{border-bottom:1px solid var(--roadmap-edge);scroll-margin-top:120px}
+.roadmap-feature>summary{display:flex;gap:18px;align-items:center;list-style:none;padding:26px 0;cursor:pointer}
+.feature-title{flex:1;min-width:0;display:grid;gap:9px}
+.feature-title strong{font-size:19px;line-height:1.45;letter-spacing:-.025em;font-weight:500}
+.feature-title>span{font-size:15px;line-height:1.6;color:#b5bcb8}
+.feature-kind{font-size:13px;line-height:1.5;color:#c0c7c2;white-space:nowrap}
+.feature-kind.is-proposal{color:#d1c5ac}
+.feature-body{padding:0 50px 28px 0;color:#ccd2cd}
+.feature-body ul{margin:0;padding-left:21px;display:grid;gap:10px;font-size:16px;line-height:1.75}
+.feature-body li::marker{color:#809089}
+.feature-note{font-size:14px;line-height:1.7;color:#b6c0b8;border-left:2px solid #64776a;padding-left:16px;margin-top:24px}
+.roadmap-outro{display:flex;align-items:center;justify-content:space-between;gap:48px;margin-top:100px;padding:52px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.roadmap-outro h2{font-size:clamp(30px,3.5vw,46px);font-weight:400}
+.roadmap-outro p{font-size:16px;color:#bec6bf;max-width:580px;margin-top:20px}
+.roadmap-outro p.roadmap-outro-note{font-size:13px;margin-top:10px;color:#aeb6b0}
+.roadmap-outro>.button{flex:none}
+@media(prefers-reduced-motion:no-preference){
+  .roadmap-intro h1{animation:roadmap-arrive 1.6s cubic-bezier(.25,.1,.25,1) both}
+  .roadmap-package[open]>.package-body,.roadmap-feature[open]>.feature-body,.roadmap-enhanced .roadmap-area:not([hidden])>.area-heading{animation:roadmap-arrive 1s cubic-bezier(.25,.1,.25,1) both}
+  @keyframes roadmap-arrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+}
+@media(max-width:1000px){
+  .roadmap-catalog-layout{grid-template-columns:240px minmax(0,1fr);gap:32px}
+  .roadmap-section-head{gap:32px}.package-body ul{column-gap:32px}
+  .roadmap-area-nav a{padding:13px 14px;font-size:15px}
+  .roadmap-feature>summary{flex-wrap:wrap;gap:10px 16px}.feature-title{flex-basis:calc(100% - 48px)}
+  .feature-kind{order:3;flex-basis:100%}.feature-body{padding-right:0}
+}
+@media(max-width:760px){
+  .roadmap-intro{padding:120px 0 64px}.roadmap-breadcrumb{margin-bottom:28px}
+  .roadmap-intro h1{font-size:clamp(52px,11vw,78px)}
+  .roadmap-intro-bottom{display:block;margin-top:28px}.roadmap-intro-bottom>p:first-child{font-size:17px}
+  .roadmap-version{margin-top:24px}.roadmap-version time{display:inline;margin-left:12px;font-size:14px}
+  .roadmap-jumps .button{font-size:14px;gap:20px}
+  .roadmap-section-head{grid-template-columns:1fr;gap:20px}.roadmap-section-head h2{font-size:36px}
+  .roadmap-packages{padding-left:38px;gap:12px}.roadmap-packages:before{left:13px}
+  .roadmap-package{border-radius:20px}.roadmap-package>summary{padding:22px 20px;gap:10px;min-height:116px}
+  .package-index{left:-39px;width:28px;height:28px;top:28px;font-size:13px}
+  .package-title strong{font-size:24px}.package-name,.package-when{font-size:13px}
+  .package-body{padding:22px 20px}.package-intro{font-size:16px}.package-body ul{grid-template-columns:1fr;row-gap:16px}
+  .package-branch{margin-left:12px}.package-branch .package-index{left:-51px}.package-branch:before{width:24px;left:-24px;top:43px}
+  .roadmap-journey-note{margin-left:38px}.roadmap-catalog{margin-top:72px;padding-top:48px}
+  .roadmap-catalog-layout{grid-template-columns:1fr;gap:32px}
+  .roadmap-area-nav{position:static;grid-template-columns:1fr 1fr;gap:8px}
+  .roadmap-area-nav a{font-size:14px;min-height:64px}.roadmap-area-nav a>span:last-child{display:none}
+  .roadmap-feature>summary{padding-block:24px}.feature-title strong{font-size:18px}
+  .roadmap-outro{flex-direction:column;align-items:flex-start;margin-top:64px;padding-block:40px;gap:28px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}.roadmap-page,.roadmap-page *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}

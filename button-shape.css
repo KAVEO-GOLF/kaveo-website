@@ -1,0 +1,7 @@
+/* KAVEO's rounded rectangle for content and the explicitly approved header CTA.
+   Preserve colors, sizes, states, menu capsule and footer styling. */
+#inhalt .button,
+#inhalt button,
+.site-header .header-actions > .button {
+  border-radius:16px;
+}

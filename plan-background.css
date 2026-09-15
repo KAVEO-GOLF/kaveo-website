@@ -1,0 +1,113 @@
+/* Extend the same scene through the final plan card. Chooser/footer excluded. */
+.story-world {
+  position:relative;
+  isolation:isolate;
+  background:#0d0d0d;
+}
+.story-opening { background:transparent; isolation:auto }
+.story-world > .story-scene-backdrop::after {
+  background:
+    linear-gradient(90deg,rgba(13,13,13,.77),rgba(13,13,13,.55) 37%,rgba(13,13,13,.12) 77%),
+    linear-gradient(180deg,rgba(13,13,13,.12),rgba(13,13,13,.14) 14%,rgba(13,13,13,.28) 22%,rgba(13,13,13,.42) 31%,rgba(13,13,13,.60) 42%,rgba(13,13,13,.62) 56%,rgba(13,13,13,.64) 80%,rgba(13,13,13,.76) 94%,#0d0d0d 100%);
+}
+.story-plan { position:relative }
+.story-plan .features { padding-top:56px; padding-bottom:144px }
+.story-plan .section-heading .text-secondary,
+.story-plan .plan-intro { color:#c2c4bf }
+.story-plan .feature-card {
+  position:relative;
+  top:auto;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.16);
+  transform:none;
+  filter:none;
+  box-shadow:none;
+}
+.story-plan .feature-surface {
+  background:rgba(21,24,22,.64);
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  border-radius:inherit;
+  transform:none;
+}
+.story-plan .feature-photo { display:none }
+.story-plan .feature-art {
+  align-items:center;
+  justify-content:center;
+  padding:48px;
+  background:transparent;
+}
+.story-plan .feature-copy > .index,
+.story-plan .feature-copy p,
+.story-plan .preview-label,
+.story-plan .plan-later h4 span { color:#c2c4bf }
+.story-plan .feature-copy > .index { font-size:12px }
+.story-plan .preview-label { font-size:11px; letter-spacing:.06em }
+.story-plan .art-footnote { font-size:12px; color:#c2c4bf }
+.story-plan .round-preview,
+.story-plan .growth-preview,
+.story-plan .community-tiles,
+.story-plan .community-tile { transform:none }
+.story-plan .community-tiles.feature-object { width:min(100%,320px); gap:16px }
+.story-plan .community-tile:nth-child(3) { grid-column:1 / -1; width:calc((100% - 16px) / 2); justify-self:center }
+.story-plan .preview-glass { background:rgba(21,21,21,.65) }
+.story-plan .feature-object { max-width:100% }
+.story-plan .art-rounds .feature-object { width:min(100%,320px) }
+.story-plan .round-preview { width:100% }
+.story-plan .growth-focus { display:flex; flex-direction:column; align-items:center; gap:8px }
+.story-plan .growth-focus strong { text-align:center; line-height:1.3 }
+.story-plan .growth-focus > span { display:block; font-size:12px; line-height:1.5; color:#c2c4bf; text-align:center }
+.story-plan .feature-stack { gap:32px }
+@media(max-width:1000px) and (min-width:721px) {
+  .story-plan .feature-art { padding:28px }
+  .story-plan .round-preview { width:min(100%,260px) }
+  .story-plan .community-tiles.feature-object { gap:12px }
+  .story-plan .community-tile:nth-child(3) { width:calc((100% - 12px) / 2) }
+}
+/* Same source, normal mobile reading flow. No pinned cards or background. */
+@media(max-width:720px) {
+  .story-plan { isolation:isolate }
+  .story-plan::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:
+      linear-gradient(180deg,#0d0d0d,rgba(13,13,13,.7) 12%,rgba(13,13,13,.55) 46%,rgba(13,13,13,.65) 86%,#0d0d0d),
+      url('media/inselgruen-logo-poster-v04.webp') 65% center / cover no-repeat;
+  }
+  .story-plan .features { padding-top:40px; padding-bottom:88px }
+  .story-plan .feature-stack { gap:24px }
+  .story-plan .feature-surface { background:rgba(21,24,22,.62); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px) }
+  .story-plan .feature-copy { padding:28px }
+  .story-plan .feature-copy > .index { font-size:11px; letter-spacing:.08em }
+  .story-plan .feature-copy p { font-size:15px; line-height:1.75 }
+  .story-plan .feature-art { min-height:340px; padding:28px 24px 44px }
+  .story-plan .art-growth { min-height:400px }
+  .story-plan .community-tiles.feature-object { width:min(100%,264px); gap:12px }
+  .story-plan .community-tile:nth-child(3) { width:calc((100% - 12px) / 2) }
+  .story-plan .feature-tags span { font-size:11px }
+  .story-plan .preview-label { font-size:10px }
+}
+@media(prefers-reduced-motion:reduce) and (min-width:721px) {
+  .story-world > .story-scene-backdrop::after {
+    background:linear-gradient(90deg,rgba(13,13,13,.77),rgba(13,13,13,.4) 50%,rgba(13,13,13,.1)),linear-gradient(180deg,rgba(13,13,13,.12),#0d0d0d 1040px);
+  }
+  .story-plan { isolation:isolate }
+  .story-plan::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:linear-gradient(180deg,#0d0d0d,rgba(13,13,13,.72) 15%,rgba(13,13,13,.7) 80%,#0d0d0d),url('media/inselgruen-logo-poster-v04.webp') 65% center / cover no-repeat;
+  }
+}
+@media(prefers-contrast:more) {
+  .story-plan .feature-surface { background:rgba(21,24,22,.95) }
+  .story-plan .feature-copy p,.story-plan .feature-copy > .index,.story-plan .preview-label,.story-plan .art-footnote { color:#fff }
+}
+@supports not (backdrop-filter:blur(18px)) {
+  .story-plan .feature-surface { background:rgba(21,24,22,.92) }
+}

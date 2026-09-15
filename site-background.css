@@ -1,0 +1,65 @@
+/* Shared landscape contract. Load after page styles on every current route.
+   The homepage supplies the media, crop and neutral left-to-right shading.
+   Shade a viewport, never a document-height rail: page length must not tint it. */
+:root {
+  --kaveo-landscape-ink:#0d0d0d;
+  --kaveo-landscape-position:64% 58%;
+  --kaveo-landscape-shade:linear-gradient(90deg,rgba(13,13,13,.77),rgba(13,13,13,.55) 37%,rgba(13,13,13,.12) 77%),linear-gradient(180deg,rgba(13,13,13,.12),rgba(13,13,13,.14));
+}
+
+/* Keep the original video controllers, still-image fallbacks and ball camera. */
+.story-scene-still,.story-scene-video,
+.roadmap-landscape img,.roadmap-landscape .roadmap-background-video {
+  object-fit:cover;object-position:var(--kaveo-landscape-position);
+  filter:none;mix-blend-mode:normal;
+}
+.story-world>.story-scene-backdrop::after,
+.story-world.has-finale>.story-scene-backdrop::after {content:none}
+.story-scene-media::after,
+.roadmap-landscape::after,
+.roadmap-landscape-frame::after,
+.functions-landscape-frame::after,
+.about-landscape::after,.editorial-landscape::after {
+  content:"";position:absolute;inset:0;height:auto;
+  background:var(--kaveo-landscape-shade);
+  opacity:1;pointer-events:none;
+}
+/* Enhanced subpages wrap their poster/video. Only that wrapper gets the shade. */
+.roadmap-page .roadmap-landscape.has-journey-landscape::after,
+.functions-page .roadmap-landscape.has-functions-landscape::after {content:none}
+.roadmap-page .roadmap-landscape,
+.roadmap-page .roadmap-landscape.has-journey-landscape,
+.functions-page .roadmap-landscape.has-functions-landscape {
+  position:fixed;inset:0;height:100svh;overflow:hidden;
+}
+.roadmap-landscape-frame,.functions-landscape-frame {
+  position:relative;top:0;width:100%;height:100%;overflow:hidden;
+}
+
+/* Continue one background into the shared closing; no second crop or tint.
+   The independent ball canvas and text entrance/exit animations remain intact. */
+.story-world .finale-scene-shade {display:none}
+.site-closing,
+.about-editorial .site-closing,
+.functions-page.functions-continuous-scene .site-closing {background:transparent}
+.site-closing .footer-scene-image,.site-closing .footer-scene-shade,
+.site-closing .roadmap-background-video.is-footer-video,
+.signup-finale .signup-image,.signup-finale .signup-shade {display:none}
+.site-footer {
+  position:relative;background:var(--kaveo-landscape-ink);
+  /* The footer is width-limited; extend only its paint, not the scroll width. */
+  box-shadow:0 0 0 100vmax var(--kaveo-landscape-ink);
+  clip-path:inset(0 -100vmax);
+}
+
+/* Mobile and reduced-motion still use the approved poster, not another look.
+   Their video/3D suppression is still owned by the original media controllers. */
+@media(max-width:720px),(prefers-reduced-motion:reduce) {
+  .story-world>.story-scene-backdrop {display:block}
+  .story-world .story-scene-media {position:fixed;inset:0;height:100svh}
+  .story-world .story-hero::before,.story-world .story-founder::before,
+  .story-world .story-product::before,.story-world .story-plan::before {content:none}
+}
+@media print {
+  .story-world>.story-scene-backdrop,.roadmap-landscape {display:none!important}
+}

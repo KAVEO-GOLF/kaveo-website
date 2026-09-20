@@ -133,11 +133,21 @@ function measureBoxes(){
 }
 function measure(){width=space.clientWidth||1;height=space.clientHeight||1;measureBoxes();wires.setAttribute('viewBox',`0 0 ${width} ${height}`);draw();}
 
+// Was unter dem Netz steht, solange kein Bereich geoeffnet ist. Zeichengleich
+// auch in index.html -- dort steht es beim ersten Laden, hier wird es
+// zurueckgeschrieben, sobald man aus einem Bereich herausgeht. Weicht das eine
+// vom anderen ab, springt der Text beim Zurueckgehen um.
+const GRUNDZUSTAND = {
+  label: 'SECHS BEREICHE',
+  title: 'Ein Golfleben besteht nicht aus sechs Apps.',
+  copy: 'Lernen, planen, spielen, trainieren, sich austauschen — das gehört zusammen und liegt heute trotzdem in getrennten Werkzeugen. Öffne einen Bereich, um zu sehen, was darin geplant ist.',
+};
+
 function detail(group=null,index=null){
   const item=index!==null?group?.features[index]:null;
-  $('selection-label').textContent=item?`${group.label.toUpperCase()} · GEPLANT`:group?`${group.audience??'Aus der Produktvision'} · Geplant`:'SECHS BEREICHE. EIN ZUSAMMENHANG.';
-  $('selection-title').textContent=item?.title??group?.title??'Wo möchtest du anfangen?';
-  $('selection-copy').textContent=item?.description??group?.description??'';
+  $('selection-label').textContent=item?`${group.label.toUpperCase()} · GEPLANT`:group?`${group.audience??'Aus der Produktvision'} · Geplant`:GRUNDZUSTAND.label;
+  $('selection-title').textContent=item?.title??group?.title??GRUNDZUSTAND.title;
+  $('selection-copy').textContent=item?.description??group?.description??GRUNDZUSTAND.copy;
   if(motionAllowed())$('selection').animate([{opacity:.35,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{duration:420,easing:'cubic-bezier(.22,1,.36,1)'});
 }
 

@@ -27,7 +27,7 @@
   max-width:790px;font-size:1rem;line-height:1.7;color:#d0d5d6;
 }
 .functions-page .roadmap-catalog-layout {
-  grid-template-columns:300px minmax(0,1fr);gap:36px;
+  display:block;max-width:760px;
 }
 .functions-page .roadmap-area-nav {top:128px;gap:10px;perspective:1100px}
 .functions-page.functions-scroll-ready .roadmap-main {z-index:1}

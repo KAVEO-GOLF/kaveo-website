@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0d0d0d">
-  <meta name="description" content="Die geplanten Funktionen von KAVEO GOLF: sechs Produktbereiche mit ihren Ideen und Details.">
+  <meta name="description" content="Die Funktionen von KAVEO GOLF, die heute schon laufen: Runde spielen, Regelhilfe, Wetter und Freunde.">
   <title>Funktionen — KAVEO GOLF</title>
   <link rel="icon" href="assets/favicon.png">
   <link rel="preload" href="reference/assets/fonts/Manrope_400Regular.ttf" as="font" type="font/ttf" crossorigin>
@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="footer-socials.css">
   <script type="module" src="footer-controls.mjs"></script>
   <script type="module" src="shared-footer.mjs"></script>
+  <script type="module" src="warteliste-formular.mjs"></script>
   <script type="module" src="roadmap.mjs"></script>
   <link rel="stylesheet" href="roadmap-video.css">
   <link rel="stylesheet" href="functions-ci.css">
@@ -64,197 +65,28 @@
     <section class="functions-intro" id="start" aria-labelledby="functions-title" tabindex="-1">
       <nav class="roadmap-breadcrumb" aria-label="Seitenpfad"><a href="/">Startseite</a><span aria-hidden="true">/</span><span aria-current="page">Funktionen</span></nav>
       <div class="functions-title-row"><h1 id="functions-title">Funktionen im Detail.</h1><a class="button roadmap-outline" href="roadmap.html#entwicklungsweg">Zur Roadmap <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a></div>
-      <p class="functions-version">Konzeptstand: <time datetime="2026-09">September 2026</time></p>
+      <p class="functions-version">Stand: <time datetime="2026-09">September 2026</time> — was heute in der App läuft.</p>
     </section>
 
     <section class="roadmap-catalog" id="funktionen" aria-labelledby="catalog-title" tabindex="-1">
-      <div class="roadmap-section-head"><h2 id="catalog-title">Die Ideen dahinter.</h2><p>Sechs Bereiche, viele zusammengehörige Funktionen. Öffne ein Thema, um mehr zu erfahren. Alles hier ist geplant — gebaut ist davon noch nichts.</p></div>
+      <div class="roadmap-section-head"><h2 id="catalog-title">Was schon läuft.</h2><p>Diese Funktionen sind heute in der App live. Öffne eine Kachel, um mehr zu erfahren. Was noch in Arbeit ist, steht auf der Roadmap.</p></div>
       <div class="roadmap-catalog-layout">
-        <nav class="roadmap-area-nav" aria-label="Produktbereiche"><a href="#bereich-entdecken" data-area-link="entdecken"><span>Entdecken &amp; Lernen</span><span aria-hidden="true">↗</span></a><a href="#bereich-planen" data-area-link="planen"><span>Planen &amp; Angebote</span><span aria-hidden="true">↗</span></a><a href="#bereich-spielen" data-area-link="spielen"><span>Spielen &amp; Erfassen</span><span aria-hidden="true">↗</span></a><a href="#bereich-trainieren" data-area-link="trainieren"><span>Trainieren &amp; Verbessern</span><span aria-hidden="true">↗</span></a><a href="#bereich-community" data-area-link="community"><span>Community &amp; Erlebnisse</span><span aria-hidden="true">↗</span></a><a href="#bereich-partner" data-area-link="partner"><span>Partner &amp; Betrieb</span><span aria-hidden="true">↗</span></a></nav>
-        <div class="roadmap-area-panels"><section class="roadmap-area" id="bereich-entdecken" data-area-panel="entdecken" aria-labelledby="titel-entdecken"><div class="area-heading"><h3 id="titel-entdecken" tabindex="-1">Entdecken und Lernen</h3><p>Vom ersten Interesse bis zu einer gut vorbereiteten ersten Runde.</p></div><div class="roadmap-feature-list"><details class="roadmap-feature" id="funktion-golf-verstehen">
-  <summary><span class="feature-title"><strong>Golf verständlich kennenlernen</strong><span>Spiel, Platz und Ausrüstung ohne Vorwissen verstehen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Texte und Videos zum Spielziel und zum Aufbau einer Runde.</li><li>Begriffe direkt erklären und passende nächste Schritte anbieten.</li></ul></div>
-</details>
-<details class="roadmap-feature" id="funktion-regeln-einstieg">
-  <summary><span class="feature-title"><strong>Regeln, Etikette und Sicherheit</strong><span>Typische Situationen auf dem Platz verständlich einordnen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Ein Nachschlagewerk mit kurzen Erklärungen und Beispielen.</li><li>Sicherheit, Rücksichtnahme und Verhalten auf der Anlage.</li><li>Inhalte für Kursvorbereitung und die ersten eigenen Besuche.</li></ul></div>
-</details>
-<details class="roadmap-feature" id="funktion-lernweg">
-  <summary><span class="feature-title"><strong>Dein persönlicher Lernweg</strong><span>Lernen dort fortsetzen, wo du zuletzt aufgehört hast.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Golfstart, erste Übungen und Lernfortschritt zusammenführen.</li><li>Passende Inhalte zum Erfahrungsstand finden und wieder aufgreifen.</li><li>Vorbereitung auf Platzreife und selbstständiges Spielen.</li></ul></div>
-</details>
-<details class="roadmap-feature" id="funktion-erste-runde">
-  <summary><span class="feature-title"><strong>Die erste Runde vorbereiten</strong><span>Mit mehr Orientierung auf den Platz gehen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Vorbereitungshilfen und eine Checkliste für den ersten Platzbesuch.</li><li>Übungsmöglichkeiten und passende Trainingspartner entdecken.</li><li>Den Weg vom Schnuppern über den Kurs bis zur eigenen Runde erklären.</li></ul><p class="feature-note">Kurs- und Zugangsvoraussetzungen legt die jeweilige Anlage fest.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-kosten-ausruestung">
-  <summary><span class="feature-title"><strong>Kosten und erste Ausrüstung</strong><span>Einordnen, was du brauchst und was zusätzlich kosten kann.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Kurs, Training, Mitgliedschaft, Greenfee und Ausrüstung getrennt betrachten.</li><li>Einmalige und laufende Ausgaben verständlich machen.</li><li>Leihen, Gebrauchtkauf und Grundausstattung erklären.</li></ul><p class="feature-note">Fehlende Preise bleiben offen; eine Orientierung ersetzt kein individuelles Fitting.</p></div>
-</details></div></section>
-<section class="roadmap-area" id="bereich-planen" data-area-panel="planen" aria-labelledby="titel-planen"><div class="area-heading"><h3 id="titel-planen" tabindex="-1">Planen und Angebote</h3><p>Informationen, Termine und Angebote für deinen nächsten Golfbesuch.</p></div><div class="roadmap-feature-list"><details class="roadmap-feature" id="funktion-anlagen">
-  <summary><span class="feature-title"><strong>Anlagen und Clubseiten</strong><span>Passende Golfmöglichkeiten in deiner Umgebung finden.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Golfplätze, Übungsanlagen und Indoorangebote mit Ort und Anfahrt.</li><li>Bilder, Kontakt, Bewertungen und Informationen zur Anlage.</li><li>Wetter und aktueller Platzstatus als Hilfe für die Besuchsplanung.</li><li>Angaben und Filter zu stufenlosen Zugängen, Wegen und Hilfsangeboten.</li></ul><p class="feature-note">Aktualität und Quelle der Angaben müssen erkennbar bleiben.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-besuch-buchen">
-  <summary><span class="feature-title"><strong>Startzeiten und Leistungen vor Ort</strong><span>Den geplanten Besuch mit seinen Bestandteilen überblicken.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Startzeiten und Greenfee-Angebote finden.</li><li>Carts, Trolleys und Leihausrüstung reservieren.</li><li>Passende Informationen zu Gastronomie und Angeboten vor Ort.</li></ul><p class="feature-note">Anfrage, bestätigte Buchung und tatsächliche Nutzung sind unterschiedliche Zustände. Zahlungswege bleiben je Anbieter zu klären.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-kurse">
-  <summary><span class="feature-title"><strong>Kurse, Trainer und Indoorzeiten</strong><span>Vom passenden Angebot zum nachvollziehbaren Termin.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Schnupper- und Platzreifekurse vergleichen.</li><li>Einzel- und Gruppentraining sowie Indoorboxen finden.</li><li>Leistung, Preis, Voraussetzungen, Termin und Buchungsstatus zusammen anzeigen.</li></ul></div>
-</details>
-<details class="roadmap-feature" id="funktion-kalender">
-  <summary><span class="feature-title"><strong>Kalender und Favoriten</strong><span>Den nächsten Golfbesuch leichter wieder aufgreifen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Anlagen, Angebote und Inhalte merken.</li><li>Runden, Kurse und Training im persönlichen Kalender verbinden.</li><li>Hinweise gezielt steuern, statt unnötig benachrichtigt zu werden.</li><li>Wartelisten mit ihrem tatsächlichen Teilnahme- oder Buchungsstand unterscheiden.</li></ul><p class="feature-note">Ein gemerktes Angebot reserviert noch keinen Platz.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-mitgliedschaft">
-  <summary><span class="feature-title"><strong>Mitgliedschaften und digitale Karten</strong><span>Leistungen vergleichen und den nächsten Schritt mit dem Club klären.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Kosten, Laufzeit und Spielrechte verschiedener Mitgliedschaften vergleichen.</li><li>Eine Mitgliedschaft beim ausgewählten Club anfragen oder beantragen.</li><li>Digitale Mitglieds- und Vorteilskarten mit Herausgeber und Gültigkeit verwalten.</li></ul><p class="feature-note">Ein Antrag ist keine Aufnahmebestätigung. Eine persönliche Karte ist kein zugesagter offizieller DGV-Ausweis.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-equipment">
-  <summary><span class="feature-title"><strong>Ausrüstung und Service</strong><span>Produkte und passende Dienstleistungen vergleichen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Händlerpreise und Angebote für konkrete Produktvarianten vergleichen.</li><li>Gebrauchte Ausrüstung entdecken und eigene private Angebote inserieren.</li><li>Schlägertests, Fittings und Reparaturangebote finden.</li></ul><p class="feature-note">Für einen Händlerkauf geht es zum ausgewählten Anbieter. KAVEO verkauft selbst keine Schläger; Zahlungs- und Versandwege privater Angebote bleiben offen.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-reisen">
-  <summary><span class="feature-title"><strong>Golfreisen und Hotels</strong><span>Unterkunft und Golfprogramm im Zusammenhang planen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Reise- und Hotelangebote entdecken und vergleichen.</li><li>Golfprogramm, Zeitraum und Mitreisende berücksichtigen.</li><li>Passende Angebote im persönlichen Reiseplan wiederfinden.</li></ul><p class="feature-note">Buchung, Bezahlung, Änderungen, Stornierung und Erstattung erfolgen beim Reiseanbieter oder Hotel.</p></div>
-</details></div></section>
-<section class="roadmap-area" id="bereich-spielen" data-area-panel="spielen" aria-labelledby="titel-spielen"><div class="area-heading"><h3 id="titel-spielen" tabindex="-1">Spielen und Erfassen</h3><p>Von der gemeinsamen Rundenvorbereitung bis zu einem nachvollziehbaren Rückblick.</p></div><div class="roadmap-feature-list"><details class="roadmap-feature" id="funktion-runde-planen">
-  <summary><span class="feature-title"><strong>Runde und Mitspieler vorbereiten</strong><span>Vor dem Abschlag klären, wer wie mitspielt.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Platz, Strecke, Abschläge und Spielmodus auswählen.</li><li>Freunde einladen und Gäste ohne eigenes Konto zur Scorekarte hinzufügen.</li><li>Einzel-, Gegeneinander- und Teamformate verständlich unterscheiden.</li></ul><p class="feature-note">Weitere Spielmodi sind dem späteren Spieler-Ausbau zugeordnet; nicht alle Varianten gehören ins Startpaket.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-score">
-  <summary><span class="feature-title"><strong>Manuelle Scorekarte</strong><span>Ergebnisse schnell festhalten und bewusst abschließen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Scores pro Loch, Spieler oder Team eingeben.</li><li>Fehler berichtigen und unvollständige Werte als offen kennzeichnen.</li><li>Die Runde prüfen, abschließen und die Scorekarte gezielt teilen.</li></ul><p class="feature-note">Persönliche Scores sind nicht automatisch offiziell anerkannte Ergebnisse.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-rundenarchiv">
-  <summary><span class="feature-title"><strong>Rundenarchiv, Statistik und Ziele</strong><span>Aus vergangenen Runden etwas für die nächste mitnehmen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Gespeicherte Runden wiederfinden und vergleichen.</li><li>Einfache und später detailliertere Statistiken aus vorhandenen Daten.</li><li>Persönliche Ziele und den eigenen Handicap-Verlauf betrachten.</li></ul><p class="feature-note">Fehlende Daten werden nicht ergänzt oder als Null gewertet. Der persönliche Handicap-Verlauf ersetzt keine Verbandsbestätigung.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-gps">
-  <summary><span class="feature-title"><strong>GPS und Entfernungen</strong><span>Die aktuelle Spielbahn besser überblicken.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Kartenansicht mit Standort und Genauigkeit.</li><li>Distanzen zu Grünbereichen und verfügbaren Hindernissen.</li><li>Eigene Zielpunkte wählen und Lochzuordnungen korrigieren.</li></ul><p class="feature-note">Platzdaten und Ortung müssen verlässlich sein. Grünmitte und tatsächliche Fahnenposition sind nicht dasselbe.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-platznotizen">
-  <summary><span class="feature-title"><strong>Persönliche Platznotizen</strong><span>Erfahrungen zu einem Platz für spätere Besuche festhalten.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Eigene Hinweise zur Anlage oder zu einzelnen Bahnen speichern.</li><li>Notizen bei der Vorbereitung und auf dem Platz wiederfinden.</li></ul><p class="feature-note">Eine weitergehende taktische Kartenplanung ist ein ergänzender Vorschlag.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-golfbag">
-  <summary><span class="feature-title"><strong>Digitales Golfbag und Schlägerhilfe</strong><span>Deine Ausrüstung und persönlichen Längen einordnen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Eigene Schläger und Schlaglängen hinterlegen.</li><li>Zielentfernung mit verfügbaren Wetter- und Windangaben verbinden.</li><li>Empfehlungen mit ihrer Datengrundlage nachvollziehen.</li></ul><p class="feature-note">Die Schlägerempfehlung ist ein später zu prüfendes Konzeptziel, keine garantierte Flugweite.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-schlagerkennung">
-  <summary><span class="feature-title"><strong>Handy, Uhr und automatische Erfassung</strong><span>Schläge unterstützen lassen, ohne die Kontrolle abzugeben.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Unterstützte Geräte für Bewegung, Standort und Zeit einbeziehen.</li><li>Vermutete Schläge bestätigen, ergänzen oder verwerfen.</li><li>Manuelle Erfassung als Korrekturweg erhalten.</li></ul><p class="feature-note">Geräteunterstützung und Erkennungsqualität sind noch zu validieren. Ein erkannter Schwung beweist keinen Ballkontakt.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-eigene-daten">
-  <summary><span class="feature-title"><strong>Offline, Papier-Score und eigene Daten</strong><span>Deine Aufzeichnungen auch über einen einzelnen Besuch hinaus nutzen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Vorgesehene Offlinefunktionen und lokale Zwischenstände.</li><li>Papier-Scorekarten fotografieren, erkannte Werte prüfen und übernehmen.</li><li>Eigene Golfdaten importieren und exportieren.</li></ul><p class="feature-note">Lokales Speichern gehört zum Startablauf; Papiererkennung und weitergehende Datenfunktionen sind spätere Erweiterungen.</p></div>
-</details></div></section>
-<section class="roadmap-area" id="bereich-trainieren" data-area-panel="trainieren" aria-labelledby="titel-trainieren"><div class="area-heading"><h3 id="titel-trainieren" tabindex="-1">Trainieren und Verbessern</h3><p>Übungen, Beobachtungen und Betreuung für dein eigenes Spiel zusammenhalten.</p></div><div class="roadmap-feature-list"><details class="roadmap-feature" id="funktion-uebungen">
-  <summary><span class="feature-title"><strong>Übungen und Trainingsplan</strong><span>Gezielt üben und passende Inhalte wiederfinden.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Übungen in Text und Video für unterschiedliche Erfahrungsstände.</li><li>Persönliche Ziele, Challenges, Trainingsprogramme und Trainingstagebuch.</li><li>Durchgeführte Einheiten und den nächsten Schritt festhalten.</li></ul></div>
-</details>
-<details class="roadmap-feature" id="funktion-trainerfeedback">
-  <summary><span class="feature-title"><strong>Trainerfeedback und Nachbereitung</strong><span>Nach dem Termin an Erklärungen und Übungen anknüpfen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Freigegebene Hinweise bei der passenden Trainingseinheit wiederfinden.</li><li>Übungen und persönliche nächste Schritte speichern.</li><li>Rückfragen im zugehörigen Trainerchat stellen.</li></ul><p class="feature-note">Private Trainernotizen bleiben von geteilten Inhalten getrennt. Ein Chat verspricht keine ständige Erreichbarkeit.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-videoanalyse">
-  <summary><span class="feature-title"><strong>Videoanalyse und Messdaten</strong><span>Schwungaufnahmen und verfügbare Werte vergleichen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Videos ansehen, vergleichen und mit Hinweisen ergänzen.</li><li>Messdaten mit Quelle, Gerät und Bedingungen einordnen.</li><li>Aufnahmen bewusst für Trainerfeedback freigeben.</li></ul></div>
-</details>
-<details class="roadmap-feature" id="funktion-ki-training">
-  <summary><span class="feature-title"><strong>KI-gestützte Trainingshilfen</strong><span>Aus tatsächlichen Aufnahmen einen prüfbaren Entwurf gewinnen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Vereinbarte Aufzeichnungen aus einer Einheit auswerten lassen.</li><li>Zusammenfassungen und passende Übungen als Entwurf vorbereiten.</li><li>Dem Trainer Prüfung, Korrektur und Ergänzung ermöglichen.</li></ul><p class="feature-note">Keine erfundenen Beobachtungen und keine Zusage einer bestimmten Analysequalität.</p></div>
+        <div class="roadmap-feature-list"><details class="roadmap-feature" id="funktion-runde-spielen">
+  <summary><span class="feature-title"><strong>Runde spielen</strong><span>Vom Abschlag bis zur Zusammenfassung — live mit deinen Mitspielern.</span></span><span class="feature-kind ">Live</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
+  <div class="feature-body"><ul><li>Platz, Spielform (Zählspiel, Stableford, Maximum Score, Par/Bogey) und Abschlag wählen, Freunde und Gäste einladen.</li><li>Score Loch für Loch erfassen — die Runde läuft live bei allen Mitspielern mit.</li><li>Kartenansicht mit Standort und Entfernungen auf der aktuellen Bahn.</li><li>Gespielte Runden im Rundenarchiv wiederfinden.</li></ul><p class="feature-note">Grünmitte und tatsächliche Fahnenposition sind nicht dasselbe.</p></div>
 </details>
 <details class="roadmap-feature" id="funktion-regelhilfe">
-  <summary><span class="feature-title"><strong>Verständliche Regelhilfe</strong><span>Eine konkrete Golfsituation leichter einordnen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Regeln in verständlichen eigenen Worten mit Kontext.</li><li>Eine KI-Hilfe für Fragen aus dem Golfalltag.</li><li>Unklare Fälle kenntlich machen und weiter prüfen lassen.</li></ul><p class="feature-note">Eine KI-Antwort ersetzt keine zuständige Entscheidung in einem ungeklärten Regelfall.</p></div>
-</details></div></section>
-<section class="roadmap-area" id="bereich-community" data-area-panel="community" aria-labelledby="titel-community"><div class="area-heading"><h3 id="titel-community" tabindex="-1">Community und Erlebnisse</h3><p>Die Menschen, Absprachen und Erlebnisse rund um dein Golfspiel.</p></div><div class="roadmap-feature-list"><details class="roadmap-feature" id="funktion-profil">
-  <summary><span class="feature-title"><strong>Profil und Privatsphäre</strong><span>Selbst bestimmen, was andere von dir sehen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Ein persönliches Profil passend zur eigenen Nutzung.</li><li>Empfänger und Umfang beim Teilen bewusst auswählen.</li><li>Standort, Ergebnisse und Trainingsinhalte getrennt freigeben.</li></ul></div>
+  <summary><span class="feature-title"><strong>Regelhilfe</strong><span>Elf Kategorien, konkrete Antworten für den Golfalltag.</span></span><span class="feature-kind ">Live</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
+  <div class="feature-body"><ul><li>Typische Platzsituationen in verständlichen Worten nachschlagen.</li><li>Nach Kategorie oder Suchbegriff die passende Antwort finden.</li></ul><p class="feature-note">Eine Antwort ersetzt keine zuständige Entscheidung in einem ungeklärten Regelfall.</p></div>
 </details>
-<details class="roadmap-feature" id="funktion-mitspieler">
-  <summary><span class="feature-title"><strong>Freunde und Mitspieler</strong><span>Bestehende Kontakte verbinden und passende Runden finden.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Freunde wiederfinden und erneut zum Spielen einladen.</li><li>Mitspieler nach Ort, Termin und passendem Spielinteresse suchen.</li><li>Offene Plätze in gemeinsamen Runden sichtbar machen.</li></ul><p class="feature-note">Eine Teilnahmezusage ersetzt keine bestätigte Startzeit beim Anbieter.</p></div>
+<details class="roadmap-feature" id="funktion-wetter">
+  <summary><span class="feature-title"><strong>Wetter</strong><span>Aktuelle Bedingungen für deinen Platz, bevor du losfährst.</span></span><span class="feature-kind ">Live</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
+  <div class="feature-body"><ul><li>Vorhersage und aktuelle Bedingungen für den gewählten Ort abrufen.</li><li>Hinweise zu Wind und Spielbarkeit auf einen Blick.</li></ul></div>
 </details>
-<details class="roadmap-feature" id="funktion-gruppen-chat">
-  <summary><span class="feature-title"><strong>Gruppen und Messenger</strong><span>Absprachen bei der passenden Aktivität wiederfinden.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Private Gruppen, Freundeskreise und Mannschaften organisieren.</li><li>Zu Runde, Gruppe, Club oder Training kommunizieren.</li><li>Wichtige Termine und Informationen zusammenhalten.</li></ul></div>
-</details>
-<details class="roadmap-feature" id="funktion-turniere">
-  <summary><span class="feature-title"><strong>Private Turniere und Ligen</strong><span>Gemeinsam spielen und Wertungen nachvollziehen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Kleine Gruppenformate und Freundesligen für wiederkehrende Runden.</li><li>Später weitere Turnierformate, Startlisten und Teamwertungen.</li><li>Laufende Ergebnisse, Prüfung und abschließende Freigabe unterscheiden.</li></ul><p class="feature-note">Kleine private Formate und umfangreiche Turnierorganisation werden schrittweise getrennt entwickelt.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-beitraege">
-  <summary><span class="feature-title"><strong>Beiträge und Austausch</strong><span>Golfmomente mit dem passenden Publikum teilen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Runden, Bilder, Videos und Erfahrungen veröffentlichen.</li><li>Sichtbarkeit eigener Inhalte bewusst festlegen.</li><li>Private Trainingsaufnahmen nicht automatisch öffentlich machen.</li></ul><p class="feature-note">Folgen, Kommentare, Reaktionen und Themensteuerung sind ergänzende Vorschläge, noch keine endgültigen Produktentscheidungen.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-golfmedien">
-  <summary><span class="feature-title"><strong>Aufnehmen und Bearbeiten</strong><span>Golfaufnahmen zu einer eigenen Fassung zusammenführen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Aufnahmehilfen, mehrere Perspektiven, Schnitt, Zeitlupe, Stabilisierung und Ton.</li><li>Untertitel, Übersetzungen, Vorlagen und Medienorganisation.</li><li>Ballfluglinien, Schwungvergleiche und Markierungen.</li><li>Highlights, Rückblicke und gemeinsame Medienprojekte vorbereiten.</li></ul><p class="feature-note">Eine Fluglinie im Video ist keine gemessene Flugbahn. Automatische Bearbeitungen sollen prüfbar und korrigierbar bleiben.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-live-interaktiv">
-  <summary><span class="feature-title"><strong>Livevideos und interaktive Inhalte</strong><span>Gemeinsame Golfmomente und neue Medienformate ermöglichen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Livevideos, gemeinsame Medienprojekte und Feedback zu Szenen.</li><li>Interaktive Videostellen, Lernverzweigungen und Panoramarundgänge.</li><li>Golfdaten und persönliche Rückblicke im passenden Medienkontext aufbereiten.</li></ul><p class="feature-note">Livestreaming gehört zum späteren Ausbau. Ein gewöhnlicher Videoexport übernimmt interaktive KAVEO-Funktionen nicht automatisch.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-golfalltag">
-  <summary><span class="feature-title"><strong>Familie, Mannschaft und Golfalltag</strong><span>Gemeinsame Aktivitäten über eine einzelne Runde hinaus planen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Familien- und Jugendangebote sowie Mannschaftsorganisation.</li><li>Fahrgemeinschaften und gemeinsame Aktivitäten.</li><li>Fundsachen sowie Demotage, Schlägertests, Clubfeste und weitere Golfveranstaltungen finden.</li></ul><p class="feature-note">Berechtigungen für Minderjährige und offizielle Nachweise benötigen eigene Klärungen.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-community-schutz">
-  <summary><span class="feature-title"><strong>Schutz und nachvollziehbare Hilfe</strong><span>Bei unerwünschtem Kontakt selbst handeln können.</span></span><span class="feature-kind is-proposal">Ergänzende Idee</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Stummschalten, Blockieren und Melden nach ihrem Zweck trennen.</li><li>Meldungen zuständig prüfen und Rückmeldungen verständlich machen.</li><li>Gruppenrechte von privaten Gesprächen und Datenfreigaben trennen.</li></ul><p class="feature-note">Die konkreten Abläufe, Regeln, Zuständigkeiten und Reaktionszeiten sind noch auszuarbeiten.</p></div>
-</details></div></section>
-<section class="roadmap-area" id="bereich-partner" data-area-panel="partner" aria-labelledby="titel-partner"><div class="area-heading"><h3 id="titel-partner" tabindex="-1">Partner und Betrieb</h3><p>Eigene Arbeitsbereiche für die Menschen und Betriebe hinter dem Golfbesuch.</p></div><div class="roadmap-feature-list"><details class="roadmap-feature" id="funktion-clubs">
-  <summary><span class="feature-title"><strong>Golfclubs</strong><span>Mitgliederkontakt, Spielbetrieb und kaufmännische Vorgänge verbinden.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Profile, Angebote, Mitglieder und Gäste organisieren.</li><li>Timetable, Check-in, Turniere, Ligen und Live-Platzkarte.</li><li>Beiträge, Rechnungen, Kasse, Warenwirtschaft und Einkauf.</li><li>Range, Vermietungen, Spinde, Platzpflege und Problemmeldungen.</li></ul><p class="feature-note">Schlanke Partnerpiloten kommen vor umfassender Betriebssoftware. Eine Platzkarte ist keine unfehlbare Ortung.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-indoor">
-  <summary><span class="feature-title"><strong>Indooranlagen</strong><span>Von der Boxenbelegung bis zur tatsächlichen Session.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Boxen, Tarife, Pakete, Abos, Zusatzleistungen und Buchungen.</li><li>Ankunft, Einweisung, Zugang und Simulatorfreigabe getrennt führen.</li><li>Spontane Gäste vor Ort auch ohne KAVEO-Konto berücksichtigen.</li><li>Kasse, Kurse, Ligen, Gastronomie und Wartung.</li></ul><p class="feature-note">Gerätesteuerung und Messdaten hängen von den jeweiligen Zugängen und Partnern ab.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-trainer">
-  <summary><span class="feature-title"><strong>Golftrainer</strong><span>Unterricht organisieren und Schüler weiter begleiten.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Profil, Angebote, Kalender, Schüler, Pakete und Abrechnung.</li><li>Einzel- und Gruppentraining, Pläne und Online-Coaching.</li><li>Videoanalyse, Feedback sowie private und geteilte Unterlagen.</li></ul><p class="feature-note">Werkzeuge für Trainerteams und Akademien sind zusätzliche Vorschläge.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-veranstalter">
-  <summary><span class="feature-title"><strong>Turnier- und Eventveranstalter</strong><span>Den Wettbewerb von der Anmeldung bis zum Abschluss betreuen.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Veranstaltungsseiten, Anmeldungen und Teilnahmegebühren.</li><li>Teilnehmer, Gruppen, Startlisten, Ressourcen und Organisationsteam.</li><li>Livescoring, Scoreprüfung, Siegerehrung und Nachbereitung.</li><li>Chat, Sponsoren und die Abstimmung mit der Anlage.</li></ul><p class="feature-note">Eine mögliche offizielle Ergebnisübermittlung setzt eine eingerichtete, autorisierte Schnittstelle voraus.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-haendler">
-  <summary><span class="feature-title"><strong>Händler und Golfservices</strong><span>Angebote dort sichtbar machen, wo Golfer Ausrüstung suchen.</span></span><span class="feature-kind is-proposal">Ergänzende Idee</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Produkt- und Angebotsdaten sowie Filialinformationen pflegen.</li><li>Verfügbarkeit, Kontakt und Serviceangebote zusammenführen.</li><li>Anfragen und Auswertungen im Anbieterbereich betrachten.</li></ul><p class="feature-note">Die Händleroberfläche ist ein ergänzender Vorschlag. Der Kauf bleibt beim Händler.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-reiseanbieter">
-  <summary><span class="feature-title"><strong>Reiseanbieter und Golfhotels</strong><span>Golfprogramme und Unterkünfte verständlich vergleichbar machen.</span></span><span class="feature-kind is-proposal">Ergänzende Idee</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Anbieterprofile und nachvollziehbare Reise- und Hotelangebote.</li><li>Leistungen, Konditionen und Gruppenwünsche vergleichen.</li><li>Kontakt, Planung und Rückmeldungen im richtigen Zusammenhang.</li></ul><p class="feature-note">Die Anbieteroberfläche ist vorgeschlagen. Buchung, Zahlung und Vertragsabwicklung bleiben beim Anbieter.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-marken">
-  <summary><span class="feature-title"><strong>Marken und Hersteller</strong><span>Produkte, Testgelegenheiten und Ansprechpartner verbinden.</span></span><span class="feature-kind is-proposal">Ergänzende Idee</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Markenprofile, Produktkataloge und Unterlagen.</li><li>Tests, Service, Schulungen und Rückmeldungen.</li><li>Händler-, Trainer- und Creator-Kooperationen.</li></ul><p class="feature-note">Eigene Herstelleroberflächen und diese weitergehenden Abläufe sind ergänzende Vorschläge.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-verbaende">
-  <summary><span class="feature-title"><strong>Verbände und offizielle Datenwege</strong><span>Bestätigte Vorgänge über passende Schnittstellen verbinden.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Eine DGV-Anbindung und direkte Ergebnisübermittlung durch Clubs als Konzeptziele.</li><li>Benötigte Zugänge, erlaubten Umfang und Rückmeldungen je Datenweg klären.</li><li>Weitere Verbandsinformationen, Wettbewerbe, Lehrgänge und Nachwuchsangebote prüfen.</li></ul><p class="feature-note">Der weitergehende Verbandsbereich ist ein Vorschlag. Es gibt hier keine Zusage einer bestehenden DGV-Anbindung.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-sponsoren">
-  <summary><span class="feature-title"><strong>Sponsoren und Kooperationen</strong><span>Engagements im passenden Golfkontext organisieren.</span></span><span class="feature-kind is-proposal">Ergänzende Idee</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Passende Club-, Turnier- oder Inhaltsformate finden.</li><li>Leistungen, Vereinbarungen und Materialien abstimmen.</li><li>Kennzeichnung und Nachweise zu vereinbarten Platzierungen betrachten.</li></ul><p class="feature-note">Ein eigener Sponsorenbereich ist vorgeschlagen. Reichweite und Wirkung werden nicht versprochen.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-creator">
-  <summary><span class="feature-title"><strong>Creator und Veröffentlichungen</strong><span>Medienprojekte und Kooperationen im Zusammenhang führen.</span></span><span class="feature-kind is-proposal">Ergänzende Idee</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Projekte, Mediathek und Veröffentlichungsvorbereitung.</li><li>Zusammenarbeit, Feedback und erforderliche Freigaben.</li><li>Weitergehende Creator-Verwaltung, Kooperationen und exklusive Angebote.</li></ul><p class="feature-note">Die Medienwerkzeuge sind Konzeptideen; die weitergehende Creator-Verwaltung bleibt ein Vorschlag.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-schnittstellen">
-  <summary><span class="feature-title"><strong>Eigene Schnittstellen und Partnerdaten</strong><span>KAVEO mit passenden Systemen verbinden.</span></span><span class="feature-kind ">Geplant</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Eigene Schnittstellen für Clubs und Indooranlagen.</li><li>Datenzugänge zu Verband, Messgeräten und weiteren Partnersystemen klären.</li><li>Zweck, Datenquelle und unterstützten Umfang jeder Anbindung unterscheiden.</li></ul><p class="feature-note">Eine eigene Schnittstelle erteilt keinen Zugang zu einem fremden System.</p></div>
-</details>
-<details class="roadmap-feature" id="funktion-plattform">
-  <summary><span class="feature-title"><strong>Gemeinsame Grundlagen</strong><span>Verlässlichkeit und Zugriffsrechte über alle Bereiche hinweg.</span></span><span class="feature-kind is-proposal">Ergänzende Idee</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-  <div class="feature-body"><ul><li>Rollen und Organisationen mit passenden Berechtigungen.</li><li>Datenquellen, Aktualität, Freigaben und Korrekturwege.</li><li>Nutzerhilfe, Anbieteraufnahme, Datenpflege und Moderation.</li><li>Zugängliche App-Bedienung und weitergehende Offline-Abläufe.</li></ul><p class="feature-note">Diese übergreifenden Ausarbeitungen sind Vorschläge. Konkrete Zahlungsmodelle und rechtliche Detailregeln bleiben ebenfalls zu klären.</p></div>
-</details></div></section></div>
+<details class="roadmap-feature" id="funktion-freunde">
+  <summary><span class="feature-title"><strong>Freunde</strong><span>Mitspieler finden und zu Runden einladen.</span></span><span class="feature-kind ">Live</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
+  <div class="feature-body"><ul><li>Per QR-Code oder Mitgliedssuche neue Kontakte hinzufügen.</li><li>Bestehende Freunde direkt zu einer Runde einladen.</li></ul></div>
+</details></div>
       </div>
     </section>
   </main>
@@ -262,7 +94,7 @@
     <div class="footer-finale">
       <div class="footer-backdrop" aria-hidden="true"><div class="footer-scene-media"><img class="footer-scene-image" src="media/inselgruen-logo-poster-v04.webp" data-original-src="assets/island-wide.png" width="1920" height="1080" alt="" loading="lazy"><div class="footer-scene-shade"></div><canvas class="footer-ball" width="1920" height="1080" hidden></canvas></div></div>
       <div class="ball-brand-moment" aria-hidden="true"></div>
-<section class="signup signup-finale" id="fruehzugang" aria-labelledby="signup-title"><img class="signup-image" src="media/inselgruen-logo-poster-v04.webp" data-original-src="assets/island-wide.png" width="1920" height="1080" alt="KAVEO-Inselgrün" loading="lazy"><div class="signup-shade" aria-hidden="true"></div><div class="signup-inner section-wrap"><div class="signup-copy-column"><div class="signup-copy reveal"><p class="eyebrow">FRÜHZUGANG</p><h2 id="signup-title">Von Anfang<br>an dabei.</h2><p>Trag dich ein. Du hörst von uns, wenn die Tests starten — und wenn es etwas Wichtiges zu sehen gibt. Sonst nicht.</p></div><div class="signup-ball-anchor" id="signup-ball-anchor" aria-hidden="true"></div></div><form class="signup-form glass" id="signup-form" data-glare aria-describedby="form-note"><label for="signup-name">Name <span class="field-optional">(optional)</span></label><input id="signup-name" name="name" autocomplete="given-name" placeholder="Dein Name" maxlength="100"><label for="signup-email">E-Mail-Adresse</label><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="du@beispiel.de" required maxlength="254"><label class="consent" for="signup-consent"><input id="signup-consent" name="consent" type="checkbox" required><span>Ich möchte E-Mails zum Entwicklungsstand und zum Start von KAVEO erhalten. Ich kann die Einwilligung jederzeit widerrufen — der Link dafür steht in jeder Mail.</span></label><button class="button button-primary" type="submit" disabled>Eintragen <svg class="icon"><use href="#arrow-up-right"/></svg></button><p class="form-note" id="form-note" role="status" aria-live="polite">Das Formular ist noch nicht aktiv — wir bauen gerade daran. Es werden keine Daten übertragen oder gespeichert.</p><a class="privacy-link" href="/datenschutz/">Datenschutz</a></form></div></section>
+<section class="signup signup-finale" id="fruehzugang" aria-labelledby="signup-title"><img class="signup-image" src="media/inselgruen-logo-poster-v04.webp" data-original-src="assets/island-wide.png" width="1920" height="1080" alt="KAVEO-Inselgrün" loading="lazy"><div class="signup-shade" aria-hidden="true"></div><div class="signup-inner section-wrap"><div class="signup-copy-column"><div class="signup-copy reveal"><p class="eyebrow">FRÜHZUGANG</p><h2 id="signup-title">Von Anfang<br>an dabei.</h2><p>Trag dich ein. Du hörst von uns, wenn die Tests starten — und wenn es etwas Wichtiges zu sehen gibt. Sonst nicht.</p></div><div class="signup-ball-anchor" id="signup-ball-anchor" aria-hidden="true"></div></div><form class="signup-form glass" id="signup-form" data-glare aria-describedby="form-note"><label for="signup-name">Name <span class="field-optional">(optional)</span></label><input id="signup-name" name="name" autocomplete="given-name" placeholder="Dein Name" maxlength="100"><label for="signup-email">E-Mail-Adresse</label><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="du@beispiel.de" required maxlength="254"><label class="consent" for="signup-consent"><input id="signup-consent" name="consent" type="checkbox" required><span>Ich möchte E-Mails zum Entwicklungsstand und zum Start von KAVEO erhalten. Ich kann die Einwilligung jederzeit widerrufen — der Link dafür steht in jeder Mail.</span></label><button class="button button-primary" type="submit" disabled>Eintragen <svg class="icon"><use href="#arrow-up-right"/></svg></button><p class="form-note" id="form-note" role="status" aria-live="polite">Das Eintragen braucht JavaScript. Ist es aus, bleibt der Knopf gesperrt.</p><a class="privacy-link" href="/datenschutz/">Datenschutz</a></form></div></section>
     </div>
   <footer class="site-footer section-wrap"><div class="footer-top"><div class="footer-identity"><a class="brand" href="/#start" aria-label="KAVEO GOLF — zum Anfang"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131" loading="lazy"></a><p>KAVEO GOLF — in Entwicklung seit 2026.</p></div><div class="footer-connect"><nav class="footer-socials" aria-label="Social Media"><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener noreferrer" aria-label="KAVEO auf Instagram (öffnet in neuem Tab)"><svg class="social-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a><span class="social-pending">TikTok <span class="social-status">· folgt</span></span></nav><a class="back-to-top" href="#start" aria-label="Zurück nach oben"><svg class="icon"><use href="#arrow-up-right"/></svg></a></div></div><div class="footer-bottom"><span>© 2026 KAVEO GOLF</span><nav aria-label="Weitere Informationen"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><a href="mailto:info@kaveo-golf.app">Kontakt</a></nav><div class="footer-motion-slot" data-footer-motion-slot></div></div></footer>
   </div>

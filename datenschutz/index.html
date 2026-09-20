@@ -120,9 +120,44 @@ Deutschland
 <p>localStorage hat grundsätzlich kein automatisches Ablaufdatum. Informationen bleiben dort, bis die App sie entfernt oder überschreibt oder du beziehungsweise dein Browser die Website-Daten löschen. Die Gültigkeit einer Sitzung ist davon zu unterscheiden: Auch nach Ablauf der Sitzung können Einträge im Speicher vorhanden sein.</p>
 <p>Du kannst lokale Website-Daten über die Einstellungen deines Browsers löschen. Dabei können deine Anmeldung und lokal gespeicherte Einstellungen verloren gehen. Das Löschen von Browserdaten löscht nicht zugleich dein Konto auf unseren Servern.</p>
 
-<h2 id="fruehzugang">7. Frühzugang und weitere Funktionen</h2>
-<p>Auf unserer Website ist derzeit ein Formular für den Frühzugang als Gestaltungsvorschau sichtbar. <strong>Dieses Formular ist nicht aktiv:</strong> Die Absendeschaltfläche ist deaktiviert, es findet keine Übermittlung statt, und es werden keine Eingaben bei uns gespeichert. Das Formular wird in Kürze durch einen Hinweis mit E-Mail-Adresse ersetzt; diese Erklärung wird dann entsprechend angepasst.</p>
-<p>Wenn du uns schreiben möchtest, kannst du die angegebene E-Mail-Adresse nutzen; für die Verarbeitung gilt Abschnitt 4. Eine Kontaktanfrage allein führt nicht zur Aufnahme in eine Versandliste.</p>
+<h2 id="fruehzugang">7. Frühzugang (Warteliste) und weitere Funktionen</h2>
+<p>Auf der Startseite kannst du dich in eine Liste für den Frühzugang eintragen. Wir senden dir dann E-Mails zum Entwicklungsstand und zum Start von KAVEO. Der Eintrag ist freiwillig; die Nutzung der Website hängt nicht davon ab.</p>
+
+<h3>Ablauf in zwei Schritten (Double-Opt-in)</h3>
+<p>Nach dem Absenden des Formulars erhältst du <strong>eine einzige E-Mail</strong> mit einem Bestätigungslink. Erst wenn du diesen Link aufrufst und dort auf die Schaltfläche klickst, gilt die Einwilligung als erteilt und du stehst auf der Liste. <strong>Ohne diese Bestätigung senden wir dir keine weiteren E-Mails.</strong> Der Bestätigungslink ist 30 Tage gültig.</p>
+<p>Dass die Bestätigung einen Klick auf der Zielseite verlangt und nicht schon durch den bloßen Aufruf des Links erfolgt, ist beabsichtigt: Manche E-Mail-Anbieter rufen Links in Nachrichten vorab automatisch auf, um sie zu prüfen. Ein Link, der bereits beim Abruf bestätigt, würde das zweistufige Verfahren aushebeln.</p>
+
+<h3>Welche Daten wir speichern</h3>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Angabe</th><th>Zweck</th></tr></thead>
+<tbody>
+<tr><td>E-Mail-Adresse</td><td>Versand der Bestätigungsmail und der späteren Nachrichten.</td></tr>
+<tr><td>Name <em>(freiwillig)</em></td><td>Persönliche Anrede. Das Feld kann leer bleiben; der Eintrag funktioniert auch ohne.</td></tr>
+<tr><td>Zeitpunkt der Eintragung und der Bestätigung</td><td>Nachweis der Einwilligung nach Art. 7 Abs. 1 DSGVO.</td></tr>
+<tr><td>Wortlaut und Fassung des Einwilligungstextes</td><td>Nachweis darüber, <em>wem</em> genau zugestimmt wurde. Ändert sich der Text später, bleibt bei bestehenden Einträgen die Fassung gespeichert, der tatsächlich zugestimmt wurde.</td></tr>
+<tr><td>Ein zufällig erzeugter Bestätigungsschlüssel</td><td>Verknüpft den Link in der Mail mit deinem Eintrag. Er verlässt unseren Server ausschließlich per E-Mail an die eingetragene Adresse und wird in der Website nicht angezeigt.</td></tr>
+<tr><td>Zeitpunkt eines Widerrufs, falls du widerrufst</td><td>Nachweis darüber, dass und wann der Versand eingestellt wurde.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Eine IP-Adresse speichern wir dabei nicht.</strong> Der Klick auf den Bestätigungslink ist der Nachweis; eine zusätzliche IP-Adresse wäre ein weiteres personenbezogenes Datum ohne Mehrwert.</p>
+
+<h3>Rechtsgrundlagen</h3>
+<p>Der Versand der Nachrichten beruht auf deiner Einwilligung nach <strong>Art. 6 Abs. 1 lit. a DSGVO</strong>. Die Speicherung der oben genannten Nachweisangaben dient der Erfüllung der Nachweispflicht aus Art. 7 Abs. 1 DSGVO und beruht auf <strong>Art. 6 Abs. 1 lit. c DSGVO</strong>. Die Bestätigungsmail selbst versenden wir zur Durchführung des von dir angestoßenen Verfahrens.</p>
+
+<h3>Widerruf</h3>
+<p>Du kannst die Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. In jeder E-Mail steht dafür ein Abmeldelink; alternativ genügt eine formlose Nachricht an die in Abschnitt 1 genannte Adresse. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt unberührt.</p>
+
+<h3>Löschung</h3>
+<p><strong>Nicht bestätigte Einträge werden nach Ablauf der 30-tägigen Gültigkeit automatisch gelöscht</strong>, ohne dass es dafür einer Anfrage bedarf. Ein nächtlich laufender Vorgang übernimmt das. Bestätigte Einträge speichern wir bis zu deinem Widerruf. Nach einem Widerruf bleibt der Eintrag mit dem Vermerk des Widerrufs bestehen, damit wir belegen können, dass und wann der Versand eingestellt wurde, und damit die Adresse nicht versehentlich erneut angeschrieben wird; eine vollständige Löschung kannst du über die in Abschnitt 1 genannte Adresse verlangen.</p>
+
+<h3>Empfänger</h3>
+<p>Die Liste liegt in unserer Datenbank bei Supabase; der Versand der E-Mails erfolgt über unser bei STRATO gehostetes Postfach. Beide sind in Abschnitt 8 aufgeführt. Ein gesonderter Newsletter-Dienstleister ist nicht eingebunden; es findet keine Auswertung darüber statt, ob und wann du eine Nachricht geöffnet hast, und es werden keine Zählpixel eingesetzt.</p>
+<p>Um zu verhindern, dass jemand fremde Adressen mit Bestätigungsmails überhäuft, begrenzen wir die Zahl der Bestätigungsmails je Adresse und je Stunde. Dafür werden ausschließlich die oben genannten Zeitstempel und ein Zähler ohne Personenbezug ausgewertet.</p>
+
+<h3>Weitere Funktionen</h3>
+<p>Wenn du uns schreiben möchtest, kannst du die angegebene E-Mail-Adresse nutzen; für die Verarbeitung gilt Abschnitt 4. Eine Kontaktanfrage allein führt nicht zur Aufnahme in die Liste für den Frühzugang.</p>
 <p>Für den hier beschriebenen Stand sind keine Analyse- oder Werbedienste, externen Video-Player, Zahlungsdienste, automatische Handicap-Importe, Push-Dienste oder KI-Chatdienste für Nutzereingaben eingebunden. Die Anmeldung über Google ist in Abschnitt 5 beschrieben; eine Anmeldung über Apple gibt es nicht. Vor der Aktivierung zusätzlicher Verarbeitungen wird diese Erklärung angepasst; erforderliche Einwilligungen werden vorab eingeholt.</p>
 
 <h2 id="empfaenger">8. Empfänger und Übermittlungen in Drittländer</h2>
@@ -153,6 +188,8 @@ Deutschland
 <tr><td>Noch nicht bestätigte Registrierungen</td><td>Zweck ist die Durchführung und Bestätigung der Registrierung. Sobald die Registrierung endgültig abgebrochen ist oder nicht weiterverfolgt wird, entfällt dieser Zweck. Du kannst die Löschung deiner nicht abgeschlossenen Registrierung über die in Abschnitt 1 genannte Adresse beantragen.</td></tr>
 <tr><td>Zugriffsprotokolle bei den Hosting-Anbietern</td><td>Beim jeweiligen Anbieter nach den für seinen technischen Betrieb, seine Sicherheit und etwaige gesetzliche Pflichten geltenden Regeln. Wir erhalten in der eingesetzten Konfiguration keine Rohprotokolle einzelner Seitenabrufe.</td></tr>
 <tr><td>Authentifizierungs-, Sicherheits- und Rollenänderungsprotokolle</td><td>Für die Nachvollziehbarkeit von Anmeldungen und Berechtigungsänderungen sowie zur Erkennung und Aufklärung von Sicherheitsvorfällen. Eine weitere Speicherung ist nur zulässig, solange sie hierfür oder zur erforderlichen Wahrung von Rechtsansprüchen benötigt wird.</td></tr>
+<tr><td>Frühzugang: nicht bestätigte Einträge</td><td>Zweck ist die Bestätigung der Einwilligung. Sie entfallen automatisch nach Ablauf der 30-tägigen Gültigkeit des Bestätigungslinks; siehe Abschnitt 7.</td></tr>
+<tr><td>Frühzugang: bestätigte Einträge</td><td>Bis zum Widerruf der Einwilligung. Nach einem Widerruf bleibt der Eintrag mit dessen Zeitpunkt als Nachweis und als Sperrvermerk bestehen; siehe Abschnitt 7.</td></tr>
 <tr><td>Kontaktanfragen</td><td>Bis zur abschließenden Bearbeitung, sobald keine weitere Bearbeitung absehbar ist. Danach nur, soweit im konkreten Fall gesetzliche Pflichten oder die erforderliche Wahrung von Rechtsansprüchen bestehen.</td></tr>
 <tr><td>Technische E-Mail-Zustellprotokolle</td><td>Beim Versanddienst für die Zustellung, Fehleranalyse und Absicherung des E-Mail-Betriebs nach den hierfür geltenden Speicherregeln.</td></tr>
 <tr><td>Sicherungskopien</td><td>Im Rahmen der Wiederherstellung und Ausfallsicherung nach dem jeweiligen Sicherungs- und Überschreibungszyklus. Löschungen müssen auch beim Umgang mit Sicherungskopien und bei einer Wiederherstellung berücksichtigt werden.</td></tr>

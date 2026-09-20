@@ -1,13 +1,30 @@
 import * as THREE from './reference/vendor/three-r180/three.module.js';
+import { GLTFLoader } from './vendor/three-r180/loaders/GLTFLoader.js';
 import { HDRLoader } from './reference/vendor/three-r180/HDRLoader.js';
-import { ballGeometry, markGeometry } from './reference/material-model.js';
-import { createBallFinish } from './reference/material-ball-finish.js';
 import { CAMERA, PHOTO, RADIUS, coverCrop } from './green-ball-flight.mjs';
 import { BALL_VISUAL_SCALE, presentationPose, ballPixelRatio } from './green-ball-presentation.mjs';
 import { createBallOrientation } from './green-ball-orientation.mjs';
 import { closeupPose, createCloseupOrientation } from './ball-finale-model.mjs';
 
-export async function createGreenBallRenderer(canvas) {
+// Web-Paket 20.09.2026 (KAVEO Golfball V08): echtes 3D-Asset statt der
+// bisherigen prozeduralen Kugel + flachem Logo-Decal. glTF Y-up, Radius
+// 0.021335 m -- passt exakt auf die bestehende Umrechnung `units=1/RADIUS`.
+const GLB_ASSET = Object.freeze({
+  hero: './assets/kaveo-ball-v08-hero.glb',
+  footer: './assets/kaveo-ball-v08-footer.glb'
+});
+// Entspricht ungefaehr der alten Wirkung (sceneIntensity .62 x ENVIRONMENT_RESPONSE .88).
+// Nur ein Startwert -- im Browser gegen das tatsaechliche Homepage-Licht pruefen.
+const BALL_ENV_INTENSITY = .55;
+// Das entfernte markGeometry-Decal bildete seine UV-Mitte auf Breite +0.10 ab;
+// deshalb tragen die bestehenden Orientierungsfunktionen (green-ball-orientation.mjs,
+// ball-finale-model.mjs) eine feste +0.10-rad-Korrektur genau fuer dieses Mesh.
+// Das neue Modell hat kein Decal mehr -- die Korrektur hier lokal aufheben,
+// sonst sitzt das eingebrannte Logo leicht verkippt. Nach dem ersten Ansehen
+// im Browser ggf. nachjustieren (beide Logo-Seiten pruefen).
+const MARK_OFFSET_CORRECTION = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0), -.10);
+
+export async function createGreenBallRenderer(canvas, {variant='hero'}={}) {
   // Keep existing unit-radius geometry/material intact. SI positions are
   // converted to radius units; no remodelling or logo replacement.
   const units = 1/RADIUS;
@@ -31,15 +48,13 @@ export async function createGreenBallRenderer(canvas) {
     canvas.hidden=true;
   };
   try {
+    const glbHref=new URL(GLB_ASSET[variant]??GLB_ASSET.hero,import.meta.url).href;
     const loads = await Promise.allSettled([
-      new THREE.TextureLoader().loadAsync(new URL('./assets/kaveo-ball-mark.png',import.meta.url).href),
+      new GLTFLoader().loadAsync(glbHref),
       new HDRLoader().loadAsync(new URL('./assets/meadow-2-1k.hdr',import.meta.url).href)
     ]);
-    loads.forEach(result=>{if(result.status==='fulfilled')keep(result.value);});
     if (loads[0].status==='rejected') throw loads[0].reason;
-    const mark=loads[0].value;
-    mark.colorSpace=THREE.SRGBColorSpace;
-    mark.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+    const visual=loads[0].value.scene;
     let environment=null;
     if (loads[1].status==='fulfilled') {
       const pmrem=new THREE.PMREMGenerator(renderer);
@@ -52,12 +67,20 @@ export async function createGreenBallRenderer(canvas) {
     scene.add(sunlight);
     const ball=new THREE.Group();
     ball.scale.setScalar(BALL_VISUAL_SCALE);
-    const finish=keep(createBallFinish(environment,.62,new THREE.Euler(0,-1.05,0)));
-    ball.add(new THREE.Mesh(keep(ballGeometry(256)),finish));
-    const markMaterial=keep(new THREE.MeshPhysicalMaterial({map:mark,color:0x0d0d0d,
-      roughness:.39,metalness:0,clearcoat:.2,clearcoatRoughness:.3,transparent:true,
-      depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}));
-    ball.add(new THREE.Mesh(keep(markGeometry()),markMaterial));
+    visual.scale.setScalar(units);
+    visual.quaternion.copy(MARK_OFFSET_CORRECTION);
+    visual.traverse(object=>{
+      if(!object.isMesh) return;
+      keep(object.geometry);
+      const materials=Array.isArray(object.material)?object.material:[object.material];
+      materials.forEach(material=>{
+        keep(material);
+        material.envMap=environment;
+        material.envMapIntensity=BALL_ENV_INTENSITY;
+        material.needsUpdate=true;
+      });
+    });
+    ball.add(visual);
     scene.add(ball);
     const orientBall=createBallOrientation(THREE);
     const orientCloseup=createCloseupOrientation(THREE);

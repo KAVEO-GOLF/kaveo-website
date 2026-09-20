@@ -25,7 +25,7 @@ export function createSharedFooter({win=window,doc=document,
     try{
       const {createGreenBallRenderer}=await loadRenderer();
       if(!eligible()||token!==generation)return;
-      const next=await createGreenBallRenderer(canvas);
+      const next=await createGreenBallRenderer(canvas,{variant:'footer'});
       if(!eligible()||token!==generation){next.dispose();return;}
       renderer=next;queue();
     }catch{if(token===generation){failed=true;release();queue();}}

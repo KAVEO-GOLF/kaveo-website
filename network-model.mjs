@@ -1,5 +1,8 @@
 // Six product areas from concept PDF p.29; approved editorial selection, not availability.
-export const GROUPS = [
+// GROUPS/CROSS_LINKS exist in a German and an English copy; the exported
+// constants pick one based on <html lang>, so this single file serves both
+// language versions of the homepage without duplicating the geometry/logic below.
+const GROUPS_DE = [
   {id:'entdecken',label:'Entdecken und Lernen',subtitle:'Dein Weg ins Golfspiel.',title:'Vom ersten Interesse zum ersten Schritt.',description:'Golf verständlich erklärt, von den ersten Begriffen bis zur Platzreife — mit einem Lernweg, den du in deinem Tempo gehst.',features:[
     {id:'grundlagen',title:'Golf verstehen',description:'Golf interessiert dich, die Begriffe sagen dir noch nichts? Texte und Videos erklären Spiel, Ausrüstung und Regeln, bevor du das erste Mal auf den Platz gehst.'},
     {id:'lernpfad',title:'Dein Lernpfad',description:'Grundlagen und erste Übungen bilden einen zusammenhängenden Lernweg. Deinen Fortschritt greifst du später wieder auf.'},
@@ -32,19 +35,63 @@ export const GROUPS = [
   ]}
 ];
 
+const GROUPS_EN = [
+  {id:'entdecken',label:'Discover & Learn',subtitle:'Your way into golf.',title:'From first interest to first step.',description:'Golf explained clearly, from the basic terms to course readiness — with a learning path you follow at your own pace.',features:[
+    {id:'grundlagen',title:'Understanding golf',description:"Interested in golf, but the terms don't mean much yet? Articles and videos explain the game, equipment and rules before your first time on the course."},
+    {id:'lernpfad',title:'Your learning path',description:'Fundamentals and first exercises form one connected learning path. You can pick up your progress again later.'},
+    {id:'platzreife',title:'Course readiness',description:'Learning content and preparation guides support you on the way to course readiness. The exact requirements depend on the facility.'}
+  ]},
+  {id:'planen',label:'Plan & Offers',subtitle:'Planning your next round.',title:'A fitting offer. A clear next step.',description:"Compare courses, tee times, lessons and indoor offers. What's included and who's behind it stays clear throughout.",features:[
+    {id:'plaetze-startzeiten',title:'Courses & tee times',description:'Find facilities and matching tee times in one place. A booking becomes binding only once the provider confirms it.'},
+    {id:'kurse-indoor',title:'Lessons & indoor offers',description:'Compare lessons and indoor slots: quality, date, requirements. Booking happens through the respective provider.'},
+    {id:'ausruestung',title:'Compare equipment',description:"Product details and retailer offers side by side. Purchases happen at the retailer — KAVEO doesn't sell the products itself."}
+  ]},
+  {id:'spielen',label:'Play & Track',subtitle:'Your round at a glance.',title:'Stay in your round, on the course.',description:'Prepare your round, choose a game format, track distances and results — from the first tee shot to looking back afterward.',features:[
+    {id:'gps',title:'GPS & scorecard',description:'See distances on the hole, record results instantly. Round tracking brings together what matters right now.'},
+    {id:'spielmodi',title:'Game modes',description:'Solo, head-to-head, or as a team? You set the format, players and scoring before the round — the results follow exactly that choice.'},
+    {id:'rueckblick',title:'Round recap',description:'Saved rounds and clear breakdowns show what worked and what needs practice — over months, not just one round.'}
+  ]},
+  {id:'trainieren',label:'Train & Improve',subtitle:'Working on your own game.',title:'One coaching session becomes your next step.',description:'Drills, videos and feedback stay together — turning a coaching session into a plan for your next sessions.',features:[
+    {id:'uebungsplan',title:'Drills & training plan',description:'Drills in text and video, your own goals, a training plan. The next session is prepared, the last one easy to find again.'},
+    {id:'videoanalyse',title:'Video analysis',description:"Why isn't the swing clicking? Watch recordings, compare them, and add notes. AI assistance offers suggestions, not confirmed measurements."},
+    {id:'feedback',title:'Coach feedback',description:'What was discussed in the coaching session stays on record afterward. An AI summary is only a draft — the coach reviews and adds to it.'}
+  ]},
+  {id:'community',label:'Community & Experiences',subtitle:'Experiencing golf together.',title:'A round can turn into more.',description:'Find playing partners, play together, share experiences — the people and plans around your golfing life, in one place.',features:[
+    {id:'mitspieler-gruppen',title:'Playing partners & groups',description:"Don't feel like playing alone? Finding playing partners and groups brings the right people together. Arrangements stay right where the round is happening."},
+    {id:'turniere-ligen',title:'Tournaments & leagues',description:"Your friends' league without scattered spreadsheets: match days, standings and live results in one place, private or at the club."},
+    {id:'beitraege',title:'Posts & exchange',description:'Share golf moments and experiences, and start a conversation about them. You decide who sees what — private training content stays private.'}
+  ]},
+  {id:'partner',label:'Partners & Operations',subtitle:'For clubs, coaches and providers',audience:'For clubs, coaches and providers',title:'Behind the round, everything should fit together too.',description:"Clubs, indoor facilities and coaches work in their own areas. Their offers meet players' golfing routines there, without responsibilities or private data getting mixed up.",features:[
+    {id:'cluborganisation',title:'Club organization',description:'Member contact, offers, scheduling and tasks come together in one dedicated interface. Every staff member gets the access that fits their role.'},
+    {id:'indoorbetrieb',title:'Indoor operations',description:"Who's playing in which bay today? Bookings, open bays and actual usage belong together. Device integrations depend on the respective partner."},
+    {id:'trainerbereich',title:'Coach area',description:'Appointments, agreed-upon recordings, notes and next drills stay together in one dedicated workspace. Private and shared content stays separate.'}
+  ]}
+];
+
 // Querverbindungen in der Uebersicht. Jede beschreibt einen Weg, den ein
 // Golfer wirklich geht -- keine Dekoration. Die Anordnung ist zwei Spalten,
 // also laufen die Linien AUSSEN HERUM: senkrecht in der Spalte, waagerecht
 // oben und unten. Keine Linie kreuzt die Mitte, wo die KAVEO-Scheibe liegt.
 //   a ist die Karte, an deren Rand die Linie beginnt; bei port 2 (senkrecht)
 //   muss a die OBERE sein, bei port 0 liegt b links von a, bei port 1 rechts.
-export const CROSS_LINKS = [
+const CROSS_LINKS_DE = [
   {a:0,b:1,port:2,why:'Wer die Grundlagen hat, sucht den ersten Kurs.'},
   {a:1,b:2,port:2,why:'Startzeit gebucht, Runde gespielt.'},
   {a:2,b:5,port:1,why:'Gespielt wird auf der Anlage eines Clubs.'},
   {a:4,b:5,port:2,why:'Clubs und Trainer veranstalten Turniere und Ligen.'},
   {a:3,b:0,port:0,why:'Aus dem Lernweg wird gezieltes Training.'}
 ];
+const CROSS_LINKS_EN = [
+  {a:0,b:1,port:2,why:'Once you have the basics, you look for your first lesson.'},
+  {a:1,b:2,port:2,why:'Tee time booked, round played.'},
+  {a:2,b:5,port:1,why:"Rounds are played at a club's facility."},
+  {a:4,b:5,port:2,why:'Clubs and coaches run tournaments and leagues.'},
+  {a:3,b:0,port:0,why:'The learning path turns into focused training.'}
+];
+
+const IS_EN = typeof document!=='undefined' && document.documentElement.lang==='en';
+export const GROUPS = IS_EN ? GROUPS_EN : GROUPS_DE;
+export const CROSS_LINKS = IS_EN ? CROSS_LINKS_EN : CROSS_LINKS_DE;
 
 export const CENTER = {x:.5,y:.48,z:46,rx:0,ry:0};
 export const GROUP_POSITIONS = [{x:.20,y:.19,z:72,rx:3,ry:-8},{x:.18,y:.50,z:-48,rx:-2,ry:-5},{x:.21,y:.81,z:52,rx:3,ry:-7},{x:.80,y:.19,z:-62,rx:-3,ry:7},{x:.79,y:.50,z:92,rx:2,ry:8},{x:.79,y:.81,z:-32,rx:-3,ry:6}];

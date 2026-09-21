@@ -4,6 +4,23 @@ import {createElasticLinks} from './network-elastic.mjs';
 import {floatPose} from './network-float.mjs';
 import {FEATURE_POINTS} from './network-details.mjs';
 
+// A handful of UI strings this module writes into the DOM itself (the rest
+// comes from GROUPS/FEATURE_POINTS, which already switch on <html lang>).
+const IS_EN=document.documentElement.lang==='en';
+const T=IS_EN?{
+  planned:'PLANNED',fromVision:'From the product vision',plannedLower:'Planned',
+  overview:'SIX AREAS. ONE WHOLE.',whereStart:'Where would you like to start?',
+  plannedDetails:'Planned · Details',backToOverview:'Back to overview',
+  plannedFeatures:n=>`${n}: three planned features`,sixAreas:'KAVEO and its six product areas',
+  viewDetails:'View details'
+}:{
+  planned:'GEPLANT',fromVision:'Aus der Produktvision',plannedLower:'Geplant',
+  overview:'SECHS BEREICHE. EIN ZUSAMMENHANG.',whereStart:'Wo möchtest du anfangen?',
+  plannedDetails:'Geplant · Details',backToOverview:'Zur Übersicht zurück',
+  plannedFeatures:n=>`${n}: drei geplante Funktionen`,sixAreas:'KAVEO und seine sechs Produktbereiche',
+  viewDetails:'Details ansehen'
+};
+
 const $=id=>document.getElementById(id);
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const narrow=matchMedia('(max-width: 900px)');
@@ -133,21 +150,11 @@ function measureBoxes(){
 }
 function measure(){width=space.clientWidth||1;height=space.clientHeight||1;measureBoxes();wires.setAttribute('viewBox',`0 0 ${width} ${height}`);draw();}
 
-// Was unter dem Netz steht, solange kein Bereich geoeffnet ist. Zeichengleich
-// auch in index.html -- dort steht es beim ersten Laden, hier wird es
-// zurueckgeschrieben, sobald man aus einem Bereich herausgeht. Weicht das eine
-// vom anderen ab, springt der Text beim Zurueckgehen um.
-const GRUNDZUSTAND = {
-  label: 'SECHS BEREICHE',
-  title: 'Ein Golfleben besteht nicht aus sechs Apps.',
-  copy: 'Lernen, planen, spielen, trainieren, sich austauschen — das gehört zusammen und liegt heute trotzdem in getrennten Werkzeugen. Öffne einen Bereich, um zu sehen, was darin geplant ist.',
-};
-
 function detail(group=null,index=null){
   const item=index!==null?group?.features[index]:null;
-  $('selection-label').textContent=item?`${group.label.toUpperCase()} · GEPLANT`:group?`${group.audience??'Aus der Produktvision'} · Geplant`:GRUNDZUSTAND.label;
-  $('selection-title').textContent=item?.title??group?.title??GRUNDZUSTAND.title;
-  $('selection-copy').textContent=item?.description??group?.description??GRUNDZUSTAND.copy;
+  $('selection-label').textContent=item?`${group.label.toUpperCase()} · ${T.planned}`:group?`${group.audience??T.fromVision} · ${T.plannedLower}`:T.overview;
+  $('selection-title').textContent=item?.title??group?.title??T.whereStart;
+  $('selection-copy').textContent=item?.description??group?.description??'';
   if(motionAllowed())$('selection').animate([{opacity:.35,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{duration:420,easing:'cubic-bezier(.22,1,.36,1)'});
 }
 
@@ -196,7 +203,7 @@ function renderFeatures(group){
   featureButtons=group.features.map((item,index)=>{
     const position=make('div','node-position feature-position');
     const button=make('button','network-node feature-node');button.type='button';button.setAttribute('aria-pressed','false');button.setAttribute('aria-controls','feature-detail');button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-expanded','false');
-    append(button,append(make('span'),make('span','node-title',item.title),make('span','node-subtitle','Geplant · Details')));
+    append(button,append(make('span'),make('span','node-title',item.title),make('span','node-subtitle',T.plannedDetails)));
     button.addEventListener('click',()=>openFeatureDetail(group,index,button));
     button.disabled=true;position.append(button);$('feature-nodes').append(position);return {position,button,box:{width:224,height:120}};
   });
@@ -218,11 +225,11 @@ function selectGroup(id,{initial=false}={}){
     const active=!id||GROUPS[i].id===id;
     position.inert=!active;button.classList.toggle('is-center',GROUPS[i].id===id);
     button.setAttribute('aria-expanded',String(GROUPS[i].id===id));
-    button.setAttribute('aria-label',GROUPS[i].id===id?`${GROUPS[i].label}. Zur Übersicht zurück`:`${GROUPS[i].label}. ${GROUPS[i].subtitle}`);
+    button.setAttribute('aria-label',GROUPS[i].id===id?`${GROUPS[i].label}. ${T.backToOverview}`:`${GROUPS[i].label}. ${GROUPS[i].subtitle}`);
   });
   measureBoxes();
   $('back-button').hidden=!id;$('home-crumb').disabled=!id;$('group-crumb').hidden=!id;$('group-crumb').textContent=group?.label??'';
-  space.setAttribute('aria-label',id?`${group.label}: drei geplante Funktionen`:'KAVEO und seine sechs Produktbereiche');
+  space.setAttribute('aria-label',id?T.plannedFeatures(group.label):T.sixAreas);
   if(!id){featureButtons.forEach(({button,position})=>{button.disabled=true;position.inert=true;});}
   detail(group);
   if(wasFocused){const target=id?categoryButtons.find((_,i)=>GROUPS[i].id===id)?.button:categoryButtons.find((_,i)=>GROUPS[i].id===previous)?.button;target?.focus({preventScroll:true});}
@@ -257,10 +264,10 @@ GROUPS.forEach((group,index)=>{
   const summary=append(make('summary'),make('span','node-index',`0${index+1}`),append(make('span'),make('span','node-title',group.label),make('span','node-subtitle',group.subtitle)));
   const content=make('div','mobile-features');
   group.features.forEach((feature,i)=>{
-    const button=make('button','quiet-button mobile-detail-button','Details ansehen');button.type='button';
-    button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls','feature-detail');button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`${feature.title}: Details ansehen`);
+    const button=make('button','quiet-button mobile-detail-button',T.viewDetails);button.type='button';
+    button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-controls','feature-detail');button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',`${feature.title}: ${T.viewDetails}`);
     button.addEventListener('click',()=>openFeatureDetail(group,i,button));mobileDetailButtons.set(`${group.id}:${i}`,button);
-    append(content,append(make('section','mobile-feature'),make('span','eyebrow','GEPLANT'),make('h3','',feature.title),make('p','',feature.description),button));
+    append(content,append(make('section','mobile-feature'),make('span','eyebrow',T.planned),make('h3','',feature.title),make('p','',feature.description),button));
   });
   append(item,summary,content);$('mobile-explorer').append(item);
 });

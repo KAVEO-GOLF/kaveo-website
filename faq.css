@@ -1,0 +1,35 @@
+/* KAVEO — FAQ-Bereich auf der Startseite. Wiederverwendet bestehende Tokens
+   (.story-width/.story-eyebrow aus opening.css, --line/--glass/--ease aus
+   reference/styles.css) und das etablierte Accordion-Muster (disclosure-mark
+   wie in roadmap.css/functions-ci.css), eigenständig statt page-fremdes CSS
+   nachzuladen. */
+.faq { position:relative; padding:96px 0 112px }
+.faq h2 { font-size:clamp(40px,4.8vw,56px); line-height:1.12; letter-spacing:-.045em; font-weight:400; margin-top:20px; max-width:640px }
+.faq-list { margin-top:40px; display:grid; gap:16px }
+.faq-item {
+  position:relative; padding:0 32px; border:1px solid var(--line); border-radius:24px;
+  background:linear-gradient(125deg,rgba(78,85,91,.42),var(--glass));
+  box-shadow:inset 0 1px rgba(255,255,255,.16), 0 24px 64px rgba(0,0,0,.21);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+}
+.faq-item > summary { display:flex; gap:18px; align-items:center; list-style:none; padding:24px 0; cursor:pointer }
+.faq-item > summary::-webkit-details-marker { display:none }
+.faq-item > summary:focus-visible { outline:2px solid #fff; outline-offset:5px }
+.faq-question { flex:1; min-width:0; font-size:18px; font-weight:500; line-height:1.4; letter-spacing:-.01em; color:#fff }
+.disclosure-mark { display:grid; place-items:center; width:32px; height:32px; font-size:26px; font-weight:400; color:#c9cfcc; transition:transform .35s var(--ease); flex:none }
+details[open] > summary > .disclosure-mark { transform:rotate(45deg) }
+.faq-answer { padding:0 0 26px; color:var(--secondary); font-size:15px; line-height:1.75; max-width:64ch }
+.faq-answer a { color:#fff; text-decoration:underline; text-underline-offset:3px }
+.faq-answer a:hover { color:var(--secondary) }
+@media(max-width:900px) {
+  .faq { padding:72px 0 88px }
+}
+@media(max-width:720px) {
+  .faq { padding:56px 0 64px }
+  .faq-item { padding:0 20px; border-radius:20px }
+  .faq-item > summary { padding-block:20px }
+  .faq-question { font-size:16px }
+}
+@media(prefers-reduced-motion:reduce) {
+  .disclosure-mark { transition:none }
+}

@@ -4,6 +4,10 @@
    wie in roadmap.css/functions-ci.css), eigenständig statt page-fremdes CSS
    nachzuladen. */
 .faq { position:relative; padding:96px 0 112px }
+.faq::before {
+  content:""; position:absolute; top:0; left:0; right:0; height:180px;
+  background:linear-gradient(180deg,transparent,#0d0d0d); pointer-events:none;
+}
 .faq h2 { font-size:clamp(40px,4.8vw,56px); line-height:1.12; letter-spacing:-.045em; font-weight:400; margin-top:20px; max-width:640px }
 .faq-list { margin-top:40px; display:grid; gap:16px }
 .faq-item {

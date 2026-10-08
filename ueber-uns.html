@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Über uns – KAVEO GOLF</title>
+  <meta name="description" content="Ich bin Philipp. Ich spiele Golf, seit ich 14 bin, und ich baue KAVEO GOLF – allein, aus Overath." />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="canonical" href="https://kaveo-golf.app/ueber-uns.html" />
+  <link rel="preload" href="assets/fonts/Manrope_700Bold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/Manrope_400Regular.woff2" as="font" type="font/woff2" crossorigin />
+  <style>
+    @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Italic-latin.woff2") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_400Regular.woff2") format("woff2"), url("assets/fonts/Manrope_400Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_500Medium.woff2") format("woff2"), url("assets/fonts/Manrope_500Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_600SemiBold.woff2") format("woff2"), url("assets/fonts/Manrope_600SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_700Bold.woff2") format("woff2"), url("assets/fonts/Manrope_700Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+
+    /* Farben, Schriften und Bausteine wie auf der Startseite (index.html) */
+    :root {
+      --ink: #0d0d0d;
+      --ink-2: #111111;
+      --line: rgba(255, 255, 255, 0.1);
+      --muted: #a3a3a3;
+      --green: #045c3c;
+      --green-hi: #1f9a6a;
+      --mint: #d6f5e7;
+      --cream: #f3f0e8;
+      --cream-2: #e9e4d8;
+      --cream-ink: #14231b;
+      --cream-muted: #5d6a62;
+      --radius: 28px;
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: "Manrope", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body { margin: 0; background: var(--ink); color: #fff; font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+    .serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+    .eyebrow { font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase; font-weight: 600; color: var(--green-hi); }
+
+    /* ---------- nav (wie Startseite) ---------- */
+    .nav {
+      position: fixed; top: 16px; left: 50%; translate: -50% 0; z-index: 50;
+      width: min(1180px, 100% - 32px); display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 10px 10px 20px; border-radius: 999px; background: rgba(13, 13, 13, 0.82);
+      border: 1px solid var(--line); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    }
+    .nav .logo { flex: none; } .nav .logo img { height: 30px; width: auto; }
+    .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 14px; font-weight: 500; opacity: .85; }
+    .nav ul a:hover, .nav ul a[aria-current] { opacity: 1; color: var(--green-hi); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer; font: 600 15px var(--sans);
+      padding: 13px 22px; border-radius: 999px; background: #fff; color: var(--ink); transition: transform .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-1px); background: var(--mint); }
+    .btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-hi); box-shadow: 0 0 0 4px rgba(31, 154, 106, .25); }
+
+    /* ---------- Kopf: Text links, Foto rechts ---------- */
+    .intro { position: relative; padding: 170px 0 120px; isolation: isolate; overflow-x: clip; }
+    .intro::before {
+      content: ""; position: absolute; inset: -20% -10% auto; height: 900px; z-index: -1;
+      background:
+        radial-gradient(45% 45% at 70% 35%, rgba(4, 92, 60, .5), transparent 70%),
+        radial-gradient(30% 30% at 10% 10%, rgba(31, 154, 106, .16), transparent 70%);
+    }
+    .intro::after {
+      content: ""; position: absolute; inset: 0; z-index: -1; opacity: .3;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 72px 72px;
+      -webkit-mask-image: radial-gradient(ellipse 60% 55% at 60% 30%, #000, transparent 75%);
+      mask-image: radial-gradient(ellipse 60% 55% at 60% 30%, #000, transparent 75%);
+    }
+    .intro-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 70px; align-items: center; }
+    .intro h1 { margin: 22px 0 0; font-size: clamp(42px, 6.4vw, 88px); line-height: .98; letter-spacing: -0.045em; font-weight: 700; }
+    .intro h1 .serif { font-size: 1.1em; color: var(--mint); }
+    .intro .lead { margin: 28px 0 0; max-width: 560px; font-size: clamp(18px, 2vw, 21px); line-height: 1.55; color: #cfcfcf; }
+    .photo { position: relative; margin: 0; }
+    .photo .frame {
+      border-radius: 34px; padding: 10px; background: linear-gradient(180deg, #2a2a2a, #121212); border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 60px 140px -30px rgba(0,0,0,.9), 0 0 120px rgba(4, 92, 60, .35); rotate: 2deg;
+    }
+    .photo img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 26px; }
+    .photo figcaption { margin-top: 16px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); text-align: right; }
+
+    /* ---------- Geschichte (hell, wie „So funktioniert's“) ---------- */
+    .story { background: var(--cream); color: var(--cream-ink); padding: 130px 0; }
+    .story .eyebrow { color: var(--green); }
+    .chapter { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding: 56px 0; border-top: 1px solid rgba(20,35,27,.12); }
+    .chapter:first-of-type { border-top: 0; padding-top: 0; }
+    .chapter .num { font: 600 14px var(--sans); color: var(--green); letter-spacing: .2em; padding-top: 14px; }
+    .chapter h2 { margin: 0; font-size: clamp(34px, 4.6vw, 60px); line-height: 1.02; letter-spacing: -.04em; font-weight: 700; max-width: 760px; }
+    .chapter h2 .serif { color: var(--green); }
+    .chapter p { margin: 22px 0 0; font-size: 19px; line-height: 1.65; color: var(--cream-muted); max-width: 640px; }
+
+    /* ---------- Fakten (Kacheln wie Funktionen) ---------- */
+    .facts-sec { padding: 130px 0 120px; }
+    .facts { margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .fact {
+      position: relative; overflow: hidden; border-radius: var(--radius); padding: 28px; min-height: 230px;
+      background: linear-gradient(180deg, #171717, #111); border: 1px solid var(--line);
+      display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; transition: border-color .3s, transform .3s;
+    }
+    .fact:hover { border-color: rgba(31,154,106,.5); transform: translateY(-3px); }
+    .fact .big { position: absolute; top: 20px; left: 26px; font-size: 76px; font-weight: 700; letter-spacing: -.06em; line-height: 1;
+      background: linear-gradient(180deg, #fff, rgba(255,255,255,.1)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .fact .big.small { font-size: 54px; }
+    .fact h3 { margin: 0; font-size: 19px; letter-spacing: -.01em; line-height: 1.3; }
+    .fact p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+
+    /* ---------- Wie ich baue + Abschluss ---------- */
+    .build { padding: 0 0 130px; }
+    .build-card {
+      border-radius: 36px; padding: clamp(28px, 5vw, 64px); border: 1px solid var(--line);
+      background: radial-gradient(60% 90% at 100% 0%, rgba(4,92,60,.45), transparent 70%), #101010;
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center;
+    }
+    .build-card h2 { margin: 16px 0 0; font-size: clamp(34px, 4.6vw, 58px); line-height: 1.02; letter-spacing: -.04em; }
+    .build-card h2 .serif { color: var(--mint); }
+    .build-card p { margin: 0; font-size: 18px; line-height: 1.65; color: #cfcfcf; }
+    .build-card p a { color: var(--mint); text-decoration: underline; text-underline-offset: 3px; }
+    .cta { padding: 0 0 140px; text-align: center; }
+    .cta h2 { margin: 0; font-size: clamp(48px, 8vw, 110px); line-height: .95; letter-spacing: -.05em; }
+    .cta h2 .serif { color: var(--mint); }
+    .cta p { margin: 24px auto 0; max-width: 520px; font-size: 18px; line-height: 1.6; color: var(--muted); }
+    .cta p a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+    .cta .btn { margin-top: 34px; padding: 18px 26px; font-size: 17px; }
+
+    footer { background: #0d0d0d; border-top: 1px solid var(--line); padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+    footer img { height: 26px; width: auto; }
+    footer nav { display: flex; gap: 22px; }
+    .social { display: flex; gap: 10px; }
+    .social a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); color: #cfcfcf; transition: color .2s, border-color .2s, background .2s; }
+    .social a:hover { color: #fff; border-color: rgba(31,154,106,.6); background: rgba(31,154,106,.12); }
+    .social svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* reveal */
+    .rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+    .rv.in { opacity: 1; transform: none; }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 960px) {
+      .nav ul { display: none; }
+      .intro-grid { grid-template-columns: 1fr; gap: 56px; }
+      .photo { max-width: 460px; }
+      .chapter { grid-template-columns: 1fr; gap: 10px; }
+      .facts { grid-template-columns: 1fr 1fr; }
+      .build-card { grid-template-columns: 1fr; gap: 26px; }
+    }
+    @media (max-width: 560px) {
+      .intro { padding-top: 130px; padding-bottom: 90px; }
+      .nav .btn { padding: 13px 16px; font-size: 14px; }
+      footer nav a { padding: 12px 4px; }
+      .story, .facts-sec { padding-block: 90px; }
+      .facts { grid-template-columns: 1fr; }
+      .fact { min-height: 190px; }
+      .fact:not(:has(.big)) { min-height: 0; }
+      .chapter p { font-size: 17px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .rv { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <a class="logo" href="index.html" aria-label="KAVEO GOLF Startseite"><img src="assets/logo-lockup.webp" alt="KAVEO GOLF" width="512" height="341" /></a>
+    <ul>
+      <li><a href="index.html#runde">So funktioniert's</a></li>
+      <li><a href="index.html#funktionen">Funktionen</a></li>
+      <li><a href="index.html#plan">Der Plan</a></li>
+      <li><a href="ueber-uns.html" aria-current="page">Über uns</a></li>
+    </ul>
+    <a class="btn" href="https://app.kaveo-golf.app/register"><span class="dot"></span>Registrieren</a>
+  </header>
+
+  <main>
+    <!-- KOPF -->
+    <section class="intro">
+      <div class="wrap intro-grid">
+        <div>
+          <div class="eyebrow rv">Über uns</div>
+          <h1 class="rv">Ein Golfer baut die App, die ihm <span class="serif">gefehlt hat.</span></h1>
+          <p class="lead rv">Ich bin Philipp. Ich spiele Golf, seit ich 14 bin, und ich baue KAVEO GOLF – allein, aus Overath.</p>
+        </div>
+        <figure class="photo rv">
+          <div class="frame"><img src="assets/philipp-golfplatz.webp" alt="Philipp im grünen KAVEO-Poloshirt mit Schläger auf einem Golfplatz, links die Fahne, im Hintergrund ein Teich" width="760" height="760" /></div>
+          <figcaption>KI-Visualisierung</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- GESCHICHTE -->
+    <section class="story">
+      <div class="wrap">
+        <article class="chapter rv">
+          <div class="num">01 · Wie alles anfing</div>
+          <div>
+            <h2>Es fing mit einer <span class="serif">Excel-Tabelle</span> an.</h2>
+            <p>Mit meinen Freunden spiele ich eine eigene Liga. Die Tabelle dazu habe ich in Excel geführt. Und nach jeder Runde dasselbe: Die Scores kamen falsch, unvollständig oder gar nicht bei mir an. Irgendwann war klar: Das muss einfacher gehen.</p>
+          </div>
+        </article>
+        <article class="chapter rv">
+          <div class="num">02 · Zehn Apps</div>
+          <div>
+            <h2>Zehn Golf-Apps. <span class="serif">Eine reicht.</span></h2>
+            <p>Dazu kommt: Auf meinem Handy liegen gefühlt zehn Golf-Apps. Eine für den Score, eine fürs Wetter, eine für die Regeln. Ehrlich gesagt geht mir das auf den Keks. KAVEO GOLF bringt das an einen Ort.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAKTEN -->
+    <section class="facts-sec">
+      <div class="wrap">
+        <div class="rv">
+          <div class="eyebrow">Kurz zu mir</div>
+        </div>
+        <div class="facts">
+          <article class="fact rv">
+            <div class="big">14</div>
+            <h3>Golf seit dem 14. Lebensjahr</h3>
+          </article>
+          <article class="fact rv">
+            <div class="big">0,0</div>
+            <h3>Handicap: in der Spitze 0,0</h3>
+            <p>heute um 4–5</p>
+          </article>
+          <article class="fact rv">
+            <h3>Angefangen im Golfclub Burg Overbach,</h3>
+            <p>heute im Golfclub Schloss Auel</p>
+          </article>
+          <article class="fact rv">
+            <h3>Fast immer mit Hund auf der Runde</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WIE ICH BAUE -->
+    <section class="build">
+      <div class="wrap">
+        <div class="build-card rv">
+          <div>
+            <div class="eyebrow" style="color:var(--mint)">Wie ich baue</div>
+            <h2>Stück für Stück. <span class="serif">Kostenlos.</span></h2>
+          </div>
+          <p>KAVEO GOLF ist grundsätzlich kostenlos. Ich baue die App Stück für Stück – zuerst das, was auf der Runde wirklich hilft: Runde spielen, Regeln finden, das Wetter lesen. Was schon läuft und was noch kommt, steht ehrlich unter <a href="index.html#plan">„Der Plan“</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABSCHLUSS -->
+    <section class="cta">
+      <div class="wrap rv">
+        <h2>Spiel <span class="serif">mit.</span></h2>
+        <p>Leg dir ein Konto an und sag mir, was dir fehlt. Fragen, Ideen oder Kritik gern an <a href="mailto:info@kaveo-golf.app">info@kaveo-golf.app</a>.</p>
+        <a class="btn" href="https://app.kaveo-golf.app/register"><span class="dot"></span>Jetzt registrieren</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <img src="assets/logo-lockup.webp" alt="KAVEO GOLF" width="512" height="341" />
+      <nav><a href="ueber-uns.html">Über uns</a><a href="faq.html">FAQ</a><a href="https://kaveo-golf.app/impressum/">Impressum</a><a href="https://kaveo-golf.app/datenschutz/">Datenschutz</a></nav>
+      
+        <div class="social"><a href="https://www.facebook.com/profile.php?id=61594981341610" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a><a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a><a href="https://www.tiktok.com/@kaveogolf" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf TikTok" title="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Einblenden beim Scrollen (wie Startseite)
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.15 });
+    document.querySelectorAll(".rv").forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280, height=720" />
+    <title>KAVEO GOLF – Hero-Film</title>
+    <script src="../vendor/gsap/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_400Regular.ttf"); font-weight: 400; }
+      @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_500Medium.ttf"); font-weight: 500; }
+      @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_600SemiBold.ttf"); font-weight: 600; }
+      @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_700Bold.ttf"); font-weight: 700; }
+
+      :root {
+        --ink: #0d0d0d;
+        --line: rgba(255, 255, 255, 0.1);
+        --muted: #a3a3a3;
+        --green: #045c3c;
+        --green-hi: #1f9a6a;
+      }
+      html, body { width: 100%; height: 100%; }
+      body { margin: 0; background: var(--ink); color: #fff; font-family: "Manrope", sans-serif; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--ink); }
+
+      /* ---------- Hintergrund ---------- */
+      #bg { position: absolute; inset: 0; }
+      .glow { position: absolute; width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(circle, rgba(4, 92, 60, 0.55) 0%, rgba(4, 92, 60, 0) 65%); }
+      #glow-a { left: -260px; top: -320px; }
+      #glow-b { left: 640px; top: 120px; opacity: 0.6; }
+      .grid {
+        position: absolute; inset: 0; opacity: 0.25;
+        background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: 80px 80px;
+        -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+        mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+      }
+
+      /* ---------- Intro ---------- */
+      #intro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
+      #ball { display: block; width: 230px; height: 230px; }
+      #ball img { width: 100%; height: 100%; display: block; }
+      .kicker { font-size: 15px; letter-spacing: 0.3em; color: var(--green-hi); font-weight: 600; text-transform: uppercase; }
+      .headline { display: flex; gap: 16px; font-size: 64px; font-weight: 700; letter-spacing: -0.03em; }
+      .headline .w { display: inline-block; }
+
+      /* ---------- Text links, Handy rechts ---------- */
+      .copy { position: absolute; left: 110px; top: 0; bottom: 0; width: 470px; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+      .copy .tag { display: flex; align-items: center; gap: 14px; font-size: 15px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--green-hi); font-weight: 600; }
+      .copy .tag img { width: 56px; height: 56px; display: block; }
+      .copy h2 { margin: 0; font-size: 50px; line-height: 1.05; letter-spacing: -0.03em; font-weight: 700; }
+      .copy p { margin: 0; font-size: 21px; line-height: 1.45; color: var(--muted); max-width: 430px; }
+
+      #phone-wrap { position: absolute; right: 150px; top: 60px; width: 300px; height: 600px; }
+      #phone {
+        position: absolute; inset: 0; border-radius: 46px; background: #050505;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7), 0 0 0 8px #111, 0 0 80px rgba(4, 92, 60, 0.35);
+        overflow: hidden;
+      }
+      .notch { position: absolute; left: 105px; top: 10px; width: 90px; height: 24px; border-radius: 20px; background: #000; z-index: 9; }
+      /* Ein echter App-Screen (390x760) füllt das Display; die Bildposition wird im Zeitstrahl animiert */
+      .shot { position: absolute; inset: 0; overflow: hidden; opacity: 0; }
+      #s-runde { opacity: 1; }
+      .tap, .ring, .sweep { opacity: 0; }
+      .shot img { position: absolute; left: -4px; top: 0; width: 308px; height: auto; display: block; }
+      /* Hinweise über dem Screen: Fingertipp und Leuchtrahmen (Koordinaten im Display, 300x600) */
+      .tap { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; background: rgba(255, 255, 255, 0.35); border: 2px solid rgba(255, 255, 255, 0.8); z-index: 8; }
+      .ring { position: absolute; border-radius: 14px; border: 2px solid #1f9a6a; box-shadow: 0 0 0 4px rgba(31, 154, 106, 0.25), 0 0 24px rgba(31, 154, 106, 0.6); z-index: 8; }
+      .sweep { position: absolute; left: 14px; right: 14px; height: 30px; border-radius: 8px; background: rgba(31, 154, 106, 0.22); border: 1px solid rgba(31, 154, 106, 0.6); z-index: 8; }
+
+      /* ---------- Outro ---------- */
+      #outro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+      #lockup { display: block; width: 420px; }
+      .cta { font-size: 20px; color: var(--muted); }
+      .cta b { color: #fff; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1280" data-height="720" data-duration="19.5" data-fps="30">
+      <div id="bg">
+        <div class="glow" id="glow-a"></div>
+        <div class="glow" id="glow-b"></div>
+        <div class="grid"></div>
+      </div>
+
+      <!-- Intro -->
+      <section id="intro" class="clip" data-start="0" data-duration="3.4" data-track-index="1">
+        <div id="ball"><img src="assets/ball.webp" alt="" /></div>
+        <div class="kicker" id="kicker">Die Golf-App · in Entwicklung</div>
+        <div class="headline" id="headline">
+          <span class="w">Dein</span><span class="w">Golfleben</span><span class="w">bekommt</span><span class="w">einen</span><span class="w">Ort.</span>
+        </div>
+      </section>
+
+      <!-- Texte -->
+      <section id="copy-round" class="clip copy" data-start="3.2" data-duration="4.8" data-track-index="2">
+        <div class="tag"><img src="assets/icons/runden.png" alt="" />Runde spielen</div>
+        <h2>Deine Runde. Loch für Loch.</h2>
+        <p>Anlage wählen, Spielform festlegen, Schläge eintragen. Auch ohne Netz.</p>
+      </section>
+      <section id="copy-weather" class="clip copy" data-start="7.9" data-duration="4.1" data-track-index="2">
+        <div class="tag"><img src="assets/icons/wetter.png" alt="" />Wetter</div>
+        <h2>Wetter, das Golf versteht.</h2>
+        <p>Gut spielbar oder nicht. Und bis wann du heute noch starten kannst.</p>
+      </section>
+      <section id="copy-rules" class="clip copy" data-start="11.9" data-duration="4.4" data-track-index="2">
+        <div class="tag"><img src="assets/icons/regeln.png" alt="" />Regelhilfe</div>
+        <h2>Die Regel. Direkt am Platzplan.</h2>
+        <p>Tippe, wo dein Ball liegt. Die Antwort kommt in Klartext.</p>
+      </section>
+
+      <!-- Handy mit echten App-Screens -->
+      <section id="phone-clip" class="clip" data-start="3.2" data-duration="13.1" data-track-index="3">
+        <div id="phone-wrap">
+          <div id="phone">
+            <div class="notch"></div>
+            <div class="shot" id="s-runde"><img src="assets/screens/07_runde_spielen.webp" alt="" /></div>
+            <div class="shot" id="s-form"><img src="assets/screens/08_spielform.webp" alt="" /></div>
+            <div class="shot" id="s-score"><img src="assets/screens/10_scorekarte.webp" alt="" /></div>
+            <div class="shot" id="s-wetter"><img src="assets/screens/05_wetter.webp" alt="" /></div>
+            <div class="shot" id="s-tage"><img src="assets/screens/06_wetter_7tage.webp" alt="" /></div>
+            <div class="shot" id="s-regeln"><img src="assets/screens/02_regeln.webp" alt="" /></div>
+            <div class="shot" id="s-antwort"><img src="assets/screens/04_regel_antwort.webp" alt="" /></div>
+            <div class="tap" id="tap1" style="left:150px;top:212px"></div>
+            <div class="tap" id="tap2" style="left:86px;top:278px"></div>
+            <div class="sweep" id="sweep" style="top:262px"></div>
+            <div class="ring" id="ring-spielbar" style="left:19px;top:263px;width:115px;height:32px;border-radius:18px"></div>
+            <div class="ring" id="ring-start" style="left:17px;top:409px;width:264px;height:42px"></div>
+            <div class="ring" id="ring-antwort" style="left:10px;top:208px;width:280px;height:166px"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Outro -->
+      <section id="outro" class="clip" data-start="16.1" data-duration="3.4" data-track-index="1">
+        <img id="lockup" src="assets/logo-lockup.webp" alt="KAVEO GOLF" />
+        <div class="cta" id="cta">Jetzt <b>registrieren</b> und mitspielen</div>
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Hintergrund
+      tl.fromTo("#glow-a", { x: 0, y: 0 }, { x: 260, y: 140, duration: 19.5, ease: "sine.inOut" }, 0);
+      tl.fromTo("#glow-b", { x: 0, y: 0 }, { x: -220, y: -80, duration: 19.5, ease: "sine.inOut" }, 0);
+
+      // Intro
+      tl.fromTo("#ball", { scale: 0.4, opacity: 0, rotation: -120, y: -40 }, { scale: 1, opacity: 1, rotation: 0, y: 0, duration: 1.1, ease: "power3.out" }, 0.15);
+      tl.fromTo("#kicker", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.8);
+      tl.fromTo("#headline .w", { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, stagger: 0.09, ease: "power3.out" }, 1.0);
+      tl.to("#intro", { opacity: 0, scale: 0.96, duration: 0.45, ease: "power2.in" }, 2.95);
+
+      // Handy kommt
+      tl.fromTo("#phone-wrap", { y: 80, opacity: 0, rotationY: -18 }, { y: 0, opacity: 1, rotationY: 0, duration: 0.9, ease: "power3.out" }, 3.2);
+
+      // Texte
+      const copyIn = (sel, at, out) => {
+        tl.fromTo(sel + " .tag", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, at);
+        tl.fromTo(sel + " h2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, at + 0.1);
+        tl.fromTo(sel + " p", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, at + 0.22);
+        tl.to(sel, { opacity: 0, duration: 0.3, ease: "power1.in" }, out);
+      };
+      copyIn("#copy-round", 3.35, 7.6);
+      copyIn("#copy-weather", 7.95, 11.6);
+      copyIn("#copy-rules", 11.95, 16.0);
+
+      // Screens: Startzustand
+
+      // Wischen wie in der App: neuer Screen schiebt von rechts herein
+      const push = (from, to, at) => {
+        tl.fromTo(to, { opacity: 1, xPercent: 100 }, { opacity: 1, xPercent: 0, duration: 0.5, ease: "power3.inOut", immediateRender: false }, at);
+        tl.fromTo(from, { opacity: 1, xPercent: 0 }, { opacity: 0, xPercent: -30, duration: 0.5, ease: "power3.inOut", immediateRender: false }, at);
+      };
+      const tap = (sel, at) => {
+        tl.fromTo(sel, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power2.out", immediateRender: false }, at);
+        tl.fromTo(sel, { opacity: 1, scale: 1 }, { opacity: 0, scale: 1.6, duration: 0.35, ease: "power2.out", immediateRender: false }, at + 0.18);
+      };
+      const ring = (sel, at, hold) => {
+        tl.fromTo(sel, { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, at);
+        tl.fromTo(sel, { opacity: 1 }, { opacity: 0, duration: 0.3, immediateRender: false }, at + hold);
+      };
+
+      // Runde spielen -> Spielform -> Scorekarte
+      tap("#tap1", 4.35);
+      push("#s-runde", "#s-form", 4.75);
+      tl.fromTo("#s-form img", { y: 0, scale: 1 }, { y: -40, scale: 1.12, transformOrigin: "50% 0%", duration: 1.0, ease: "power2.inOut" }, 5.35);
+      push("#s-form", "#s-score", 6.35);
+      tl.fromTo("#sweep", { opacity: 0 }, { opacity: 1, duration: 0.2, immediateRender: false }, 6.9);
+      tl.fromTo("#sweep", { y: 0 }, { y: 240, duration: 1.0, ease: "steps(8)", immediateRender: false }, 6.95);
+      tl.fromTo("#sweep", { opacity: 1 }, { opacity: 0, duration: 0.2, immediateRender: false }, 7.95);
+
+      // Wetter -> 7 Tage
+      push("#s-score", "#s-wetter", 7.95);
+      ring("#ring-spielbar", 8.55, 0.9);
+      ring("#ring-start", 9.5, 0.9);
+      push("#s-wetter", "#s-tage", 10.55);
+      tl.fromTo("#s-tage img", { y: 0, scale: 1 }, { y: -40, scale: 1.12, transformOrigin: "50% 0%", duration: 1.0, ease: "power2.inOut" }, 11.0);
+
+      // Regeln -> Antwort
+      push("#s-tage", "#s-regeln", 11.95);
+      tap("#tap2", 13.0);
+      push("#s-regeln", "#s-antwort", 13.35);
+      ring("#ring-antwort", 14.0, 1.6);
+      tl.to("#phone-wrap", { opacity: 0, y: -30, duration: 0.4, ease: "power2.in" }, 15.9);
+
+      // Outro
+      tl.fromTo("#lockup", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 16.2);
+      tl.fromTo("#cta", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 16.7);
+      tl.to("#outro", { opacity: 0, duration: 0.5, ease: "power1.in" }, 18.95);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

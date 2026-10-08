@@ -1,239 +1,757 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0d0d0d">
-  <meta name="description" content="Verabredungen im Chat, Ergebnisse in Tabellen, für alles andere eine eigene App: KAVEO bringt dein Golfleben an einem Ort zusammen — und entsteht gerade.">
-  <title>KAVEO GOLF — Dein Golfleben bekommt einen Ort</title>
-  <link rel="canonical" href="https://kaveo-golf.app/">
-  <link rel="alternate" hreflang="de" href="https://kaveo-golf.app/">
-  <link rel="alternate" hreflang="en" href="https://kaveo-golf.app/en/">
-  <link rel="alternate" hreflang="x-default" href="https://kaveo-golf.app/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="KAVEO GOLF">
-  <meta property="og:locale" content="de_DE">
-  <meta property="og:title" content="KAVEO GOLF — Dein Golfleben bekommt einen Ort">
-  <meta property="og:description" content="Verabredungen im Chat, Ergebnisse in Tabellen, für alles andere eine eigene App: KAVEO bringt dein Golfleben an einem Ort zusammen — und entsteht gerade.">
-  <meta property="og:image" content="https://kaveo-golf.app/media/inselgruen-logo-poster-v04.webp">
-  <meta property="og:image:width" content="1920">
-  <meta property="og:image:height" content="1080">
-  <meta property="og:url" content="https://kaveo-golf.app/">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="KAVEO GOLF — Dein Golfleben bekommt einen Ort">
-  <meta name="twitter:description" content="Verabredungen im Chat, Ergebnisse in Tabellen, für alles andere eine eigene App: KAVEO bringt dein Golfleben an einem Ort zusammen — und entsteht gerade.">
-  <meta name="twitter:image" content="https://kaveo-golf.app/media/inselgruen-logo-poster-v04.webp">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Was ist KAVEO GOLF?","acceptedAnswer":{"@type":"Answer","text":"Verabredungen im Chat, Ergebnisse in Tabellen, für alles andere eine eigene App — KAVEO bringt dein Golfleben an einem Ort zusammen."}},{"@type":"Question","name":"Was kann ich in der App schon nutzen?","acceptedAnswer":{"@type":"Answer","text":"Schon heute kannst du Runden mit deinen Mitspielern live spielen, die Regelhilfe nutzen, aktuelles Wetter für deinen Platz abrufen und Freunde finden. Weitere Funktionen stehen auf der Roadmap."}},{"@type":"Question","name":"Ist KAVEO GOLF kostenlos?","acceptedAnswer":{"@type":"Answer","text":"Die App ist grundsätzlich kostenlos nutzbar."}},{"@type":"Question","name":"Für welche Plattformen kommt KAVEO?","acceptedAnswer":{"@type":"Answer","text":"iOS, Android und als Web-App."}},{"@type":"Question","name":"Wann startet KAVEO GOLF?","acceptedAnswer":{"@type":"Answer","text":"Das steht noch nicht ganz fest — voraussichtlich Anfang der neuen Golfsaison."}}]}</script>
-  <link rel="icon" href="assets/favicon.png">
-  <link rel="preload" href="reference/assets/fonts/Manrope_400Regular.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="reference/styles.css">
-  <link rel="stylesheet" href="reference/copy-v2.css">
-  <link rel="stylesheet" href="reference/feature-story.css">
-  <link rel="stylesheet" href="opening.css">
-  <link rel="stylesheet" href="background.css">
-  <link rel="stylesheet" href="plan-background.css">
-  <link rel="stylesheet" href="green-ball.css">
-  <link rel="stylesheet" href="founder-stage.css">
-  <script src="controls.js" defer></script>
-  <script src="ambient-video.js" defer></script>
-  <script type="module" src="green-ball.mjs"></script>
-  <script type="module" src="founder-stage.mjs"></script>
-  <link rel="stylesheet" href="founder-polish.css">
-  <link rel="stylesheet" href="hero-stage.css">
-  <script type="module" src="hero-stage.mjs"></script>
-  <link rel="stylesheet" href="button-shape.css">
-  <link rel="stylesheet" href="founder-video.css">
-  <script type="module" src="founder-video.mjs"></script>
-  <link rel="stylesheet" href="phone-assembly.css">
-  <script type="module" src="phone-assembly.mjs"></script>
-  <link rel="stylesheet" href="network-stage.css">
-  <script type="module" src="network-preview.mjs"></script>
-  <link rel="stylesheet" href="ball-finale.css">
-  <script type="module" src="ball-finale.mjs"></script>
-  <link rel="stylesheet" href="faq.css">
-  <link rel="stylesheet" href="site-navigation.css">
-  <script type="module" src="site-navigation.mjs"></script>
-  <link rel="stylesheet" href="mobile-polish.css">
-  <link rel="stylesheet" href="footer-socials.css">
-  <script type="module" src="footer-controls.mjs"></script>
-  <script type="module" src="warteliste-formular.mjs"></script>
-  <link rel="stylesheet" href="site-background.css">
-  <link rel="stylesheet" href="feinschliff.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KAVEO GOLF – Dein Golfleben bekommt einen Ort</title>
+  <meta name="description" content="KAVEO GOLF ist die Golf-App, die wir gerade bauen: Runde spielen, Regeln am Platzplan finden, Wetter golfgerecht lesen." />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="canonical" href="https://kaveo-golf.app/" />
+  <link rel="preload" href="assets/fonts/Manrope_700Bold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/Manrope_400Regular.woff2" as="font" type="font/woff2" crossorigin />
+  <script src="vendor/hyperframes/hyperframes-player.global.js" defer></script>
+  <style>
+    @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Italic-latin.woff2") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_400Regular.woff2") format("woff2"), url("assets/fonts/Manrope_400Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_500Medium.woff2") format("woff2"), url("assets/fonts/Manrope_500Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_600SemiBold.woff2") format("woff2"), url("assets/fonts/Manrope_600SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_700Bold.woff2") format("woff2"), url("assets/fonts/Manrope_700Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+
+    :root {
+      --ink: #0d0d0d;
+      --ink-2: #111111;
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #ffffff;
+      --muted: #a3a3a3;
+      --green: #045c3c;
+      --green-hi: #1f9a6a;
+      --mint: #d6f5e7;
+      --cream: #f3f0e8;
+      --cream-2: #e9e4d8;
+      --cream-ink: #14231b;
+      --cream-muted: #5d6a62;
+      --radius: 28px;
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans: "Manrope", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body { margin: 0; background: var(--ink); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+    .serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+    .eyebrow { font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase; font-weight: 600; color: var(--green-hi); }
+
+    /* ---------- nav ---------- */
+    .nav {
+      position: fixed; top: 16px; left: 50%; translate: -50% 0; z-index: 50;
+      width: min(1180px, 100% - 32px); display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 10px 10px 20px; border-radius: 999px; background: rgba(13, 13, 13, 0.82);
+      border: 1px solid var(--line); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    }
+    .nav .logo { flex: none; } .nav .logo img { height: 30px; width: auto; }
+    .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 14px; font-weight: 500; color: inherit; opacity: .85; }
+    .nav ul a:hover { opacity: 1; color: var(--green-hi); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer; font: 600 15px var(--sans);
+      padding: 13px 22px; border-radius: 999px; background: #fff; color: var(--ink); transition: transform .2s, background .2s;
+    }
+    .btn:hover { transform: translateY(-1px); background: var(--mint); }
+    .btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-hi); box-shadow: 0 0 0 4px rgba(31, 154, 106, .25); }
+    .btn.ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.22); }
+    .btn.ghost:hover { background: rgba(255,255,255,.06); }
+
+    /* ---------- hero ---------- */
+    .hero { position: relative; padding: 150px 0 0; text-align: center; isolation: isolate; overflow-x: clip; }
+    .hero::before {
+      content: ""; position: absolute; inset: -20% -10% auto; height: 900px; z-index: -1;
+      background:
+        radial-gradient(50% 45% at 50% 30%, rgba(4, 92, 60, .55), transparent 70%),
+        radial-gradient(30% 30% at 15% 10%, rgba(31, 154, 106, .18), transparent 70%),
+        radial-gradient(30% 30% at 85% 20%, rgba(4, 92, 60, .3), transparent 70%);
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: 0; z-index: -1; opacity: .35;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 72px 72px;
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 20%, #000, transparent 75%);
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 20%, #000, transparent 75%);
+    }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.05); border: 1px solid var(--line); font-size: 14px; color: #d8d8d8;
+    }
+    .status-pill b { background: var(--green); color: #fff; font-weight: 600; font-size: 12px; padding: 4px 10px; border-radius: 999px; }
+    .hero h1 { margin: 28px auto 0; max-width: 980px; font-size: clamp(44px, 8vw, 104px); line-height: .98; letter-spacing: -0.045em; font-weight: 700; }
+    .hero h1 .serif { font-size: 1.12em; color: var(--mint); }
+    .hero .lead { margin: 26px auto 0; max-width: 620px; font-size: clamp(17px, 2vw, 20px); line-height: 1.55; color: var(--muted); }
+    .hero .actions { margin-top: 34px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* tilted film screen (flattens on scroll) */
+    .stage { perspective: 1400px; margin-top: 70px; padding-bottom: 40px; }
+    .screen-card {
+      width: min(1100px, 100%); margin-inline: auto; border-radius: 30px; padding: 10px;
+      background: linear-gradient(180deg, #2a2a2a, #121212); border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 60px 140px -30px rgba(0,0,0,.9), 0 0 120px rgba(4, 92, 60, .35);
+      transform-origin: 50% 0%; will-change: transform;
+    }
+    .screen-card .inner { position: relative; border-radius: 22px; overflow: hidden; background: #0d0d0d; aspect-ratio: 16 / 9; }
+    .screen-card hyperframes-player { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .screen-card .fallback, .screen-card .fallback img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .screen-card .fallback { z-index: 1; }
+
+    /* ---------- marquee ---------- */
+    .marquee { border-block: 1px solid var(--line); padding: 22px 0; overflow: hidden; background: var(--ink-2); }
+    .marquee .track { display: flex; gap: 48px; width: max-content; animation: slide 38s linear infinite; }
+    .marquee span { display: inline-flex; align-items: center; gap: 48px; font-size: 18px; font-weight: 500; color: #cfcfcf; white-space: nowrap; }
+    .marquee span::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green-hi); }
+    @keyframes slide { to { transform: translateX(-50%); } }
+
+    /* ---------- story (light) ---------- */
+    .story { background: var(--cream); color: var(--cream-ink); padding: 140px 0 120px; position: relative; }
+    .story .head { max-width: 760px; }
+    .story .eyebrow { color: var(--green); }
+    .story h2 { margin: 18px 0 0; font-size: clamp(38px, 5.5vw, 72px); line-height: 1; letter-spacing: -0.04em; font-weight: 700; }
+    .story h2 .serif { color: var(--green); }
+    .story .sub { margin-top: 20px; font-size: 19px; line-height: 1.55; color: var(--cream-muted); max-width: 560px; }
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 70px; }
+    .phone-col { position: relative; }
+    .phone-sticky { position: sticky; top: 110px; height: calc(100vh - 140px); max-height: 720px; display: grid; place-items: center; }
+    .phone {
+      position: relative; width: 320px; height: 650px; border-radius: 52px; background: #050505; color: #fff;
+      box-shadow: 0 0 0 10px #1b1b1b, 0 0 0 11px #2d2d2d, 0 50px 100px -20px rgba(20, 35, 27, .45);
+      overflow: hidden;
+    }
+    .phone .notch { position: absolute; left: 50%; translate: -50% 0; top: 14px; width: 100px; height: 28px; border-radius: 20px; background: #000; z-index: 5; }
+    .scr { position: absolute; inset: 0; opacity: 0; transform: translateY(18px) scale(.98); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+    .scr.on { opacity: 1; transform: none; }
+    .scr.real img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; display: block; }
+
+    .steps { display: flex; flex-direction: column; }
+    .step { min-height: 78vh; display: flex; flex-direction: column; justify-content: center; padding: 30px 0; opacity: .28; transition: opacity .5s; }
+    .step.on { opacity: 1; }
+    .step .num { font: 600 14px var(--sans); color: var(--green); letter-spacing: .2em; }
+    .step h3 { margin: 14px 0 0; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.05; letter-spacing: -.035em; font-weight: 700; }
+    .step p { margin: 16px 0 0; font-size: 18px; line-height: 1.6; color: var(--cream-muted); max-width: 440px; }
+    .step .facts { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .step .facts span { font-size: 13px; font-weight: 600; padding: 8px 12px; border-radius: 999px; background: var(--cream-2); color: var(--cream-ink); }
+    .step .icon { width: 64px; height: 64px; margin-bottom: 8px; filter: drop-shadow(0 10px 18px rgba(20,35,27,.25)); }
+
+    /* ---------- bento ---------- */
+    .bento-sec { padding: 140px 0; }
+    .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; flex-wrap: wrap; }
+    .sec-head h2 { margin: 16px 0 0; font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -.04em; font-weight: 700; max-width: 700px; }
+    .sec-head h2 .serif { color: var(--mint); }
+    .sec-head p { color: var(--muted); max-width: 380px; font-size: 17px; line-height: 1.55; margin: 0; }
+    .bento { margin-top: 60px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+    .tile {
+      position: relative; overflow: hidden; border-radius: var(--radius); padding: 30px; min-height: 260px;
+      background: linear-gradient(180deg, #171717, #111); border: 1px solid var(--line);
+      display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; transition: border-color .3s, transform .3s;
+    }
+    .tile:hover { border-color: rgba(31,154,106,.5); transform: translateY(-3px); }
+    .tile::before { content: ""; position: absolute; inset: auto -30% -60% auto; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(4,92,60,.45), transparent 70%); opacity: .0; transition: opacity .4s; }
+    .tile:hover::before { opacity: 1; }
+    .tile h3 { margin: 0; font-size: 24px; letter-spacing: -.02em; position: relative; }
+    .tile p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; position: relative; }
+    .tile .ic { position: absolute; top: 24px; right: 24px; width: 84px; height: 84px; }
+    .t-a { grid-column: span 4; min-height: 380px; }
+    .t-b { grid-column: span 2; min-height: 380px; }
+    .t-c, .t-d, .t-e { grid-column: span 2; }
+    .modes { position: absolute; top: 30px; left: 30px; right: 130px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .modes span { font-size: 13px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); color: #ddd; background: rgba(255,255,255,.03); }
+    .strip { position: absolute; left: 30px; right: 30px; top: 50%; translate: 0 -50%; display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; }
+    .strip div { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+    .strip b { width: 100%; max-width: 46px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-size: 15px; border: 1px solid rgba(255,255,255,.25); }
+    .strip b.g { background: var(--green); border-color: var(--green); }
+    .strip b.o { background: #262626; border-color: #262626; }
+    .bignum { position: absolute; top: 18px; left: 30px; font-size: 120px; font-weight: 700; letter-spacing: -.06em; line-height: 1; background: linear-gradient(180deg, #fff, rgba(255,255,255,.08)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .qr { position: absolute; top: 28px; left: 30px; width: 86px; height: 86px; border-radius: 14px; background:
+      conic-gradient(from 90deg at 30% 30%, #fff 25%, transparent 0) 0 0/22px 22px, #1b1b1b; border: 6px solid #1b1b1b; opacity: .9; }
+    .langs { position: absolute; top: 30px; left: 30px; display: flex; gap: 8px; }
+    .langs span { font-weight: 700; font-size: 14px; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); }
+    .langs span:first-child { background: #fff; color: #000; }
+
+    /* ---------- plan ---------- */
+    .plan { padding: 0 0 140px; }
+    .plan-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .lane { border-radius: var(--radius); border: 1px solid var(--line); padding: 28px; background: #101010; }
+    .lane h4 { margin: 0 0 18px; display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; letter-spacing: .02em; }
+    .lane h4 i { width: 10px; height: 10px; border-radius: 50%; }
+    .lane ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .lane li { font-size: 16px; color: #dcdcdc; padding: 14px 16px; border-radius: 14px; background: #161616; border: 1px solid var(--line); }
+    .lane li small { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+    .lane.now h4 i { background: var(--green-hi); box-shadow: 0 0 0 5px rgba(31,154,106,.2); }
+    .lane.next h4 i { background: #d9b871; }
+    .lane.later h4 i { background: #555; }
+    .lane.later li { color: #9a9a9a; }
+
+    /* ---------- finale: landing on the green ---------- */
+    /* Szene: ein Video-Hintergrund für Finale und Mitmachen */
+    .scene { position: relative; isolation: isolate; overflow: hidden; }
+    .scene > .bg { position: absolute; inset: 0; z-index: -2; background: #0d0d0d url("assets/gruen-klippe-poster.jpg") 60% 50% / cover no-repeat; }
+    .scene > .bg video { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; display: block; transform: scale(var(--z, 1.18)); transform-origin: 60% 60%; will-change: transform; }
+    .finale { position: relative; overflow: hidden; padding: 60px 0 0; text-align: center; }
+    .scene::after {
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(180deg, var(--ink) 0%, rgba(13,13,13,.75) 14%, rgba(13,13,13,.15) 34%, rgba(13,13,13,0) 50%, rgba(13,13,13,0) 100%);
+    }
+    .finale .ball-slot { width: min(300px, 60vw); aspect-ratio: 1; margin: 0 auto; transition: opacity .6s ease;
+      background: url("assets/ball-spin-sprite.webp") 0 0 / 600% 600% no-repeat; }
+    .finale .ball-slot.launched { opacity: 0; transition: none; }
+    /* Ball: Bildfolge aus dem 3D-Modell V08 (6x6 Drehbilder), das Bild wird per background-position gewählt */
+    .finale .ball { position: absolute; left: 0; top: 0; width: 256px; aspect-ratio: 1; opacity: 0; margin: 0; z-index: 3; pointer-events: none; transform-origin: 50% 50%;
+      background: url("assets/ball-spin-sprite.webp") 0 0 / 600% 600% no-repeat; will-change: transform, background-position; }
+    .finale .ball::after { /* Grashalme vor der Unterkante, sobald der Ball liegt */
+      content: ""; position: absolute; left: 4%; right: 4%; bottom: 3%; height: 22%; border-radius: 0 0 50% 50% / 0 0 100% 100%;
+      background: linear-gradient(0deg, rgba(86,104,34,.95) 0%, rgba(96,118,40,.55) 45%, rgba(96,118,40,0) 100%); opacity: var(--grass, 0); }
+    .finale .ball-shadow, .finale .ball-cast { position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0; z-index: 0; }
+    .finale .ball-shadow { width: 10px; height: 4px; border-radius: 50%; background: radial-gradient(closest-side, rgba(10,14,4,.85), rgba(10,14,4,.35) 55%, rgba(10,14,4,0)); }
+    .finale .ball-cast { width: 30px; height: 6px; border-radius: 50%; transform-origin: 100% 50%;
+      background: linear-gradient(270deg, rgba(14,20,6,.55) 0%, rgba(14,20,6,.35) 45%, rgba(14,20,6,0) 100%); filter: blur(.6px); }
+    .finale .wrap { position: relative; z-index: 2; }
+    .finale h2 { margin: 26px auto 0; font-size: clamp(40px, 7vw, 96px); line-height: 1; letter-spacing: -.045em; max-width: 1000px; text-shadow: 0 2px 16px rgba(0,0,0,.35), 0 6px 50px rgba(0,0,0,.45); }
+    .finale h2 .serif { color: #fff; }
+    .finale .spacer { height: clamp(320px, 42vw, 560px); }
+    .cta { position: relative; z-index: 3; margin-top: -300px; padding: 0 0 90px; }
+    .finale .viz { position: absolute; right: 16px; bottom: 12px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+
+    /* ---------- CTA (glass over the green) ---------- */
+    .cta-card {
+      position: relative; overflow: hidden; border-radius: 36px; padding: clamp(28px, 5vw, 64px); text-align: left;
+      background: rgba(13, 13, 13, 0.58); border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      box-shadow: 0 40px 120px -30px rgba(0,0,0,.7);
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center;
+    }
+    .cta-card h2 { margin: 0; font-size: clamp(36px, 5vw, 64px); line-height: 1; letter-spacing: -.04em; }
+    .cta-card h2 .serif { color: var(--mint); }
+    .cta-card p { color: rgba(255,255,255,.75); font-size: 17px; line-height: 1.6; margin: 18px 0 0; }
+    .cta-go { display: flex; flex-direction: column; gap: 14px; }
+    .cta-go .btn { padding: 18px 26px; font-size: 17px; }
+    .note { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.5; }
+
+    footer { background: #0d0d0d; border-top: 1px solid var(--line); padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+    footer img { height: 26px; width: auto; }
+    footer nav { display: flex; gap: 22px; }
+    .social { display: flex; gap: 10px; }
+    .social a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); color: #cfcfcf; transition: color .2s, border-color .2s, background .2s; }
+    .social a:hover { color: #fff; border-color: rgba(31,154,106,.6); background: rgba(31,154,106,.12); }
+    .social svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* reveal */
+    .rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+    .rv.in { opacity: 1; transform: none; }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 960px) {
+      .nav ul { display: none; }
+      .story-grid { display: block; }
+      .phone-col { position: sticky; top: 64px; z-index: 2; height: 360px; margin-top: 30px; background: linear-gradient(var(--cream) 88%, rgba(243,240,232,0)); }
+      .phone-sticky { position: static; height: auto; display: flex; justify-content: center; padding-top: 14px; }
+      .phone { transform: scale(.48); transform-origin: 50% 0; margin-bottom: -338px; margin-top: 18px; }
+      .step { min-height: 64vh; }
+      .bento { grid-template-columns: 1fr 1fr; }
+      .t-a, .t-b { grid-column: span 2; min-height: 320px; }
+      .t-c, .t-d, .t-e { grid-column: span 2; }
+      .plan-grid { grid-template-columns: 1fr; }
+      .cta-card { grid-template-columns: 1fr; }
+      .scene > .bg video, .scene > .bg { object-position: 53% 50%; background-position: 53% 50%; }
+      .cta { margin-top: -60px; }
+      .finale .viz { bottom: 72px; }
+    }
+    @media (max-width: 560px) {
+      .hero { padding-top: 120px; }
+      .screen-card { width: min(320px, 100%); border-radius: 34px; }
+      .screen-card .inner { aspect-ratio: 9 / 16; border-radius: 26px; }
+      .nav .btn { padding: 13px 16px; font-size: 14px; }
+      footer nav a { padding: 12px 4px; }
+      .modes { right: 30px; top: 110px; }
+      .strip { display: none; }
+      .tile .ic { width: 64px; height: 64px; }
+      .t-a { min-height: 380px; }
+      .bignum { font-size: 96px; }
+      .finale .ball-slot { width: min(300px, 60vw, 20vh); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .rv { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
 <body>
-  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
-    <symbol id="arrow-up-right" viewBox="0 0 24 24"><path d="M6 18 18 6M6 6h12v12"/></symbol>
-    <symbol id="arrow-down" viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6"/></symbol>
-    <symbol id="arrow-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
-    <symbol id="pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
-    <symbol id="play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
-    <symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3Zm6 10v-7h6v7"/></symbol>
-    <symbol id="bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
-    <symbol id="pencil" viewBox="0 0 24 24"><path d="m16 3 5 5L8 21H3v-5Zm-2 2 5 5"/></symbol>
-    <symbol id="message" viewBox="0 0 24 24"><path d="M21 11a9 9 0 0 1-9 9 11 11 0 0 1-4-.8L3 21l1.8-5A9 9 0 1 1 21 11Z"/></symbol>
-    <symbol id="check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
-    <symbol id="plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-  </defs></svg>
-  <a class="skip-link" href="#inhalt">Zum Inhalt</a>
-  <header class="site-header glass">
-    <a class="brand" href="/#start" aria-label="KAVEO GOLF — zur Startseite"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131"></a>
-    <nav class="site-navigation" id="site-navigation" aria-label="Hauptnavigation">
-      <a class="site-nav-home" href="/#start" data-nav-page="home" aria-current="page">Startseite</a>
-      <a href="funktionen.html" data-nav-page="functions">Funktionen</a>
-      <a href="roadmap.html" data-nav-page="roadmap">Roadmap</a>
-      <a href="ueber-uns-v2.html" data-nav-page="about">Über uns</a>
-      <div class="site-nav-language"><span aria-current="true">Deutsch</span><a href="en/index.html">English</a></div>
-    </nav>
-    <div class="header-actions">
-      <div class="language" aria-label="Sprache: Deutsch"><span aria-current="true">DE</span><a href="en/index.html" title="Switch to English">EN</a></div>
-      <a class="button button-small button-light" href="#fruehzugang">Frühzugang <svg class="icon"><use href="#arrow-up-right"/></svg></a>
-      <button class="site-menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false" aria-label="Menü öffnen" hidden><span class="site-menu-label">Menü</span><span class="site-menu-icon" aria-hidden="true"><span></span><span></span></span></button>
-    </div>
+
+  <header class="nav" id="nav">
+    <a class="logo" href="#top" aria-label="KAVEO GOLF Startseite"><img src="assets/logo-lockup.webp" alt="KAVEO GOLF" width="512" height="341" /></a>
+    <ul>
+      <li><a href="#runde">So funktioniert's</a></li>
+      <li><a href="#funktionen">Funktionen</a></li>
+      <li><a href="#plan">Der Plan</a></li>
+      <li><a href="ueber-uns.html">Über uns</a></li>
+    </ul>
+    <a class="btn" href="https://app.kaveo-golf.app/register"><span class="dot"></span>Registrieren</a>
   </header>
-  <main id="inhalt">
-<div class="story-world" id="story-world">
-  <div class="story-scene-backdrop" aria-hidden="true">
-    <div class="story-scene-media">
-      <img class="story-scene-still" src="media/inselgruen-logo-poster-v04.webp" width="1920" height="1080" alt="" fetchpriority="high">
-      <video id="story-ambient-video" class="story-scene-video" data-src="media/optimized/inselgruen-loop-720p.mp4" poster="media/inselgruen-logo-poster-v04.webp" width="1920" height="1080" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture disableremoteplayback></video>
-      <div class="finale-scene-shade" aria-hidden="true"></div>
-      <canvas id="story-green-ball" class="story-green-ball" aria-hidden="true" hidden></canvas>
-    </div>
-  </div>
-  <div class="story-video-controls">
-    <button class="story-video-toggle" type="button" aria-controls="story-ambient-video" aria-pressed="false" hidden>Hintergrund pausieren</button>
-  </div>
-<div class="story-opening" id="story-opening">
-  <section class="story-hero" id="start" aria-labelledby="story-hero-title">
-    <div class="story-width story-hero-inner">
-      <div class="story-hero-copy">
-        <h1 id="story-hero-title">Dein Golfleben<br>bekommt<br><span>einen Ort.</span></h1>
-        <p class="story-lead">Verabredungen im Chat. Ergebnisse in Tabellen.<br class="desktop-break"> Für alles andere eine eigene App. KAVEO bringt das zusammen — und entsteht gerade.</p>
-        <a class="button button-primary story-cta" href="#fruehzugang">Zum Frühzugang <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a>
-      </div>
-    </div>
-  </section>
 
-  <section class="story-founder story-width" id="erlebnis" aria-labelledby="story-founder-title">
-    <div class="story-founder-copy">
-      <p class="story-eyebrow">01 / DER ANFANG</p>
-      <h2 id="story-founder-title">Es fing mit einer<br><span>Excel-Tabelle an.</span></h2>
-      <p class="story-body">Meine Freunde und ich spielen eine private Golfliga. Unsere Ergebnisse haben wir bisher in einer Excel-Tabelle geführt.</p>
-      <p class="story-body story-founder-idea">Daraus entstand die Idee zu KAVEO: <strong>eine App, die unser Golfleben zusammenbringen soll.</strong></p>
-      <a class="button story-about-button" href="ueber-uns-v2.html">Über uns <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a>
-    </div>
-    <figure class="story-portrait story-portrait--video" data-original-src="media/optimized/philipp-portrait.webp">
-      <div class="story-portrait-field">
-        <img class="founder-landscape" src="media/inselgruen-logo-poster-v04.webp" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-        <canvas class="founder-landscape-frame" aria-hidden="true" hidden></canvas>
-        <div class="founder-person-layer">
-          <picture>
-            <source media="(max-width:720px), (prefers-reduced-motion:reduce)" srcset="media/optimized/philipp-blick-end.webp">
-            <img class="founder-person-still" src="media/optimized/philipp-blick-start.webp" data-end-src="media/optimized/philipp-blick-end.webp" width="718" height="960" alt="Philipp steht auf dem Inselgrün; KI-gestützte Personenaufnahme" loading="lazy" decoding="async">
-          </picture>
-          <img class="founder-person-end" src="media/optimized/philipp-blick-end.webp" width="718" height="960" alt="" aria-hidden="true" loading="lazy" decoding="async">
-          <video id="story-founder-video" data-src="media/philipp-blick-v01-alpha.webm" width="718" height="960" muted playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture disableremoteplayback></video>
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="status-pill rv"><b>Neu</b>Die ersten Funktionen laufen in unserer frühen Version</div>
+        <h1 class="rv">Dein Golfleben bekommt einen <span class="serif">Ort.</span></h1>
+        <p class="lead rv">KAVEO GOLF ist die Golf-App, die wir gerade bauen. Runde spielen, die passende Regel finden, das Wetter golfgerecht lesen. Alles an einem Ort.</p>
+        <div class="actions rv">
+          <a class="btn" href="https://app.kaveo-golf.app/register"><span class="dot"></span>Konto anlegen</a>
+          <a class="btn ghost" href="#runde">So funktioniert's</a>
         </div>
       </div>
-    </figure>
-  </section>
-
-  <section class="story-product story-product--assembly" id="deine-app" aria-labelledby="story-product-title">
-    <div class="story-width story-product-inner">
-      <div class="story-product-copy">
-        <p class="story-eyebrow"><span class="status-dot"></span>STAND HEUTE</p>
-        <h2 id="story-product-title">Dein Startpunkt. <span>So, wie du ihn brauchst.</span></h2>
-        <p class="story-body">Ordne deinen Homescreen, blende Kacheln aus, wähle deinen Hintergrund. Das funktioniert heute. Was hinter den Kacheln liegt, kommt Schritt für Schritt dazu — deshalb steht es dort.</p>
-      </div>
-      <figure class="story-device-figure">
-        <div class="assembly-viewport">
-          <img class="assembly-fallback" src="media/optimized/smartphone-assembled.webp" width="800" height="1700" alt="KAVEO-3D-Handy mit Homescreen-Designansicht: Training, Regeln, Runden, Wetter, Freunde und Einstellungen; alle Kacheln mit Kommt später gekennzeichnet" loading="lazy">
-          <canvas class="assembly-canvas" aria-hidden="true" hidden></canvas>
-        </div>
-      </figure>
-    </div>
-  </section>
-</div>
-
-    <div class="story-plan">
-    <section class="network-home" id="features" aria-labelledby="features-title">
-      <div class="network-study">
-    <div class="intro">
-      <div><p class="eyebrow">DAS SOLL KAVEO VERBINDEN</p><h2 class="network-heading" id="features-title">Ein Ort. <span>Viele Verbindungen.</span></h2></div>
-      
-    </div>
-    <div class="desktop-explorer" id="desktop-explorer" hidden>
-      <nav class="explorer-bar" aria-label="Position im KAVEO-Netz">
-        <div class="breadcrumbs"><button type="button" id="home-crumb" disabled>KAVEO</button><span id="group-crumb" hidden></span></div>
-        <button class="quiet-button back-button" id="back-button" type="button" hidden><span aria-hidden="true">←</span> Zur Übersicht</button>
-      </nav>
-      <section class="network-space" id="network-space" data-home-network="true" aria-label="KAVEO und seine sechs Produktbereiche">
-        <canvas class="network-canvas" id="network-canvas" aria-hidden="true" hidden></canvas>
-        <svg class="connections" id="connections" aria-hidden="true"></svg>
-        <div class="brand-hub" id="brand-hub"><div class="brand-glass"><img src="/assets/kaveo-ball-mark.png" alt="" width="267" height="267"><strong>KAVEO</strong><span>DEIN GOLFLEBEN</span></div></div>
-        <div id="category-nodes"></div>
-        <div id="feature-nodes"></div>
-      </section>
-      <section class="selection" id="selection" aria-label="Ausgewählter Bereich" aria-live="polite" aria-atomic="true">
-        <!-- Grundzustand. Steht zeichengleich auch in network-preview.mjs (GRUNDZUSTAND) --
-           das JS schreibt ihn zurueck, sobald man aus einem Bereich herausgeht.
-           Wer hier etwas aendert, muss es dort mitaendern. -->
-        <p class="eyebrow" id="selection-label">SECHS BEREICHE</p>
-        <div class="selection-body"><h2 id="selection-title">Ein Golfleben besteht nicht aus sechs Apps.</h2><p id="selection-copy">Lernen, planen, spielen, trainieren, sich austauschen — das gehört zusammen und liegt heute trotzdem in getrennten Werkzeugen. Öffne einen Bereich, um zu sehen, was darin geplant ist.</p></div>
-      </section>
-    </div>
-    <div class="mobile-explorer" id="mobile-explorer"></div>
-    <noscript><div class="no-script"><h2>Was KAVEO verbinden soll</h2><ul><li>Entdecken und Lernen: Golf verstehen, Lernpfad und Platzreife.</li><li>Planen und Angebote: Plätze und Startzeiten, Kurse und Indoorangebote, Ausrüstung vergleichen.</li><li>Spielen und Erfassen: GPS und Scorekarte, Spielmodi und Rundenrückblick.</li><li>Trainieren und Verbessern: Übungen und Trainingsplan, Videoanalyse und Trainerfeedback.</li><li>Community und Erlebnisse: Mitspieler und Gruppen, Turniere und Ligen, Beiträge und Austausch.</li><li>Partner und Betrieb – für Clubs, Trainer und Anbieter: Cluborganisation, Indoorbetrieb und Trainerbereich.</li></ul><p>Für das interaktive Netz bitte JavaScript aktivieren. Alle Funktionen sind geplant.</p></div></noscript>
-    <div class="study-bottom"><button type="button" class="quiet-button" id="motion-toggle" aria-pressed="false" hidden>Netz pausieren <span aria-hidden="true">Ⅱ</span></button></div>
-  
-      </div>
-  <dialog class="feature-detail" id="feature-detail" aria-labelledby="feature-detail-title" aria-describedby="feature-detail-copy">
-    <div class="feature-detail-top"><p id="feature-detail-group"></p><button type="button" class="detail-close" id="feature-detail-close" aria-label="Detailkarte schließen">×</button></div>
-    <p class="detail-status">Geplant</p>
-    <h2 id="feature-detail-title" tabindex="-1"></h2>
-    <p class="detail-intro">Das ist vorgesehen</p>
-    <ul class="detail-points" id="feature-detail-points"></ul>
-    <div class="detail-benefit"><h3>Was dir das bringt</h3><p id="feature-detail-copy"></p></div>
-    <button type="button" class="quiet-button detail-back" id="feature-detail-back"><span aria-hidden="true">←</span> Zurück zu den Funktionen</button>
-  </dialog>
-    </section>
-    </div>
-    <section class="faq" id="faq" aria-labelledby="faq-title">
-      <div class="story-width">
-        <p class="story-eyebrow">HÄUFIGE FRAGEN</p>
-        <h2 id="faq-title">Kurz erklärt.</h2>
-        <div class="faq-list">
-          <details class="faq-item">
-            <summary><span class="faq-question">Was ist KAVEO GOLF?</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-            <div class="faq-answer"><p>Verabredungen im Chat, Ergebnisse in Tabellen, für alles andere eine eigene App — KAVEO bringt dein Golfleben an einem Ort zusammen.</p></div>
-          </details>
-          <details class="faq-item">
-            <summary><span class="faq-question">Was kann ich in der App schon nutzen?</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-            <div class="faq-answer"><p>Schon heute kannst du Runden mit deinen Mitspielern live spielen, die Regelhilfe nutzen, aktuelles Wetter für deinen Platz abrufen und Freunde finden. Alle Details auf der <a href="funktionen.html">Funktionen-Seite</a>, was als Nächstes kommt, steht auf der <a href="roadmap.html">Roadmap</a>.</p></div>
-          </details>
-          <details class="faq-item">
-            <summary><span class="faq-question">Ist KAVEO GOLF kostenlos?</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-            <div class="faq-answer"><p>Die App ist grundsätzlich kostenlos nutzbar.</p></div>
-          </details>
-          <details class="faq-item">
-            <summary><span class="faq-question">Für welche Plattformen kommt KAVEO?</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-            <div class="faq-answer"><p>iOS, Android und als Web-App.</p></div>
-          </details>
-          <details class="faq-item">
-            <summary><span class="faq-question">Wann startet KAVEO GOLF?</span><span class="disclosure-mark" aria-hidden="true">+</span></summary>
-            <div class="faq-answer"><p>Das steht noch nicht ganz fest — voraussichtlich Anfang der neuen Golfsaison.</p></div>
-          </details>
+      <div class="stage">
+        <div class="wrap">
+          <div class="screen-card" id="screen">
+            <div class="inner">
+              <picture class="fallback">
+                <source media="(max-width: 560px)" srcset="assets/film-poster-hoch.webp" width="720" height="1280" />
+                <img src="assets/film-poster-quer.webp" alt="KAVEO GOLF App: Wetter-Ansicht mit „Gut spielbar“ und letztem Start" width="1280" height="720" />
+              </picture>
+              <hyperframes-player loop muted></hyperframes-player>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-    <div class="story-finale" id="story-finale">
-      <div class="ball-brand-moment" aria-hidden="true"></div>
-<section class="signup signup-finale" id="fruehzugang" aria-labelledby="signup-title"><img class="signup-image" src="media/inselgruen-logo-poster-v04.webp" data-original-src="assets/island-wide.png" width="1920" height="1080" alt="KAVEO-Inselgrün" loading="lazy"><div class="signup-shade" aria-hidden="true"></div><div class="signup-inner section-wrap"><div class="signup-copy-column"><div class="signup-copy reveal"><p class="eyebrow">FRÜHZUGANG</p><h2 id="signup-title">Von Anfang<br>an dabei.</h2><p>Trag dich ein. Du hörst von uns, wenn die Tests starten — und wenn es etwas Wichtiges zu sehen gibt. Sonst nicht.</p></div><div class="signup-ball-anchor" id="signup-ball-anchor" aria-hidden="true"></div></div><form class="signup-form glass" id="signup-form" data-glare aria-describedby="form-note"><label for="signup-name">Name <span class="field-optional">(optional)</span></label><input id="signup-name" name="name" autocomplete="given-name" placeholder="Dein Name" maxlength="100"><label for="signup-email">E-Mail-Adresse</label><input id="signup-email" name="email" type="email" autocomplete="email" placeholder="du@beispiel.de" required maxlength="254"><label class="consent" for="signup-consent"><input id="signup-consent" name="consent" type="checkbox" required><span>Ich möchte E-Mails zum Entwicklungsstand und zum Start von KAVEO erhalten. Ich kann die Einwilligung jederzeit widerrufen — der Link dafür steht in jeder Mail.</span></label><button class="button button-primary" type="submit" disabled>Eintragen <svg class="icon"><use href="#arrow-up-right"/></svg></button><p class="form-note" id="form-note" role="status" aria-live="polite">Das Eintragen braucht JavaScript. Ist es aus, bleibt der Knopf gesperrt.</p><a class="privacy-link" href="/datenschutz/">Datenschutz</a></form></div></section>
 
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="track">
+        <span>Zählspiel</span><span>Stableford</span><span>Maximum Score</span><span>Gegen Par</span><span>Brutto &amp; Netto</span><span>Auch ohne Netz</span><span>Bis zu 3 Gäste</span><span>7-Tage-Golfwetter</span><span>66 Regeltexte</span><span>Deutsch &amp; Englisch</span>
+        <span>Zählspiel</span><span>Stableford</span><span>Maximum Score</span><span>Gegen Par</span><span>Brutto &amp; Netto</span><span>Auch ohne Netz</span><span>Bis zu 3 Gäste</span><span>7-Tage-Golfwetter</span><span>66 Regeltexte</span><span>Deutsch &amp; Englisch</span>
+      </div>
     </div>
-</div>
+
+    <!-- STORY (light) -->
+    <section class="story" id="runde">
+      <div class="wrap">
+        <div class="head rv">
+          <div class="eyebrow">So funktioniert's</div>
+          <h2>Vom ersten Abschlag bis zum <span class="serif">letzten Putt.</span></h2>
+          <p class="sub">Eine App, die mitläuft, statt im Weg zu stehen. Scroll dich durch eine Runde.</p>
+        </div>
+
+        <div class="story-grid">
+          <div class="phone-col">
+            <div class="phone-sticky">
+              <div class="phone" aria-hidden="true">
+                <div class="notch"></div>
+
+                <div class="scr on real" data-scr="0"><img src="assets/screens/07_runde_spielen.webp" alt="" width="390" height="760" /></div>
+                <div class="scr real" data-scr="1"><img src="assets/screens/10_scorekarte.webp" alt="" width="390" height="760" loading="lazy" /></div>
+                <div class="scr real" data-scr="2"><img src="assets/screens/05_wetter.webp" alt="" width="390" height="760" loading="lazy" /></div>
+                <div class="scr real" data-scr="3"><img src="assets/screens/02_regeln.webp" alt="" width="390" height="760" loading="lazy" /></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="steps">
+            <article class="step on" data-step="0">
+              <img class="icon" src="assets/icons/runden.png" alt="" width="192" height="192" />
+              <div class="num">01 · Runde starten</div>
+              <h3>Spielform wählen. Gäste dazu. Los.</h3>
+              <p>Zählspiel, Stableford, Maximum Score oder gegen Par, brutto oder netto. Bis zu drei Gäste spielen mit, auch ohne eigenes Konto.</p>
+              <div class="facts"><span>4 Spielformen</span><span>Brutto &amp; Netto</span><span>Bis zu 3 Gäste</span></div>
+            </article>
+            <article class="step" data-step="1">
+              <img class="icon" src="assets/icons/runden.png" alt="" width="192" height="192" />
+              <div class="num">02 · Loch für Loch</div>
+              <h3>Schläge eintragen. Ergebnis steht.</h3>
+              <p>Die Scorekarte rechnet mit und speichert jeden Schlag sofort. Kein Netz am 7. Loch? Macht nichts, die Runde läuft weiter.</p>
+              <div class="facts"><span>Scorekarte</span><span>Auch ohne Netz</span></div>
+            </article>
+            <article class="step" data-step="2">
+              <img class="icon" src="assets/icons/wetter.png" alt="" width="192" height="192" />
+              <div class="num">03 · Vor dem Abschlag</div>
+              <h3>Wetter, das Golf versteht.</h3>
+              <p>Gut spielbar oder nicht? Dazu Wind, Böen, Regen und Tageslicht, mit dem letzten sinnvollen Start für 9 und 18 Löcher. Sieben Tage im Voraus, die ersten drei Stunde für Stunde.</p>
+              <div class="facts"><span>Gut spielbar</span><span>Letzter Start</span><span>7 Tage</span></div>
+            </article>
+            <article class="step" data-step="3">
+              <img class="icon" src="assets/icons/regeln.png" alt="" width="192" height="192" />
+              <div class="num">04 · Wenn's knifflig wird</div>
+              <h3>Die Regel. Direkt am Platzplan.</h3>
+              <p>Tippe auf den Bereich, in dem dein Ball liegt, oder suche direkt. 66 eigene Erklärtexte zu den allgemeinen offiziellen Golfregeln. Die Platzregeln deines Clubs gelten zusätzlich.</p>
+              <div class="facts"><span>8 Bereiche</span><span>Suche</span><span>66 Regeltexte</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENTO -->
+    <section class="bento-sec" id="funktionen">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <div>
+            <div class="eyebrow">Funktionen</div>
+            <h2>Klein angefangen. <span class="serif">Richtig gebaut.</span></h2>
+          </div>
+          <p>Was hier steht, läuft schon in der frühen Version. Alles Weitere steht unter „Der Plan“.</p>
+        </div>
+
+        <div class="bento">
+          <article class="tile t-a rv">
+            <div class="modes"><span>Zählspiel</span><span>Stableford</span><span>Maximum Score</span><span>Gegen Par</span><span>Brutto</span><span>Netto</span></div>
+            <div class="strip" aria-hidden="true">
+              <div><b>4</b>1</div><div><b class="g">2</b>2</div><div><b>5</b>3</div><div><b class="o">5</b>4</div><div><b>4</b>5</div><div><b>3</b>6</div><div><b class="g">3</b>7</div><div><b>4</b>8</div><div><b class="o">6</b>9</div>
+            </div>
+            <img class="ic" src="assets/icons/runden.png" alt="" width="192" height="192" />
+            <h3>Runde spielen</h3>
+            <p>Starten, Loch für Loch eintragen, abschließen. Mit Gästen ohne Konto und auch ohne Netz.</p>
+          </article>
+          <article class="tile t-b rv">
+            <div class="bignum">66</div>
+            <img class="ic" src="assets/icons/regeln.png" alt="" width="192" height="192" />
+            <h3>Regelhilfe</h3>
+            <p>Eigene Erklärtexte zu den allgemeinen offiziellen Golfregeln, gefunden über eine Platzzeichnung oder die Suche.</p>
+          </article>
+          <article class="tile t-c rv">
+            <div class="bignum">7</div>
+            <img class="ic" src="assets/icons/wetter.png" alt="" width="192" height="192" />
+            <h3>Golfwetter</h3>
+            <p>Sieben Tage im Voraus, mit „Gut spielbar“ und dem letzten Start.</p>
+          </article>
+          <article class="tile t-d rv">
+            <div class="qr" aria-hidden="true"></div>
+            <h3>KAVEO-Mitgliedskarte</h3>
+            <p>Dein Profil mit QR-Code und Privatsphäre-Schaltern. Kein Verbands- oder Clubausweis.</p>
+          </article>
+          <article class="tile t-e rv">
+            <div class="langs" aria-hidden="true"><span>DE</span><span>EN</span></div>
+            <h3>Deutsch &amp; Englisch</h3>
+            <p>Die App spricht beide Sprachen, von Anfang an.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLAN -->
+    <section class="plan" id="plan">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <div>
+            <div class="eyebrow">Der Plan</div>
+            <h2>Was läuft. Was kommt. <span class="serif">Ehrlich.</span></h2>
+          </div>
+          <p>Zum Start gibt es KAVEO GOLF in Deutschland, kostenlos, für alle ab 18.</p>
+        </div>
+        <div class="plan-grid">
+          <div class="lane now rv">
+            <h4><i></i>Läuft in der frühen Version</h4>
+            <ul>
+              <li>Runde spielen<small>Vier Spielformen, Gäste, offline</small></li>
+              <li>Regelhilfe am Platzplan</li>
+              <li>Golfwetter für sieben Tage</li>
+              <li>Profil mit KAVEO-Mitgliedskarte</li>
+            </ul>
+          </div>
+          <div class="lane next rv">
+            <h4><i></i>Für den Start geplant</h4>
+            <ul>
+              <li>Freunde<small>Anfragen, Suche, Blockieren</small></li>
+              <li>Gemeinsame Runden</li>
+              <li>Scorekarte als Bild teilen</li>
+            </ul>
+          </div>
+          <div class="lane later rv">
+            <h4><i></i>Später</h4>
+            <ul>
+              <li>Live-Runde auf mehreren Geräten</li>
+              <li>Rundenanalyse mit Trends</li>
+              <li>Turniere und Gruppen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINALE: Landung auf dem Grün an der Klippe -->
+    <div class="scene" id="scene">
+      <div class="bg" aria-hidden="true">
+        <video id="green-video" muted loop playsinline preload="none" poster="assets/gruen-klippe-poster.jpg" data-src="assets/gruen-klippe-loop.mp4"></video>
+      </div>
+    <section class="finale">
+      <div class="ball" id="ball" aria-hidden="true"></div>
+      <div class="ball-cast" id="ball-cast" aria-hidden="true"></div>
+      <div class="ball-shadow" id="ball-shadow" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="ball-slot" id="ball-slot" aria-hidden="true"></div>
+        <h2 class="rv">Golf hört nicht am <span class="serif">18.&nbsp;Grün</span> auf.</h2>
+        <div class="spacer"></div>
+      </div>
+      <span class="viz">Visualisierung</span>
+    </section>
+
+    <!-- Mitmachen: Glaskarte direkt über dem Video, Button zur echten Registrierung -->
+    <section class="cta" id="mitmachen">
+      <div class="wrap">
+        <div class="cta-card rv">
+          <div>
+            <div class="eyebrow" style="color:var(--mint)">Mitmachen</div>
+            <h2 style="margin-top:16px">Ab heute <span class="serif">mitspielen.</span></h2>
+            <p>Leg dir dein Konto an und nimm KAVEO GOLF mit auf deine nächste Runde. Die ersten Funktionen laufen schon, weitere kommen dazu.</p>
+          </div>
+          <div class="cta-go">
+            <a class="btn" href="https://app.kaveo-golf.app/register" style="justify-content:center"><span class="dot"></span>Jetzt registrieren</a>
+            <div class="note">Du landest auf der Registrierung in der App.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+    <footer>
+      <div class="wrap">
+        <img src="assets/logo-lockup.webp" alt="KAVEO GOLF" width="512" height="341" />
+        <nav><a href="ueber-uns.html">Über uns</a><a href="faq.html">FAQ</a><a href="https://kaveo-golf.app/impressum/">Impressum</a><a href="https://kaveo-golf.app/datenschutz/">Datenschutz</a></nav>
+        
+        <div class="social"><a href="https://www.facebook.com/profile.php?id=61594981341610" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a><a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a><a href="https://www.tiktok.com/@kaveogolf" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf TikTok" title="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a></div>
+      </div>
+    </footer>
   </main>
-  <footer class="site-footer section-wrap"><div class="footer-top"><div class="footer-identity"><a class="brand" href="#start" aria-label="KAVEO GOLF — zum Anfang"><img src="assets/kaveo-logo.webp" alt="KAVEO GOLF" width="512" height="131" loading="lazy"></a><p>KAVEO GOLF — in Entwicklung seit 2026.</p></div><div class="footer-connect"><nav class="footer-socials" aria-label="Social Media"><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener noreferrer" aria-label="KAVEO auf Instagram (öffnet in neuem Tab)"><svg class="social-brand-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a><span class="social-pending">TikTok <span class="social-status">· folgt</span></span></nav><a class="back-to-top" href="#start" aria-label="Zurück nach oben"><svg class="icon"><use href="#arrow-up-right"/></svg></a></div></div><div class="footer-bottom"><span>© 2026 KAVEO GOLF</span><nav aria-label="Weitere Informationen"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><a href="mailto:info@kaveo-golf.app">Kontakt</a></nav><div class="footer-motion-slot" data-footer-motion-slot></div></div></footer>
+
+  <script>
+    (() => {
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // reveal on scroll
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.15 });
+      document.querySelectorAll(".rv").forEach((el) => io.observe(el));
+
+      // sticky phone: switch screen per step
+      const steps = [...document.querySelectorAll(".step")];
+      const scrs = [...document.querySelectorAll(".scr")];
+      const so = new IntersectionObserver((es) => {
+        es.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const i = +e.target.dataset.step;
+          steps.forEach((s) => s.classList.toggle("on", s === e.target));
+          scrs.forEach((s) => s.classList.toggle("on", +s.dataset.scr === i));
+        });
+      }, { rootMargin: "-45% 0px -45% 0px" });
+      steps.forEach((s) => so.observe(s));
+
+      // Hero-Film kippt beim Scrollen, Finale: Ball, Zoom und Schlag
+      const screen = document.getElementById("screen");
+      const ball = document.getElementById("ball");
+      const finale = document.querySelector(".finale");
+      const slot = document.getElementById("ball-slot");
+      const shadow = document.getElementById("ball-shadow");
+      const vid = document.getElementById("green-video");
+      const scene = document.getElementById("scene");
+      const clamp = (v) => Math.min(Math.max(v, 0), 1);
+      const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+      // Punkte im Clip (Kling-Loop 1928x1076, wie 1920x1080 behandelt). Fuß der Fahnenstange bei ca. 1015/643.
+      // TD = Aufsetzpunkt kurz vor der Fahne, REST = Endlage rechts neben dem Loch.
+      // BALL_D: Durchmesser im Clip. Gemessen an der Fahnenstange (Stange ~3 px breit, Ball ~2,5-3x so breit) -> 8 px.
+      const TD = { x: 1030, y: 670 }, REST = { x: 1041, y: 651 }, BALL_D = 8;
+      // Schatten der Fahnenstange fällt im Clip nach links unten, ca. 13° unter der Waagerechten, lang (tiefe Sonne)
+      const SH_ANGLE = (180 - 13) * Math.PI / 180, SH_RATIO = 3.0;
+      const SPRITE_N = 36;
+      const cast = document.getElementById("ball-cast");
+      const setFrame = (fr) => { const i = ((Math.floor(fr) % SPRITE_N) + SPRITE_N) % SPRITE_N; ball.style.backgroundPosition = (i % 6) * 20 + "% " + Math.floor(i / 6) * 20 + "%"; };
+      const toScreen = (pt, z) => {
+        const W = scene.clientWidth, H = scene.clientHeight;
+        const s = Math.max(W / 1920, H / 1080);
+        const op = getComputedStyle(vid).objectPosition.split(" ").map((v) => parseFloat(v) / 100);
+        let x = (W - 1920 * s) * op[0] + pt.x * s;
+        let y = (H - 1080 * s) * op[1] + pt.y * s;
+        x = W * 0.6 + (x - W * 0.6) * z; // transform-origin 60% 60%, scale z
+        y = H * 0.6 + (y - H * 0.6) * z;
+        return { x, y, s: s * z };
+      };
+      const lerp = (p, q, t) => p + (q - p) * t;
+      const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+      let ticking = false;
+      const onScroll = () => {
+        ticking = false;
+        const y = scrollY, vh = innerHeight;
+        if (!reduce) {
+          const p = Math.min(Math.max(y / (vh * 0.7), 0), 1);
+          screen.style.transform = `rotateX(${(1 - p) * 22}deg) scale(${0.92 + p * 0.08})`;
+        }
+        {
+          const f = finale.getBoundingClientRect();
+          const z = reduce ? 1 : 1.18 - clamp((vh - f.top) / (vh + f.height)) * 0.18;
+          scene.style.setProperty("--z", z.toFixed(4));
+          lastF = f; lastZ = z;
+          updateShot(f, z, vh);
+          if (!shotRaf) drawShot(performance.now());
+        }
+      };
+
+      // ---------- Der Schlag: echte Kamera-Geometrie aus dem Clip ----------
+      // Kamera aus dem Clip geeicht: Horizont (Meer) bei y≈328, Bildmitte x≈964, Bildwinkel ~60° -> Brennweite ~1670 px.
+      // Die Fahnenstange (2,13 m, im Clip ~123 px hoch, Fuß bei 1015/643) liefert Entfernung (~29 m) und Kamerahöhe (~5,5 m).
+      // Echt wäre der Ball dort nur ~2,7 px groß; er wird optisch um VIS (~3x) vergrößert, damit man ihn sieht.
+      const HY = 328, CX = 964, R_BALL = 0.021335, F_V = 964 / Math.tan(Math.PI / 6);
+      const POLE_BASE = { x: 1015, y: 643 }, Z_POLE = F_V * 2.13 / 123;
+      const CAM_H = (POLE_BASE.y - HY) * Z_POLE / F_V;
+      const toGround = (p) => { const Zg = F_V * CAM_H / (p.y - HY); return { X: (p.x - CX) * Zg / F_V, Z: Zg }; };
+      const W_TD = toGround(TD), W_REST = toGround(REST);
+      const VIS = BALL_D / (F_V * 2 * R_BALL / W_TD.Z);
+      const project = (X, Y, Zw) => ({ x: CX + F_V * X / Zw, y: HY + F_V * (CAM_H - Y) / Zw, d: F_V * 2 * R_BALL / Zw * VIS });
+      const W_MID = { X: lerp(W_TD.X, W_REST.X, 0.55), Z: lerp(W_TD.Z, W_REST.Z, 0.55) };
+      let W_START = { X: 0.3, Y: 5, Z: 1 };                   // wird beim Abflug aus dem Markenball berechnet
+      // Bildschirm (Finale-Koordinaten) -> Clip-Pixel, Umkehrung von toScreen
+      const fromScreen = (xs, ys, z) => {
+        const W = scene.clientWidth, H = scene.clientHeight;
+        const sc = Math.max(W / 1920, H / 1080);
+        const op = getComputedStyle(vid).objectPosition.split(" ").map((v) => parseFloat(v) / 100);
+        return { x: ((xs - W * 0.6) / z + W * 0.6 - (W - 1920 * sc) * op[0]) / sc,
+                 y: ((ys - H * 0.6) / z + H * 0.6 - (H - 1080 * sc) * op[1]) / sc, s: sc * z };
+      };
+      const startFromBrand = (f, z) => {
+        const r = slot.getBoundingClientRect();
+        const c = fromScreen(r.left - f.left + r.width / 2, r.top - f.top + r.height / 2, z);
+        const dV = r.width / c.s;                                // Durchmesser in Clip-Pixeln
+        const Z0 = F_V * 2 * R_BALL * VIS / dV;                  // Entfernung, bei der der Ball so groß erscheint
+        const yBottom = c.y + dV / 2;
+        W_START = { X: (c.x - CX) * Z0 / F_V, Y: CAM_H - (yBottom - HY) * Z0 / F_V, Z: Z0 };
+      };
+      const SHOT_SPEED = +(new URLSearchParams(location.search).get("shotspeed") || 1); // nur zum Testen (Zeitlupe)
+      // Kein eigener Anstieg: der Markenball startet schon hoch (etwa Kamerahöhe) und sinkt auf dem Weg zum Grün.
+      const T_FLY = 2.1, T_HOP = 0.45, T_ROLL = 1.6, T_ALL = T_FLY + T_HOP + T_ROLL;
+      let shotState = reduce ? "rest" : "idle", shotT0 = 0, shotRaf = 0, lastF = null, lastZ = 1, prevPos = null;
+      const brand = slot;
+      const shotAt = (t) => {
+        if (t < T_FLY) {
+          const k = t / T_FLY;
+          const zp = k * k * (3 - 2 * k);                       // sanft loslösen, dann weg, zum Grün hin langsamer
+          return { X: lerp(W_START.X, W_TD.X, zp), Z: lerp(W_START.Z, W_TD.Z, zp),
+                   Y: W_START.Y * (1 - Math.pow(k, 2.2)), spin: k * SPRITE_N * 7 };   // Höhe halten, dann immer steiler sinken
+        }
+        if (t < T_FLY + T_HOP) {
+          const k = (t - T_FLY) / T_HOP;
+          return { X: lerp(W_TD.X, W_MID.X, k), Z: lerp(W_TD.Z, W_MID.Z, k), Y: Math.sin(Math.PI * k) * 0.3,
+                   spin: SPRITE_N * 7 + k * SPRITE_N * 0.6 };
+        }
+        const k = easeOut(Math.min((t - T_FLY - T_HOP) / T_ROLL, 1));
+        const X = lerp(W_MID.X, W_REST.X, k), Z = lerp(W_MID.Z, W_REST.Z, k);
+        const dist = Math.hypot(W_REST.X - W_MID.X, W_REST.Z - W_MID.Z) * k;
+        return { X, Z, Y: 0, spin: SPRITE_N * 7.6 - dist / (2 * Math.PI * R_BALL) * SPRITE_N, rolling: true };
+      };
+      const drawShot = (now) => {
+        if (!lastF) return;
+        if (shotState === "idle") { ball.style.opacity = 0; shadow.style.opacity = 0; cast.style.opacity = 0; return; }
+        const t = shotState === "rest" ? T_ALL : Math.min((now - shotT0) / 1000 * SHOT_SPEED, T_ALL);
+        const p = shotAt(t);
+        const vb = project(p.X, p.Y, p.Z), vg = project(p.X, 0, p.Z);   // Ball und Bodenpunkt im Clip
+        const sb = toScreen(vb, lastZ), sg = toScreen(vg, lastZ);
+        const bd = Math.max(vb.d * sb.s, 4.5), base = 256;
+        // Bewegungsunschärfe aus der Bildschirmgeschwindigkeit
+        const speed = prevPos ? Math.hypot(sb.x - prevPos.x, sb.y - prevPos.y) : 0;
+        prevPos = { x: sb.x, y: sb.y };
+        const blur = shotState === "rest" ? 0 : Math.min(speed * 0.12, 4);   // Unschärfe in Bildschirm-Pixeln
+        ball.style.opacity = 1;
+        ball.style.transform = "translate(" + (sb.x - base / 2) + "px, " + (sb.y - bd / 2 - base / 2) + "px) scale(" + bd / base + ")";
+        ball.style.filter = blur > 0.15 ? "blur(" + (blur * base / bd).toFixed(2) + "px)" : "none";
+        ball.style.setProperty("--grass", p.rolling ? clamp((t - T_FLY - T_HOP) / 0.2).toFixed(2) : "0");
+        setFrame(p.spin);
+        // Schatten: Kontakt nur nahe am Boden, Schlagschatten im Sonnenwinkel
+        const near = clamp(1 - p.Y / 0.6);
+        const cw = bd * 1.15;
+        shadow.style.width = cw + "px"; shadow.style.height = cw * 0.34 + "px";
+        shadow.style.transform = "translate(" + (sg.x - cw / 2) + "px, " + (sg.y - cw * 0.17) + "px)";
+        shadow.style.opacity = (near * 0.9).toFixed(3);
+        const hScr = Math.max(sg.y - sb.y, 0);
+        const len = bd * SH_RATIO, off = hScr * SH_RATIO * 0.35;
+        const cx = sg.x + Math.cos(SH_ANGLE) * off, cy = sg.y + Math.sin(SH_ANGLE) * off;
+        cast.style.width = len + "px"; cast.style.height = bd * 0.7 + "px";
+        cast.style.transform = "translate(" + (cx - len) + "px, " + (cy - bd * 0.35) + "px) rotate(" + (SH_ANGLE * 180 / Math.PI - 180) + "deg)";
+        cast.style.opacity = (clamp(1 - p.Y / 8) * (0.3 + 0.6 * near)).toFixed(3);
+        if (shotState === "flying") {
+          if (t >= T_ALL) { shotState = "rest"; shotRaf = 0; return; }
+          shotRaf = requestAnimationFrame(drawShot);
+        }
+      };
+      // Auslösen, sobald das Grün mit der Fahne gut im Bild ist; zurücksetzen, wenn man wieder hochscrollt
+      const updateShot = (f, z, vh) => {
+        const restY = f.top + toScreen(REST, z).y;
+        if (reduce) { brand.classList.remove("launched"); return; }
+        const br = brand.getBoundingClientRect();
+        // Markenball und Grün gleichzeitig gut sichtbar. Handy: Ball, Überschrift und Grün füllen fast den ganzen
+        // Bildschirm, daher weitere Grenzen (sonst bleibt nur ein ~20 px schmales Scroll-Fenster zum Auslösen).
+        const narrow = innerWidth <= 560;
+        const navBottom = narrow ? document.getElementById("nav").getBoundingClientRect().bottom : 0;
+        const bothVisible = narrow ? br.top > navBottom - 25 && restY < vh * 0.95
+                                   : br.bottom > vh * 0.25 && restY < vh * 0.78;
+        if (shotState === "idle" && (bothVisible || (restY < vh * 0.6 && restY > 0))) {
+          startFromBrand(f, z);
+          shotState = "flying"; shotT0 = performance.now(); prevPos = null;
+          brand.classList.add("launched");
+          cancelAnimationFrame(shotRaf); shotRaf = requestAnimationFrame(drawShot);
+        } else if (shotState !== "idle" && restY > vh * 1.05) {
+          shotState = "idle"; cancelAnimationFrame(shotRaf); shotRaf = 0;
+          brand.classList.remove("launched");
+        }
+      };
+      const spacerEl = finale.querySelector(".spacer"), ctaCard = document.querySelector(".cta-card");
+      // Abstände der Szene: (1) bis 960 px: Überschrift sitzt wie am Desktop knapp über der Fahne (auf dem Handy lag sonst
+      // eine ganze Bildschirmhöhe Himmel dazwischen), (2) die Ruhelage des Balls bleibt ~110 px über der Kachel.
+      // Beides verändert die Szenenhöhe und damit die Videogröße, daher schrittweise angenähert.
+      const h2El = finale.querySelector("h2"), FLAG_TOP = { x: 1015, y: 518 };
+      const offsetIn = (el, root) => { let y = 0; for (let n = el; n && n !== root; n = n.offsetParent) y += n.offsetTop; return y; };
+      const fitSpacer = () => {
+        spacerEl.style.height = ""; slot.style.marginTop = "";
+        for (let i = 0; i < 16; i++) {
+          const h2Bottom = offsetIn(h2El, scene) + h2El.offsetHeight;    // ohne Einblend-Versatz
+          const gap = toScreen(FLAG_TOP, 1.0).y - (innerWidth <= 560 ? 32 : 80) - h2Bottom;
+          const m = parseFloat(slot.style.marginTop) || 0;
+          if (innerWidth <= 960 && Math.abs(gap) > 3 && !(gap < 0 && m <= 0)) slot.style.marginTop = Math.max(0, m + gap * 0.8) + "px";
+          const flagY = toScreen(REST, 1.0).y;                       // Ruhelage des Balls (Szene-Koordinaten)
+          const need = flagY + 110 - offsetIn(ctaCard, scene);
+          if (need > 0) spacerEl.style.height = spacerEl.offsetHeight + need / 0.4 + "px";
+          else if (innerWidth > 960 || Math.abs(gap) <= 3 || (gap < 0 && m <= 0)) break;
+        }
+      };
+      fitSpacer();
+      addEventListener("resize", () => { fitSpacer(); requestAnimationFrame(onScroll); });
+      addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+      onScroll();
+
+      // finale: lazy-load the cliff loop, play only while visible, gentle "landing" zoom
+      const gv = document.getElementById("green-video");
+      if (gv) {
+        const GREEN_SPEED = 0.65; // leichte Zeitlupe: Meer und Wolken wirken ruhiger, Schleife ~11,6 s
+        gv.defaultPlaybackRate = GREEN_SPEED;
+        gv.addEventListener("loadedmetadata", () => { gv.playbackRate = GREEN_SPEED; });
+        const loadGreen = () => { if (!gv.getAttribute("src")) { gv.src = gv.dataset.src; } };
+        const inView = () => { const r = finale.getBoundingClientRect(); return r.bottom > -300 && r.top < innerHeight + 300; };
+        const sync = () => { if (inView()) { loadGreen(); if (!reduce) gv.play().catch(() => {}); } else if (!gv.paused) gv.pause(); };
+        new IntersectionObserver(sync, { rootMargin: "300px 0px" }).observe(finale);
+        addEventListener("scroll", sync, { passive: true });
+        addEventListener("load", () => { sync(); setTimeout(loadGreen, 2500); }); // spätestens nach dem Laden vorab holen (0,4 MB)
+        sync();
+      }
+
+      // hide fallback once the player is ready
+      const player = document.querySelector("hyperframes-player");
+      if (player) {
+        // Hochformat-Fassung auf schmalen Bildschirmen, sonst Querformat
+        const tall = matchMedia("(max-width: 560px)").matches;
+        player.setAttribute("width", tall ? "720" : "1280");
+        player.setAttribute("height", tall ? "1280" : "720");
+        player.setAttribute("src", tall ? "video_hoch/index.html" : "video/index.html");
+        player.addEventListener("ready", () => {
+          const f = document.querySelector(".fallback"); if (f) f.remove();
+          if (reduce) { player.pause(); player.seek(5.8); return; } // ruhiges Standbild statt Bewegung
+          player.play();
+        });
+        // nur abspielen, solange der Film sichtbar ist
+        new IntersectionObserver(([e]) => {
+          if (reduce || !player.duration) return;
+          e.isIntersecting ? player.play() : player.pause();
+        }, { threshold: 0.2 }).observe(player);
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -8,7 +8,7 @@
 
   var API = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage';
   var SPEICHER = 'kaveo-chat-v1';
-  var DATENSCHUTZ = 'https://kaveo-golf.app/datenschutz/';
+  var DATENSCHUTZ = 'https://kaveo-golf.app/datenschutz/#livechat';
   var MAX_ZEICHEN = 1000;
   var ABFRAGE_OFFEN_MS = 5000;
   var ABFRAGE_ZU_MS = 30000;
@@ -37,8 +37,23 @@
     fehlerZuViele: 'Gerade sehr viele Nachrichten – bitte warte einen Moment.',
     fehlerUngueltig: 'Bitte prüfe deine Eingabe (Nachricht höchstens 1000 Zeichen, höchstens 3 Links, gültige E-Mail).',
     fehlerKontakt: 'Die E-Mail-Adresse scheint nicht zu stimmen.',
-    zeichenUeber: 'Zu lang – höchstens 1000 Zeichen.'
+    zeichenUeber: 'Zu lang – höchstens 1000 Zeichen.',
+    reagieren: 'Mit Emoji reagieren',
+    antworten: 'Auf diese Nachricht antworten',
+    antwortAuf: 'Antwort auf',
+    zitatWeg: 'Antwort abbrechen',
+    emojiOeffnen: 'Emoji einfügen',
+    deineReaktion: 'Deine Reaktion – zum Entfernen tippen',
+    teamReaktion: 'Reaktion von KAVEO',
+    fehlerReaktion: 'Die Reaktion konnte nicht gespeichert werden.',
+    nachrichtMenue: 'Nachricht: Reagieren oder antworten'
   };
+
+  // Schnellauswahl zum Reagieren (wie im Mitglieder-Chat) und Auswahl fürs Schreiben.
+  var REAKTIONEN = ['👍', '❤️', '😂', '😮', '😢', '🙏', '⛳'];
+  var EMOJIS = ['😀', '😄', '😂', '🙂', '😉', '😍', '😎', '🤔', '😮', '😢', '😅', '🥳',
+    '👍', '👎', '👏', '🙌', '💪', '👋', '🤝', '🙏', '❤️', '🔥', '🎉', '✅',
+    '⛳', '🏌️', '🏆', '🥇', '☀️', '🌧️', '🌿', '🍀', '📍', '📅', '📷', '✉️'];
 
   var zustand = {
     token: null,
@@ -49,7 +64,12 @@
     gesehenTeam: 0,
     sendet: false,
     timer: null,
-    versuch: null // { text, id } – gleiche Anfrage-ID bei Wiederholung
+    versuch: null, // { text, id, antwort } – gleiche Anfrage-ID bei Wiederholung
+    aktiv: null, // Nachricht, deren Aktionen (Reagieren/Antworten) gerade offen sind
+    waehlen: null, // Nachricht, deren Emoji-Auswahl offen ist
+    antwortAuf: null, // { id, text, von_team } – Zitat für die nächste Nachricht
+    emojiOffen: false,
+    reaktionWartet: {} // id -> Emoji ('' = entfernt), bis die Funktion geantwortet hat
   };
 
   function laden() {
@@ -73,6 +93,7 @@
     zustand.token = null;
     zustand.nachrichten = [];
     zustand.gesehenTeam = 0;
+    zustand.aktiv = null; zustand.waehlen = null; zustand.antwortAuf = null; zustand.reaktionWartet = {};
     speichern();
   }
 
@@ -112,7 +133,7 @@
 
   // --- Aufbau ---------------------------------------------------------------
   var knopf, fenster, verlauf, fuss, punkt;
-  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox;
+  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox;
 
   function aufbauen() {
     knopf = el('button', { type: 'button', class: 'kv-chat-knopf', 'aria-label': T.oeffnen, 'aria-expanded': 'false', 'aria-controls': 'kv-chat-fenster' });
@@ -130,7 +151,12 @@
     verlauf = el('div', { class: 'kv-chat-verlauf', role: 'log', 'aria-live': 'polite', 'aria-relevant': 'additions' });
     fuss = el('div', { class: 'kv-chat-fuss' });
     fenster = el('div', { class: 'kv-chat-fenster', id: 'kv-chat-fenster', role: 'dialog', 'aria-label': T.titel + ' Chat', hidden: '' }, [kopf, verlauf, fuss]);
-    fenster.addEventListener('keydown', function (e) { if (e.key === 'Escape') { schliessen(); knopf.focus(); } });
+    fenster.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (zustand.emojiOffen) { emojiUmschalten(false); emojiKnopf.focus(); return; }
+      if (zustand.waehlen) { var id = zustand.waehlen; zustand.waehlen = null; verlaufZeichnen(); fokusAuf(id); return; }
+      schliessen(); knopf.focus();
+    });
     document.body.appendChild(fenster);
     document.body.appendChild(knopf);
     fussAufbauen();
@@ -152,8 +178,19 @@
     // Verstecktes Feld: Menschen sehen es nie, einfache Bots füllen es aus.
     honigtopf = el('input', { type: 'text', name: 'website', tabindex: '-1', autocomplete: 'off', 'aria-hidden': 'true', class: 'kv-chat-honig' });
 
-    var zeile = el('div', { class: 'kv-chat-zeile' }, [feldText, sendeKnopf]);
-    var teile = [meldung, zeile, zaehler, honigtopf];
+    zitatBox = el('div', { class: 'kv-chat-zitatleiste', hidden: '' });
+    emojiKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf', 'aria-label': T.emojiOeffnen, 'aria-expanded': 'false', text: '☺' });
+    emojiKnopf.addEventListener('click', function () { emojiUmschalten(); });
+    emojiBox = el('div', { class: 'kv-chat-emojis', role: 'group', 'aria-label': T.emojiOeffnen, hidden: '' });
+    EMOJIS.forEach(function (e) {
+      var b = el('button', { type: 'button', class: 'kv-chat-emoji', text: e, 'aria-label': e });
+      b.addEventListener('click', function () { emojiEinfuegen(e); });
+      emojiBox.appendChild(b);
+    });
+    zustand.emojiOffen = false;
+
+    var zeile = el('div', { class: 'kv-chat-zeile' }, [emojiKnopf, feldText, sendeKnopf]);
+    var teile = [meldung, zitatBox, emojiBox, zeile, zaehler, honigtopf];
 
     if (!zustand.token) {
       // Erste Nachricht: Name/E-Mail freiwillig, Datenschutz-Haken Pflicht.
@@ -165,7 +202,7 @@
       haken.addEventListener('change', pruefen);
       var link = el('a', { href: DATENSCHUTZ, target: '_blank', rel: 'noopener', text: T.datenschutzLink });
       var label = el('label', { class: 'kv-chat-haken', for: 'kv-chat-haken' }, [haken, el('span', {}, [document.createTextNode(T.datenschutzA), link, document.createTextNode(T.datenschutzB)])]);
-      teile = [meldung, feldName, feldMail, el('p', { class: 'kv-chat-hinweis', text: T.emailHinweis }), label, zeile, zaehler, honigtopf];
+      teile = [meldung, feldName, feldMail, el('p', { class: 'kv-chat-hinweis', text: T.emailHinweis }), label, emojiBox, zeile, zaehler, honigtopf];
     } else {
       haken = null; feldName = null; feldMail = null;
       kontaktBox = el('div', { class: 'kv-chat-kontakt' });
@@ -173,7 +210,46 @@
       teile.push(kontaktBox);
     }
     teile.forEach(function (t) { fuss.appendChild(t); });
+    zitatZeigen();
     pruefen();
+  }
+
+  function emojiUmschalten(offen) {
+    zustand.emojiOffen = typeof offen === 'boolean' ? offen : !zustand.emojiOffen;
+    emojiBox.hidden = !zustand.emojiOffen;
+    emojiKnopf.setAttribute('aria-expanded', zustand.emojiOffen ? 'true' : 'false');
+  }
+
+  /** Emoji an der Schreibmarke einfügen; die Auswahl bleibt offen, damit man mehrere setzen kann. */
+  function emojiEinfuegen(e) {
+    var a = feldText.selectionStart, b = feldText.selectionEnd;
+    if (typeof a !== 'number') { a = b = feldText.value.length; }
+    feldText.value = feldText.value.slice(0, a) + e + feldText.value.slice(b);
+    var pos = a + e.length;
+    feldText.focus();
+    try { feldText.setSelectionRange(pos, pos); } catch (x) { /* egal */ }
+    pruefen();
+  }
+
+  /** Leiste über dem Feld: auf welche Nachricht die nächste antwortet. */
+  function zitatZeigen() {
+    if (!zitatBox) return;
+    zitatBox.textContent = '';
+    var z = zustand.antwortAuf;
+    zitatBox.hidden = !z;
+    if (!z) return;
+    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.zitatWeg, text: '✕' });
+    weg.addEventListener('click', function () { zustand.antwortAuf = null; zitatZeigen(); feldText.focus(); });
+    zitatBox.appendChild(el('div', { class: 'kv-chat-zitat-inhalt' }, [
+      el('span', { class: 'kv-chat-zitat-von', text: T.antwortAuf + ' ' + (z.von_team ? T.wir : T.du) }),
+      el('span', { class: 'kv-chat-zitat-text', text: kurz(z.text) })
+    ]));
+    zitatBox.appendChild(weg);
+  }
+
+  function kurz(t) {
+    t = String(t || '').replace(/\s+/g, ' ').trim();
+    return t.length > 80 ? t.slice(0, 80) + '…' : t;
   }
 
   function kontaktAnzeigen(offen, ok) {
@@ -219,15 +295,102 @@
 
   function verlaufZeichnen() {
     var amEnde = verlauf.scrollHeight - verlauf.scrollTop - verlauf.clientHeight < 60;
+    var oben = verlauf.scrollTop;
     verlauf.textContent = '';
-    verlauf.appendChild(el('div', { class: 'kv-chat-blase wir' }, [el('p', { text: T.begruessung })]));
-    zustand.nachrichten.forEach(function (n) {
-      verlauf.appendChild(el('div', { class: 'kv-chat-blase ' + (n.von_team ? 'wir' : 'du') }, [
-        el('p', { text: String(n.text) }),
-        el('span', { class: 'kv-chat-zeit', text: (n.von_team ? T.wir : T.du) + ' · ' + uhrzeit(n.gesendet) })
+    verlauf.appendChild(el('div', { class: 'kv-chat-eintrag wir' }, [
+      el('div', { class: 'kv-chat-blase wir' }, [el('p', { text: T.begruessung })])
+    ]));
+    zustand.nachrichten.forEach(function (n) { verlauf.appendChild(eintrag(n)); });
+    verlauf.scrollTop = amEnde || !zustand.offen ? verlauf.scrollHeight : oben;
+  }
+
+  function eintrag(n) {
+    var seite = n.von_team ? 'wir' : 'du';
+    var blase = el('div', { class: 'kv-chat-blase ' + seite });
+    if (n.antwort) {
+      blase.appendChild(el('div', { class: 'kv-chat-zitat' }, [
+        el('span', { class: 'kv-chat-zitat-von', text: n.antwort.von_team ? T.wir : T.du }),
+        el('span', { class: 'kv-chat-zitat-text', text: kurz(n.antwort.text) })
       ]));
+    }
+    blase.appendChild(el('p', { text: String(n.text) }));
+    blase.appendChild(el('span', { class: 'kv-chat-zeit', text: (n.von_team ? T.wir : T.du) + ' · ' + uhrzeit(n.gesendet) }));
+
+    var teile = [blase];
+    var chips = [];
+    if (n.reaktion_team) chips.push(el('span', { class: 'kv-chat-chip team', title: T.teamReaktion, 'aria-label': T.teamReaktion + ': ' + n.reaktion_team, text: n.reaktion_team }));
+    if (n.reaktion_ich) {
+      var mein = el('button', { type: 'button', class: 'kv-chat-chip ich', title: T.deineReaktion, 'aria-label': T.deineReaktion + ': ' + n.reaktion_ich, text: n.reaktion_ich });
+      mein.addEventListener('click', function (ev) { ev.stopPropagation(); reagiere(n, n.reaktion_ich); });
+      chips.push(mein);
+    }
+    if (chips.length) teile.push(el('div', { class: 'kv-chat-chips' }, chips));
+
+    if (zustand.token) {
+      var aktionen = el('div', { class: 'kv-chat-aktionen' });
+      var r = el('button', { type: 'button', class: 'kv-chat-aktion', 'data-fokus': n.id, 'aria-label': T.reagieren, 'aria-expanded': zustand.waehlen === n.id ? 'true' : 'false', text: '☺' });
+      r.addEventListener('click', function (ev) { ev.stopPropagation(); zustand.waehlen = zustand.waehlen === n.id ? null : n.id; zustand.aktiv = n.id; verlaufZeichnen(); fokusAuf(n.id); });
+      var a = el('button', { type: 'button', class: 'kv-chat-aktion', 'aria-label': T.antworten, text: '↩' });
+      a.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        zustand.antwortAuf = { id: n.id, text: String(n.text), von_team: !!n.von_team };
+        zustand.waehlen = null; zustand.aktiv = null;
+        zitatZeigen(); verlaufZeichnen();
+        feldText.focus();
+      });
+      aktionen.appendChild(r);
+      aktionen.appendChild(a);
+      teile.push(aktionen);
+      if (zustand.waehlen === n.id) {
+        var wahl = el('div', { class: 'kv-chat-wahl', role: 'group', 'aria-label': T.reagieren });
+        REAKTIONEN.forEach(function (e) {
+          var b = el('button', { type: 'button', class: 'kv-chat-wahl-emoji' + (n.reaktion_ich === e ? ' an' : ''), 'aria-label': e, 'aria-pressed': n.reaktion_ich === e ? 'true' : 'false', text: e });
+          b.addEventListener('click', function (ev) { ev.stopPropagation(); reagiere(n, e); });
+          wahl.appendChild(b);
+        });
+        teile.push(wahl);
+      }
+    }
+    var box = el('div', { class: 'kv-chat-eintrag ' + seite + (zustand.aktiv === n.id ? ' aktiv' : '') }, teile);
+    // Tippen auf die Blase zeigt oder versteckt Reagieren/Antworten (am Handy gibt es kein Überfahren).
+    box.addEventListener('click', function (ev) {
+      if (ev.target && ev.target.closest && ev.target.closest('a')) return;
+      var sel = window.getSelection && window.getSelection();
+      if (sel && String(sel).length > 0) return;
+      zustand.aktiv = zustand.aktiv === n.id ? null : n.id;
+      if (zustand.aktiv !== n.id) zustand.waehlen = null;
+      verlaufZeichnen();
     });
-    if (amEnde || !zustand.offen) verlauf.scrollTop = verlauf.scrollHeight;
+    return box;
+  }
+
+  /** Nach dem Neuzeichnen den Fokus auf den Reagieren-Knopf der Nachricht zurückgeben (Tastatur). */
+  function fokusAuf(id) {
+    var b = verlauf.querySelector('[data-fokus="' + String(id).replace(/[^A-Za-z0-9-]/g, '') + '"]');
+    if (b) b.focus();
+  }
+
+  /** Eigene Reaktion setzen; dasselbe Emoji noch einmal entfernt sie. */
+  function reagiere(n, emoji) {
+    var alt = n.reaktion_ich || null;
+    var neu = alt === emoji ? '' : emoji;
+    n.reaktion_ich = neu || null;
+    zustand.reaktionWartet[n.id] = neu;
+    zustand.waehlen = null;
+    verlaufZeichnen();
+    fokusAuf(n.id);
+    zeigeMeldung('');
+    function zurueck() {
+      delete zustand.reaktionWartet[n.id];
+      n.reaktion_ich = alt;
+      verlaufZeichnen();
+    }
+    aufruf({ aktion: 'reagieren', token: zustand.token, message_id: n.id, emoji: neu }).then(function (r) {
+      if (r.status === 200) { delete zustand.reaktionWartet[n.id]; return; }
+      zurueck();
+      if (r.status === 404 && r.daten && r.daten.fehler === 'sitzung_unbekannt') { vergessen(); fussAufbauen(); verlaufZeichnen(); return; }
+      zeigeMeldung(r.status === 429 ? T.fehlerZuViele : T.fehlerReaktion);
+    }).catch(function () { zurueck(); zeigeMeldung(T.fehlerReaktion); });
   }
 
   function teamZaehlen() {
@@ -238,15 +401,25 @@
     punkt.hidden = !(neu && !zustand.offen);
   }
 
+  function signatur(liste) {
+    return JSON.stringify(liste.map(function (n) {
+      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : ''];
+    }));
+  }
+
   // --- Abfragen -------------------------------------------------------------
   function lesen() {
     if (!zustand.token) return Promise.resolve();
     return aufruf({ aktion: 'lesen', token: zustand.token, still: !zustand.offen }).then(function (r) {
       if (r.status === 404) { vergessen(); fussAufbauen(); verlaufZeichnen(); punktSetzen(); return; }
       if (r.status !== 200 || !r.daten || !Array.isArray(r.daten.nachrichten)) return;
-      var alt = JSON.stringify(zustand.nachrichten.map(function (n) { return n.id; }));
+      var alt = signatur(zustand.nachrichten);
       zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && typeof n.text === 'string'; });
-      if (JSON.stringify(zustand.nachrichten.map(function (n) { return n.id; })) !== alt) verlaufZeichnen();
+      // Eine Reaktion, die gerade gespeichert wird, nicht von einer älteren Antwort überschreiben lassen.
+      zustand.nachrichten.forEach(function (n) {
+        if (Object.prototype.hasOwnProperty.call(zustand.reaktionWartet, n.id)) n.reaktion_ich = zustand.reaktionWartet[n.id] || null;
+      });
+      if (signatur(zustand.nachrichten) !== alt) verlaufZeichnen();
       if (zustand.offen) { zustand.gesehenTeam = teamZaehlen(); speichern(); }
       punktSetzen();
     }).catch(function () { /* beim nächsten Mal wieder */ });
@@ -295,7 +468,8 @@
 
   function sende(text, wiederholt) {
     // Gleicher Text = gleiche Anfrage-ID (kein Doppel bei Wiederholung nach Netzfehler).
-    if (!zustand.versuch || zustand.versuch.text !== text) zustand.versuch = { text: text, id: neueId() };
+    var zitat = zustand.token && zustand.antwortAuf ? zustand.antwortAuf.id : null;
+    if (!zustand.versuch || zustand.versuch.text !== text || zustand.versuch.zitat !== zitat) zustand.versuch = { text: text, id: neueId(), zitat: zitat };
     var body = {
       aktion: 'senden',
       request_id: zustand.versuch.id,
@@ -303,8 +477,10 @@
       hp: honigtopf ? honigtopf.value : '',
       offen_ms: Date.now() - (zustand.geoeffnetAm || Date.now())
     };
-    if (zustand.token) body.token = zustand.token;
-    else {
+    if (zustand.token) {
+      body.token = zustand.token;
+      if (zitat) body.antwort_auf = zitat;
+    } else {
       body.einwilligung = true;
       if (feldName && feldName.value.trim()) body.name = feldName.value.trim();
       if (feldMail && feldMail.value.trim()) body.email = feldMail.value.trim();
@@ -322,10 +498,13 @@
           speichern();
         }
         zustand.versuch = null;
+        zustand.antwortAuf = null;
         feldText.value = '';
         if (neueSitzung) {
           fussAufbauen();
           feldText.focus();
+        } else {
+          zitatZeigen();
         }
         pruefen();
         lesen().then(takt);

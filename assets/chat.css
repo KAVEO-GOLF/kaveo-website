@@ -92,3 +92,12 @@ button.kv-chat-chip { cursor: pointer; border-color: #1f9a6a; min-height: 24px; 
 }
 @media (prefers-reduced-motion: reduce) { .kv-chat-knopf { transition: none; } }
 @media print { .kv-chat-knopf, .kv-chat-fenster { display: none !important; } }
+
+/* Bilder */
+.kv-chat-bildknopf:disabled { opacity: .4; cursor: not-allowed; }
+.kv-chat-bildleiste { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; background: #0D0D0D; }
+.kv-chat-bildleiste[hidden] { display: none; }
+.kv-chat-bildvorschau { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; flex: none; }
+.kv-chat-bildlink { display: block; }
+.kv-chat-bild { display: block; max-width: 100%; max-height: 240px; width: auto; height: auto; border-radius: 10px; margin-bottom: 4px; }
+.kv-chat-bild-fehlt { color: rgba(255,255,255,.6); font-size: 13px; }

@@ -7,9 +7,13 @@
   'use strict';
 
   var API = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage';
+  var API_BILD = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-bild';
   var SPEICHER = 'kaveo-chat-v1';
   var DATENSCHUTZ = 'https://kaveo-golf.app/datenschutz/#livechat';
   var MAX_ZEICHEN = 1000;
+  var BILD_KANTE = 1600; // längste Seite in Pixel; so bleibt jedes Foto weit unter 5 MB
+  var BILD_QUALITAET = 0.85;
+  var BILD_URL_MS = 45 * 60 * 1000; // signierte Adressen gelten 60 Minuten
   var ABFRAGE_OFFEN_MS = 5000;
   var ABFRAGE_ZU_MS = 30000;
 
@@ -46,7 +50,19 @@
     deineReaktion: 'Deine Reaktion – zum Entfernen tippen',
     teamReaktion: 'Reaktion von KAVEO',
     fehlerReaktion: 'Die Reaktion konnte nicht gespeichert werden.',
-    nachrichtMenue: 'Nachricht: Reagieren oder antworten'
+    nachrichtMenue: 'Nachricht: Reagieren oder antworten',
+    bildAnhaengen: 'Bild anhängen',
+    bildErstSchreiben: 'Schick zuerst eine Nachricht, dann kannst du Bilder anhängen.',
+    bildWeg: 'Bild entfernen',
+    bildVorschau: 'Vorschau des gewählten Bildes',
+    bildBereit: 'Bild bereit – dein Text wird zur Bildunterschrift.',
+    bildLesen: 'Das Bild wird vorbereitet …',
+    bildNichtLesbar: 'Dieses Bild konnte nicht gelesen werden. Bitte wähle ein anderes.',
+    fehlerBildZuViele: 'Gerade zu viele Bilder – bitte warte etwas.',
+    fehlerBildFormat: 'Dieses Bild kann nicht gesendet werden (nur Bilder, höchstens 5 MB).',
+    bildNichtDa: 'Bild nicht verfügbar',
+    bildGross: 'Bild groß ansehen',
+    fotoZitat: '📷 Foto'
   };
 
   // Schnellauswahl zum Reagieren (wie im Mitglieder-Chat) und Auswahl fürs Schreiben.
@@ -73,7 +89,11 @@
     waehlen: null, // Nachricht, deren Emoji-Auswahl offen ist
     antwortAuf: null, // { id, text, von_team } – Zitat für die nächste Nachricht
     emojiOffen: false,
-    reaktionWartet: {} // id -> Emoji ('' = entfernt), bis die Funktion geantwortet hat
+    reaktionWartet: {}, // id -> Emoji ('' = entfernt), bis die Funktion geantwortet hat
+    bild: null, // { blob, url } – gewähltes Bild, wird mit dem nächsten Senden verschickt
+    bildBereit: false,
+    bildUrls: {}, // Nachrichten-Id -> { url, seit }: gleiche Adresse behalten, sonst flackert das Bild bei jeder Abfrage
+    versuchBild: null // { id, text } – gleiche Anfrage-ID bei Wiederholung
   };
 
   function laden() {
@@ -94,6 +114,8 @@
     } catch (e) { /* egal */ }
   }
   function vergessen() {
+    bildVerwerfen();
+    zustand.bildUrls = {};
     zustand.token = null;
     zustand.nachrichten = [];
     zustand.gesehenTeam = 0;
@@ -137,7 +159,7 @@
 
   // --- Aufbau ---------------------------------------------------------------
   var knopf, fenster, verlauf, fuss, punkt;
-  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox;
+  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox;
 
   function aufbauen() {
     knopf = el('button', { type: 'button', class: 'kv-chat-knopf', 'aria-label': T.oeffnen, 'aria-expanded': 'false', 'aria-controls': 'kv-chat-fenster' });
@@ -193,8 +215,19 @@
     fenster.appendChild(emojiBox);
     zustand.emojiOffen = false;
 
-    var zeile = el('div', { class: 'kv-chat-zeile' }, [emojiKnopf, feldText, sendeKnopf]);
-    var teile = [meldung, zitatBox, zeile, zaehler, honigtopf];
+    bildKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-bildknopf', 'aria-label': T.bildAnhaengen, title: zustand.token ? T.bildAnhaengen : T.bildErstSchreiben, text: '📎' });
+    bildKnopf.disabled = !zustand.token;
+    bildKnopf.addEventListener('click', function () { if (zustand.token) bildEingabe.click(); });
+    bildEingabe = el('input', { type: 'file', accept: 'image/*', class: 'kv-chat-honig', tabindex: '-1', 'aria-hidden': 'true' });
+    bildEingabe.addEventListener('change', function () {
+      var d = bildEingabe.files && bildEingabe.files[0];
+      bildEingabe.value = '';
+      if (d) bildWaehlen(d);
+    });
+    bildBox = el('div', { class: 'kv-chat-bildleiste', hidden: '' });
+
+    var zeile = el('div', { class: 'kv-chat-zeile' }, [bildKnopf, emojiKnopf, feldText, sendeKnopf]);
+    var teile = [meldung, zitatBox, bildBox, bildEingabe, zeile, zaehler, honigtopf];
 
     if (!zustand.token) {
       // Erste Nachricht: Name/E-Mail freiwillig, Datenschutz-Haken Pflicht.
@@ -269,6 +302,93 @@
     pruefen();
   }
 
+  // --- Bilder -----------------------------------------------------------------
+  function bildVerwerfen() {
+    if (zustand.bild && zustand.bild.url) { try { URL.revokeObjectURL(zustand.bild.url); } catch (e) { /* egal */ } }
+    zustand.bild = null;
+    zustand.bildBereit = false;
+    zustand.versuchBild = null;
+    if (bildBox) bildZeigen();
+  }
+
+  /** Bild lesen und als JPEG neu zeichnen: kleiner, ohne Aufnahmeort (EXIF) und nie ein Skript. */
+  function bildAufbereiten(datei) {
+    return new Promise(function (ok, fehl) {
+      var url = URL.createObjectURL(datei);
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var b = img.naturalWidth, h = img.naturalHeight;
+          if (!b || !h) throw new Error('leer');
+          var f = Math.min(1, BILD_KANTE / Math.max(b, h));
+          var c = document.createElement('canvas');
+          c.width = Math.max(1, Math.round(b * f)); c.height = Math.max(1, Math.round(h * f));
+          var g = c.getContext('2d');
+          g.fillStyle = '#ffffff'; // durchsichtige Stellen (PNG) werden weiß, nicht schwarz
+          g.fillRect(0, 0, c.width, c.height);
+          g.drawImage(img, 0, 0, c.width, c.height);
+          c.toBlob(function (blob) {
+            URL.revokeObjectURL(url);
+            if (blob) ok(blob); else fehl(new Error('kein Bild'));
+          }, 'image/jpeg', BILD_QUALITAET);
+        } catch (e) { URL.revokeObjectURL(url); fehl(e); }
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); fehl(new Error('nicht lesbar')); };
+      img.src = url;
+    });
+  }
+
+  function bildWaehlen(datei) {
+    zeigeMeldung('');
+    bildVerwerfen();
+    zustand.bild = { blob: null, url: null };
+    var diese = zustand.bild;
+    bildZeigen();
+    bildAufbereiten(datei).then(function (blob) {
+      if (zustand.bild !== diese) return; // inzwischen entfernt oder ersetzt
+      diese.blob = blob;
+      diese.url = URL.createObjectURL(blob);
+      zustand.bildBereit = true;
+      bildZeigen();
+      pruefen();
+      feldText.focus();
+    }).catch(function () {
+      if (zustand.bild !== diese) return;
+      bildVerwerfen();
+      zeigeMeldung(T.bildNichtLesbar);
+      pruefen();
+    });
+  }
+
+  function bildZeigen() {
+    if (!bildBox) return;
+    bildBox.textContent = '';
+    var b = zustand.bild;
+    bildBox.hidden = !b;
+    if (!b) return;
+    if (!zustand.bildBereit) { bildBox.appendChild(el('span', { class: 'kv-chat-zitat-text', role: 'status', text: T.bildLesen })); return; }
+    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.bildWeg, text: '✕' });
+    weg.addEventListener('click', function () { bildVerwerfen(); pruefen(); feldText.focus(); });
+    bildBox.appendChild(el('img', { class: 'kv-chat-bildvorschau', src: b.url, alt: T.bildVorschau }));
+    bildBox.appendChild(el('span', { class: 'kv-chat-zitat-text', text: T.bildBereit }));
+    bildBox.appendChild(weg);
+  }
+
+  /** Stabile Adresse je Nachricht: die Antwort der Funktion bringt bei jeder Abfrage eine neue. */
+  function bildAdresseMerken(n) {
+    if (!n.bild) return;
+    var alt = zustand.bildUrls[n.id];
+    var jetzt = Date.now();
+    if (alt && jetzt - alt.seit < BILD_URL_MS) { n.bild.url = alt.url; return; }
+    if (typeof n.bild.url === 'string' && /^https:\/\//.test(n.bild.url)) zustand.bildUrls[n.id] = { url: n.bild.url, seit: jetzt };
+    else n.bild.url = null;
+  }
+
+  /** Text, der beim Zitieren oder in der Vorschau für eine Nachricht steht. */
+  function textVon(n) {
+    return typeof n.text === 'string' && n.text ? n.text : (n.bild ? T.fotoZitat : '');
+  }
+
   /** Leiste über dem Feld: auf welche Nachricht die nächste antwortet. */
   function zitatZeigen() {
     if (!zitatBox) return;
@@ -320,7 +440,8 @@
     var zuLang = feldText.value.length > MAX_ZEICHEN;
     zaehler.hidden = !zuLang;
     zaehler.textContent = zuLang ? T.zeichenUeber : '';
-    var ok = text !== '' && !zuLang && !zustand.sendet && (zustand.token || (haken && haken.checked));
+    var hatBild = !!(zustand.token && zustand.bild && zustand.bildBereit);
+    var ok = (text !== '' || hatBild) && !zuLang && !zustand.sendet && (zustand.token || (haken && haken.checked));
     sendeKnopf.disabled = !ok;
     sendeKnopf.textContent = zustand.sendet ? T.sendet : T.senden;
   }
@@ -351,7 +472,15 @@
         el('span', { class: 'kv-chat-zitat-text', text: kurz(n.antwort.text) })
       ]));
     }
-    blase.appendChild(el('p', { text: String(n.text) }));
+    if (n.bild) {
+      if (n.bild.url) {
+        var bild = el('img', { class: 'kv-chat-bild', src: n.bild.url, alt: T.bildGross, loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' });
+        blase.appendChild(el('a', { class: 'kv-chat-bildlink', href: n.bild.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': T.bildGross }, [bild]));
+      } else {
+        blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.bildNichtDa }));
+      }
+    }
+    if (typeof n.text === 'string' && n.text !== '') blase.appendChild(el('p', { text: n.text }));
     blase.appendChild(el('span', { class: 'kv-chat-zeit', text: (n.von_team ? T.wir : T.du) + ' · ' + uhrzeit(n.gesendet) }));
 
     var teile = [blase];
@@ -371,7 +500,7 @@
       var a = el('button', { type: 'button', class: 'kv-chat-aktion', 'aria-label': T.antworten, text: '↩' });
       a.addEventListener('click', function (ev) {
         ev.stopPropagation();
-        zustand.antwortAuf = { id: n.id, text: String(n.text), von_team: !!n.von_team };
+        zustand.antwortAuf = { id: n.id, text: textVon(n), von_team: !!n.von_team };
         zustand.waehlen = null; zustand.aktiv = null;
         zitatZeigen(); verlaufZeichnen();
         feldText.focus();
@@ -441,7 +570,7 @@
 
   function signatur(liste) {
     return JSON.stringify(liste.map(function (n) {
-      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : ''];
+      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0];
     }));
   }
 
@@ -452,7 +581,8 @@
       if (r.status === 404) { vergessen(); fussAufbauen(); verlaufZeichnen(); punktSetzen(); return; }
       if (r.status !== 200 || !r.daten || !Array.isArray(r.daten.nachrichten)) return;
       var alt = signatur(zustand.nachrichten);
-      zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && typeof n.text === 'string'; });
+      zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && (typeof n.text === 'string' || (n.bild && typeof n.bild === 'object')); });
+      zustand.nachrichten.forEach(bildAdresseMerken);
       // Eine Reaktion, die gerade gespeichert wird, nicht von einer älteren Antwort überschreiben lassen.
       zustand.nachrichten.forEach(function (n) {
         if (Object.prototype.hasOwnProperty.call(zustand.reaktionWartet, n.id)) n.reaktion_ich = zustand.reaktionWartet[n.id] || null;
@@ -500,8 +630,45 @@
   function absenden() {
     if (sendeKnopf.disabled) return;
     var text = feldText.value.trim();
+    if (zustand.token && zustand.bild && zustand.bildBereit) { sendeBild(text); return; }
     if (!text) return;
     sende(text, false);
+  }
+
+  /** Bild (mit Text als Unterschrift) an die Bild-Funktion; dieselbe Anfrage-ID bei Wiederholung. */
+  function sendeBild(text) {
+    if (zustand.sendet) return;
+    if (!zustand.versuchBild || zustand.versuchBild.text !== text || zustand.versuchBild.blob !== zustand.bild.blob) {
+      zustand.versuchBild = { id: neueId(), text: text, blob: zustand.bild.blob };
+    }
+    var f = new FormData();
+    f.append('token', zustand.token);
+    f.append('request_id', zustand.versuchBild.id);
+    f.append('datei', zustand.bild.blob, 'bild.jpg');
+    if (text) f.append('text', text);
+    f.append('hp', honigtopf ? honigtopf.value : '');
+    zustand.sendet = true;
+    zeigeMeldung('');
+    pruefen();
+    fetch(API_BILD, { method: 'POST', body: f, credentials: 'omit', referrerPolicy: 'no-referrer' }).then(function (r) {
+      zustand.sendet = false;
+      if (r.status === 200) {
+        bildVerwerfen();
+        feldText.value = '';
+        zustand.antwortAuf = null;
+        zitatZeigen();
+        pruefen();
+        lesen().then(takt);
+        return;
+      }
+      if (r.status === 404) { vergessen(); zeigeMeldung(T.fehlerNetz); fussAufbauen(); verlaufZeichnen(); punktSetzen(); return; }
+      zeigeMeldung(r.status === 429 ? T.fehlerBildZuViele : (r.status === 413 || r.status === 415 || r.status === 400) ? T.fehlerBildFormat : T.fehlerNetz);
+      pruefen();
+    }).catch(function () {
+      zustand.sendet = false;
+      zeigeMeldung(T.fehlerNetz);
+      pruefen();
+    });
   }
 
   function sende(text, wiederholt) {

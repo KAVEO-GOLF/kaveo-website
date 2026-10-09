@@ -51,9 +51,13 @@
 
   // Schnellauswahl zum Reagieren (wie im Mitglieder-Chat) und Auswahl fürs Schreiben.
   var REAKTIONEN = ['👍', '❤️', '😂', '😮', '😢', '🙏', '⛳'];
-  var EMOJIS = ['😀', '😄', '😂', '🙂', '😉', '😍', '😎', '🤔', '😮', '😢', '😅', '🥳',
-    '👍', '👎', '👏', '🙌', '💪', '👋', '🤝', '🙏', '❤️', '🔥', '🎉', '✅',
-    '⛳', '🏌️', '🏆', '🥇', '☀️', '🌧️', '🌿', '🍀', '📍', '📅', '📷', '✉️'];
+  var EMOJI_GRUPPEN = [
+    { symbol: '😀', name: 'Gesichter', liste: ['😀', '😃', '😄', '😁', '😆', '😅', '😂', '🤣', '🙂', '😉', '😊', '😇', '🥰', '😍', '🤩', '😘', '😋', '😜', '🤪', '😎', '🤓', '🥳', '🤔', '🤗', '🫡', '😏', '😌', '😴', '🤤', '😮', '😲', '😳', '🥺', '😢', '😭', '😤', '😡', '🤯', '😱', '🙃', '😬', '🙄', '😐', '🤐', '🤫', '🤭', '🥵', '🥶', '🤒'] },
+    { symbol: '👍', name: 'Gesten', liste: ['👍', '👎', '👌', '✌️', '🤞', '🤟', '🤘', '🤙', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '👋', '🖐️', '🖖', '👏', '🙌', '🤝', '🙏', '💪', '✍️', '🤳', '👀', '🧠', '👂', '🫶', '🫰', '🫵', '🤌'] },
+    { symbol: '❤️', name: 'Herzen und Symbole', liste: ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '💔', '❣️', '💕', '💞', '💯', '💥', '✨', '⭐', '🌟', '🔥', '🎉', '🎊', '✅', '❌', '❓', '❗', '⚡', '💡', '🔔', '🎁', '👑', '💎', '🏅', '🚀'] },
+    { symbol: '⛳', name: 'Golf und Sport', liste: ['⛳', '🏌️', '🏌️‍♀️', '🏌️‍♂️', '🏆', '🥇', '🥈', '🥉', '🏅', '🎯', '⚽', '🏀', '🎾', '🏓', '🥅', '🚶', '🚗', '🛺', '🧢', '👟', '🧤', '🕶️', '🍺', '🥂', '🍻', '☕', '🍔', '🍕', '🌭', '🍎', '🍌', '🥗'] },
+    { symbol: '☀️', name: 'Natur und Orte', liste: ['☀️', '🌤️', '⛅', '☁️', '🌧️', '⛈️', '🌈', '❄️', '💨', '🌬️', '🌿', '🍀', '🌳', '🌲', '🌴', '🌸', '🌻', '🌹', '🐦', '🦅', '🦆', '🐕', '🐈', '🦌', '📍', '🗺️', '🧭', '🏡', '🏨', '✈️', '📅', '⏰'] }
+  ];
 
   var zustand = {
     token: null,
@@ -157,6 +161,9 @@
       if (zustand.waehlen) { var id = zustand.waehlen; zustand.waehlen = null; verlaufZeichnen(); fokusAuf(id); return; }
       schliessen(); knopf.focus();
     });
+    fenster.addEventListener('click', function (e) {
+      if (zustand.emojiOffen && !emojiBox.contains(e.target) && !emojiKnopf.contains(e.target)) emojiUmschalten(false);
+    });
     document.body.appendChild(fenster);
     document.body.appendChild(knopf);
     fussAufbauen();
@@ -181,16 +188,13 @@
     zitatBox = el('div', { class: 'kv-chat-zitatleiste', hidden: '' });
     emojiKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf', 'aria-label': T.emojiOeffnen, 'aria-expanded': 'false', text: '☺' });
     emojiKnopf.addEventListener('click', function () { emojiUmschalten(); });
-    emojiBox = el('div', { class: 'kv-chat-emojis', role: 'group', 'aria-label': T.emojiOeffnen, hidden: '' });
-    EMOJIS.forEach(function (e) {
-      var b = el('button', { type: 'button', class: 'kv-chat-emoji', text: e, 'aria-label': e });
-      b.addEventListener('click', function () { emojiEinfuegen(e); });
-      emojiBox.appendChild(b);
-    });
+    if (emojiBox && emojiBox.parentNode) emojiBox.parentNode.removeChild(emojiBox);
+    emojiBox = emojiAuswahlBauen();
+    fenster.appendChild(emojiBox);
     zustand.emojiOffen = false;
 
     var zeile = el('div', { class: 'kv-chat-zeile' }, [emojiKnopf, feldText, sendeKnopf]);
-    var teile = [meldung, zitatBox, emojiBox, zeile, zaehler, honigtopf];
+    var teile = [meldung, zitatBox, zeile, zaehler, honigtopf];
 
     if (!zustand.token) {
       // Erste Nachricht: Name/E-Mail freiwillig, Datenschutz-Haken Pflicht.
@@ -202,7 +206,7 @@
       haken.addEventListener('change', pruefen);
       var link = el('a', { href: DATENSCHUTZ, target: '_blank', rel: 'noopener', text: T.datenschutzLink });
       var label = el('label', { class: 'kv-chat-haken', for: 'kv-chat-haken' }, [haken, el('span', {}, [document.createTextNode(T.datenschutzA), link, document.createTextNode(T.datenschutzB)])]);
-      teile = [meldung, feldName, feldMail, el('p', { class: 'kv-chat-hinweis', text: T.emailHinweis }), label, emojiBox, zeile, zaehler, honigtopf];
+      teile = [meldung, feldName, feldMail, el('p', { class: 'kv-chat-hinweis', text: T.emailHinweis }), label, zeile, zaehler, honigtopf];
     } else {
       haken = null; feldName = null; feldMail = null;
       kontaktBox = el('div', { class: 'kv-chat-kontakt' });
@@ -214,8 +218,42 @@
     pruefen();
   }
 
+  /** Emoji-Auswahl wie bei WhatsApp: Fenster über dem Schreibfeld, oben die Gruppen, darunter ein Raster. */
+  function emojiAuswahlBauen() {
+    var box = el('div', { class: 'kv-chat-emojis', role: 'group', 'aria-label': T.emojiOeffnen, hidden: '' });
+    var leiste = el('div', { class: 'kv-chat-emoji-gruppen' });
+    var raster = el('div', { class: 'kv-chat-emoji-raster' });
+    var tabs = [];
+    function zeige(i) {
+      tabs.forEach(function (t, k) { t.className = 'kv-chat-emoji-tab' + (k === i ? ' an' : ''); t.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      raster.textContent = '';
+      raster.scrollTop = 0;
+      EMOJI_GRUPPEN[i].liste.forEach(function (e) {
+        var b = el('button', { type: 'button', class: 'kv-chat-emoji', text: e, 'aria-label': e });
+        b.addEventListener('click', function () { emojiEinfuegen(e); });
+        raster.appendChild(b);
+      });
+    }
+    EMOJI_GRUPPEN.forEach(function (g, i) {
+      var t = el('button', { type: 'button', class: 'kv-chat-emoji-tab', text: g.symbol, 'aria-label': g.name });
+      t.addEventListener('click', function () { zeige(i); });
+      tabs.push(t);
+      leiste.appendChild(t);
+    });
+    box.appendChild(leiste);
+    box.appendChild(raster);
+    zeige(0);
+    return box;
+  }
+
   function emojiUmschalten(offen) {
     zustand.emojiOffen = typeof offen === 'boolean' ? offen : !zustand.emojiOffen;
+    if (zustand.emojiOffen) {
+      // direkt über dem Fuß des Fensters, nie höher als das Fenster selbst
+      var unten = Math.max(0, fenster.clientHeight - fuss.offsetTop) + 6;
+      emojiBox.style.bottom = unten + 'px';
+      emojiBox.style.maxHeight = Math.max(120, fenster.clientHeight - unten - 70) + 'px';
+    }
     emojiBox.hidden = !zustand.emojiOffen;
     emojiKnopf.setAttribute('aria-expanded', zustand.emojiOffen ? 'true' : 'false');
   }

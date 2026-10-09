@@ -73,9 +73,13 @@ button.kv-chat-chip { cursor: pointer; border-color: #1f9a6a; min-height: 24px; 
 /* Schreibfeld: Emoji-Auswahl und Zitat-Leiste */
 .kv-chat-emoji-knopf { flex: none; min-width: 44px; min-height: 44px; border: 1px solid rgba(255,255,255,.18); border-radius: 12px; background: #0D0D0D; color: #fff; font-size: 20px; cursor: pointer; }
 .kv-chat-emoji-knopf:hover { background: #1b1b1b; }
-.kv-chat-emojis { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 2px; max-height: 150px; overflow-y: auto; padding: 6px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; background: #0D0D0D; }
+.kv-chat-emojis { position: absolute; left: 10px; right: 10px; bottom: 120px; height: 260px; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: #161616; box-shadow: 0 10px 30px rgba(0,0,0,.55); overflow: hidden; z-index: 3; }
 .kv-chat-emojis[hidden], .kv-chat-zitatleiste[hidden] { display: none; }
-.kv-chat-emoji { min-height: 40px; border: 0; border-radius: 8px; background: none; font-size: 21px; cursor: pointer; }
+.kv-chat-emoji-gruppen { flex: none; display: flex; border-bottom: 1px solid rgba(255,255,255,.1); }
+.kv-chat-emoji-tab { flex: 1; min-height: 42px; border: 0; border-bottom: 2px solid transparent; background: none; font-size: 19px; cursor: pointer; opacity: .65; }
+.kv-chat-emoji-tab.an { opacity: 1; border-bottom-color: #1f9a6a; }
+.kv-chat-emoji-raster { flex: 1; min-height: 0; overflow-y: auto; display: grid; grid-template-columns: repeat(8, 1fr); align-content: start; gap: 2px; padding: 8px; overscroll-behavior: contain; }
+.kv-chat-emoji { min-height: 38px; border: 0; border-radius: 8px; background: none; font-size: 22px; cursor: pointer; }
 .kv-chat-emoji:hover { background: rgba(255,255,255,.1); }
 .kv-chat-zitatleiste { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-left: 2px solid #1f9a6a; border-radius: 6px; background: #1b1b1b; }
 .kv-chat-zitat-inhalt { flex: 1; min-width: 0; display: flex; flex-direction: column; }

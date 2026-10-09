@@ -8,6 +8,11 @@
 
   var API = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage';
   var API_BILD = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-bild';
+  var API_SPRACHE = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-sprache';
+  var SPRACHE_MAX_SEK = 600; // 10 Minuten
+  var SPRACHE_MAX_BYTES = 6 * 1024 * 1024;
+  var SPRACHE_STOPP_BYTES = 5.5 * 1024 * 1024; // Sicherheitsabstand zur Serverobergrenze von 6 MB
+  var SPRACHE_BITRATE = 32000; // 10 Minuten bleiben so bei etwa 2,4 MB
   var SPEICHER = 'kaveo-chat-v1';
   var DATENSCHUTZ = 'https://kaveo-golf.app/datenschutz/#livechat';
   var MAX_ZEICHEN = 1000;
@@ -62,7 +67,23 @@
     fehlerBildFormat: 'Dieses Bild kann nicht gesendet werden (nur Bilder, höchstens 5 MB).',
     bildNichtDa: 'Bild nicht verfügbar',
     bildGross: 'Bild groß ansehen',
-    fotoZitat: '📷 Foto'
+    fotoZitat: '📷 Foto',
+    sprachZitat: '🎤 Sprachnachricht',
+    sprachAufnehmen: 'Sprachnachricht aufnehmen',
+    sprachErstSchreiben: 'Schick zuerst eine Nachricht, dann kannst du Sprachnachrichten aufnehmen.',
+    sprachStopp: 'Aufnahme beenden',
+    sprachAbbrechen: 'Aufnahme verwerfen',
+    sprachSenden: 'Sprachnachricht senden',
+    sprachVorschau: 'Deine Aufnahme – zum Anhören abspielen',
+    sprachNimmtAuf: 'Aufnahme läuft',
+    sprachNeinMikro: 'Der Zugriff auf das Mikrofon ist nicht erlaubt. Bitte erlaube ihn im Browser und versuch es noch einmal.',
+    sprachKeinMikro: 'Es wurde kein Mikrofon gefunden.',
+    sprachZuKurz: 'Die Aufnahme war zu kurz.',
+    sprachFehler: 'Die Aufnahme hat nicht geklappt. Bitte versuch es noch einmal.',
+    fehlerSpracheZuViele: 'Gerade zu viele Sprachnachrichten – bitte warte etwas.',
+    fehlerSpracheFormat: 'Diese Sprachnachricht kann nicht gesendet werden (höchstens 10 Minuten).',
+    sprachNichtDa: 'Sprachnachricht nicht verfügbar',
+    sprachPlayer: 'Sprachnachricht abspielen'
   };
 
   // Schnellauswahl zum Reagieren (wie im Mitglieder-Chat) und Auswahl fürs Schreiben.
@@ -93,7 +114,10 @@
     bild: null, // { blob, url } – gewähltes Bild, wird mit dem nächsten Senden verschickt
     bildBereit: false,
     bildUrls: {}, // Nachrichten-Id -> { url, seit }: gleiche Adresse behalten, sonst flackert das Bild bei jeder Abfrage
-    versuchBild: null // { id, text } – gleiche Anfrage-ID bei Wiederholung
+    versuchBild: null, // { id, text } – gleiche Anfrage-ID bei Wiederholung
+    sprache: null, // { phase: 'nimmt'|'bereit', ... } – Sprachaufnahme
+    versuchSprache: null, // { id, blob } – gleiche Anfrage-ID bei Wiederholung
+    audioNeu: {} // Nachrichten-Id -> true: neue Adresse wurde schon einmal geholt
   };
 
   function laden() {
@@ -115,7 +139,9 @@
   }
   function vergessen() {
     bildVerwerfen();
+    spracheVerwerfen();
     zustand.bildUrls = {};
+    zustand.audioNeu = {};
     zustand.token = null;
     zustand.nachrichten = [];
     zustand.gesehenTeam = 0;
@@ -168,7 +194,7 @@
 
   // --- Aufbau ---------------------------------------------------------------
   var knopf, fenster, verlauf, fuss, punkt;
-  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox;
+  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox, mikroKnopf, spracheBox;
 
   function aufbauen() {
     knopf = el('button', { type: 'button', class: 'kv-chat-knopf', 'aria-label': T.oeffnen, 'aria-expanded': 'false', 'aria-controls': 'kv-chat-fenster' });
@@ -235,8 +261,16 @@
     });
     bildBox = el('div', { class: 'kv-chat-bildleiste', hidden: '' });
 
-    var zeile = el('div', { class: 'kv-chat-zeile' }, [bildKnopf, emojiKnopf, feldText, sendeKnopf]);
-    var teile = [meldung, zitatBox, bildBox, bildEingabe, zeile, zaehler, honigtopf];
+    spracheBox = el('div', { class: 'kv-chat-bildleiste kv-chat-sprachleiste', hidden: '' });
+    mikroKnopf = null;
+    if (spracheMoeglich()) {
+      mikroKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-mikroknopf', 'aria-label': T.sprachAufnehmen, title: zustand.token ? T.sprachAufnehmen : T.sprachErstSchreiben, text: '🎤' });
+      mikroKnopf.disabled = !zustand.token;
+      mikroKnopf.addEventListener('click', function () { if (zustand.token) spracheStarten(); });
+    }
+
+    var zeile = el('div', { class: 'kv-chat-zeile' }, [bildKnopf, mikroKnopf, emojiKnopf, feldText, sendeKnopf]);
+    var teile = [meldung, zitatBox, bildBox, spracheBox, bildEingabe, zeile, zaehler, honigtopf];
 
     if (!zustand.token) {
       // Erste Nachricht: Name/E-Mail freiwillig, Datenschutz-Haken Pflicht.
@@ -257,6 +291,7 @@
     }
     teile.forEach(function (t) { fuss.appendChild(t); });
     zitatZeigen();
+    spracheZeigen();
     pruefen();
   }
 
@@ -350,6 +385,7 @@
   function bildWaehlen(datei) {
     zeigeMeldung('');
     bildVerwerfen();
+    spracheVerwerfen();
     zustand.antwortAuf = null; zitatZeigen(); // Zitat und Bild schliessen sich aus: die letzte Wahl gilt
     zustand.bild = { blob: null, url: null };
     var diese = zustand.bild;
@@ -386,17 +422,18 @@
 
   /** Stabile Adresse je Nachricht: die Antwort der Funktion bringt bei jeder Abfrage eine neue. */
   function bildAdresseMerken(n) {
-    if (!n.bild) return;
+    var m = n.bild || n.audio;
+    if (!m) return;
     var alt = zustand.bildUrls[n.id];
     var jetzt = Date.now();
-    if (alt && jetzt - alt.seit < BILD_URL_MS) { n.bild.url = alt.url; return; }
-    if (typeof n.bild.url === 'string' && /^https:\/\//.test(n.bild.url)) zustand.bildUrls[n.id] = { url: n.bild.url, seit: jetzt };
-    else n.bild.url = null;
+    if (alt && jetzt - alt.seit < BILD_URL_MS) { m.url = alt.url; return; }
+    if (typeof m.url === 'string' && /^https:\/\//.test(m.url)) zustand.bildUrls[n.id] = { url: m.url, seit: jetzt };
+    else m.url = null;
   }
 
   /** Text, der beim Zitieren oder in der Vorschau für eine Nachricht steht. */
   function textVon(n) {
-    return typeof n.text === 'string' && n.text ? n.text : (n.bild ? T.fotoZitat : '');
+    return typeof n.text === 'string' && n.text ? n.text : (n.bild ? T.fotoZitat : (n.audio ? T.sprachZitat : ''));
   }
 
   /** Leiste über dem Feld: auf welche Nachricht die nächste antwortet. */
@@ -454,6 +491,7 @@
     var ok = (text !== '' || hatBild) && !zuLang && !zustand.sendet && (zustand.token || (haken && haken.checked));
     sendeKnopf.disabled = !ok;
     sendeKnopf.textContent = zustand.sendet ? T.sendet : T.senden;
+    if (mikroKnopf) mikroKnopf.disabled = !zustand.token || !!zustand.sprache || zustand.sendet;
   }
 
   function uhrzeit(iso) {
@@ -490,6 +528,22 @@
         blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.bildNichtDa }));
       }
     }
+    if (n.audio) {
+      if (n.audio.url) {
+        var sek = Number(n.audio.dauer) || 0;
+        var spieler = el('audio', { class: 'kv-chat-audio', src: n.audio.url, controls: '', preload: 'none', 'aria-label': T.sprachPlayer + (sek ? ' (' + zeitText(sek) + ')' : '') });
+        // Abgelaufener Link (Tab lange offen): einmal neue Adresse holen.
+        spieler.addEventListener('error', function () {
+          if (zustand.audioNeu[n.id]) return;
+          zustand.audioNeu[n.id] = true;
+          delete zustand.bildUrls[n.id];
+          lesen();
+        });
+        blase.appendChild(spieler);
+      } else {
+        blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.sprachNichtDa }));
+      }
+    }
     if (typeof n.text === 'string' && n.text !== '') blase.appendChild(el('p', { text: n.text }));
     blase.appendChild(el('span', { class: 'kv-chat-zeit', text: (n.von_team ? T.wir : T.du) + ' · ' + uhrzeit(n.gesendet) }));
 
@@ -511,6 +565,7 @@
       a.addEventListener('click', function (ev) {
         ev.stopPropagation();
         if (zustand.bild) bildVerwerfen(); // Zitat und Bild schliessen sich aus: die letzte Wahl gilt
+        spracheVerwerfen(); // Sprachnachrichten können nichts zitieren
         zustand.antwortAuf = { id: n.id, text: textVon(n), von_team: !!n.von_team };
         zustand.waehlen = null; zustand.aktiv = null;
         zitatZeigen(); verlaufZeichnen();
@@ -532,7 +587,7 @@
     var box = el('div', { class: 'kv-chat-eintrag ' + seite + (zustand.aktiv === n.id ? ' aktiv' : '') }, teile);
     // Tippen auf die Blase zeigt oder versteckt Reagieren/Antworten (am Handy gibt es kein Überfahren).
     box.addEventListener('click', function (ev) {
-      if (ev.target && ev.target.closest && ev.target.closest('a')) return;
+      if (ev.target && ev.target.closest && ev.target.closest('a, audio')) return;
       var sel = window.getSelection && window.getSelection();
       if (sel && String(sel).length > 0) return;
       zustand.aktiv = zustand.aktiv === n.id ? null : n.id;
@@ -581,7 +636,7 @@
 
   function signatur(liste) {
     return JSON.stringify(liste.map(function (n) {
-      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0];
+      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0];
     }));
   }
 
@@ -592,7 +647,7 @@
       if (r.status === 404) { vergessen(); fussAufbauen(); verlaufZeichnen(); punktSetzen(); return; }
       if (r.status !== 200 || !r.daten || !Array.isArray(r.daten.nachrichten)) return;
       var alt = signatur(zustand.nachrichten);
-      zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && (typeof n.text === 'string' || (n.bild && typeof n.bild === 'object')); });
+      zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && (typeof n.text === 'string' || (n.bild && typeof n.bild === 'object') || (n.audio && typeof n.audio === 'object')); });
       zustand.nachrichten.forEach(bildAdresseMerken);
       // Eine Reaktion, die gerade gespeichert wird, nicht von einer älteren Antwort überschreiben lassen.
       zustand.nachrichten.forEach(function (n) {
@@ -629,12 +684,188 @@
     window.setTimeout(function () { feldText.focus(); }, 30);
   }
   function schliessen() {
+    if (zustand.sprache && zustand.sprache.phase === 'nimmt') spracheVerwerfen(); // laufende Aufnahme endet mit dem Schließen
     zustand.offen = false;
     fenster.hidden = true;
     knopf.setAttribute('aria-expanded', 'false');
     knopf.setAttribute('aria-label', T.oeffnen);
     document.documentElement.classList.remove('kv-chat-offen');
     takt();
+  }
+
+  // --- Sprachnachrichten ----------------------------------------------------
+  function spracheMoeglich() {
+    return !!(window.MediaRecorder && navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function');
+  }
+
+  function zeitText(sek) {
+    sek = Math.max(0, Math.round(sek));
+    return Math.floor(sek / 60) + ':' + ('0' + (sek % 60)).slice(-2);
+  }
+
+  function spracheMime() {
+    var liste = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4'];
+    for (var i = 0; i < liste.length; i++) {
+      try { if (window.MediaRecorder.isTypeSupported(liste[i])) return liste[i]; } catch (e) { /* weiter */ }
+    }
+    return '';
+  }
+
+  function spracheEnde(s) {
+    if (s.uhr) { window.clearInterval(s.uhr); s.uhr = null; }
+    if (s.strom) { try { s.strom.getTracks().forEach(function (t) { t.stop(); }); } catch (e) { /* egal */ } s.strom = null; }
+  }
+
+  /** Aufnahme oder fertige Aufnahme wegwerfen (Mikrofon wird immer freigegeben). */
+  function spracheVerwerfen() {
+    var s = zustand.sprache;
+    zustand.sprache = null;
+    zustand.versuchSprache = null;
+    if (s) {
+      s.verworfen = true;
+      spracheEnde(s);
+      try { if (s.rekorder && s.rekorder.state !== 'inactive') s.rekorder.stop(); } catch (e) { /* egal */ }
+      if (s.url) { try { URL.revokeObjectURL(s.url); } catch (e) { /* egal */ } }
+    }
+    if (spracheBox) spracheZeigen();
+    if (feldText) pruefen();
+  }
+
+  function spracheStarten() {
+    if (zustand.sprache || !zustand.token || zustand.sendet) return;
+    zeigeMeldung('');
+    bildVerwerfen();
+    zustand.antwortAuf = null; zitatZeigen();
+    var s = { phase: 'start', sek: 0, chunks: [], t0: 0 };
+    zustand.sprache = s;
+    spracheZeigen();
+    pruefen();
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (strom) {
+      if (zustand.sprache !== s) { try { strom.getTracks().forEach(function (t) { t.stop(); }); } catch (e) { /* egal */ } return; }
+      s.strom = strom;
+      var mime = spracheMime();
+      var opt = { audioBitsPerSecond: SPRACHE_BITRATE };
+      if (mime) opt.mimeType = mime;
+      var rek;
+      try { rek = new window.MediaRecorder(strom, opt); } catch (e) { rek = new window.MediaRecorder(strom); }
+      s.rekorder = rek;
+      rek.addEventListener('dataavailable', function (ev) {
+        if (!ev.data || ev.data.size < 1) return;
+        s.chunks.push(ev.data);
+        s.bytes = (s.bytes || 0) + ev.data.size;
+        // Zeit und Größe zusätzlich hier prüfen: Zeitgeber ruhender Tabs werden vom Browser gedrosselt.
+        if (s.phase === 'nimmt' && (s.bytes > SPRACHE_STOPP_BYTES || (Date.now() - s.t0) / 1000 >= SPRACHE_MAX_SEK)) spracheStoppen();
+      });
+      rek.addEventListener('error', function () {
+        if (zustand.sprache !== s) return;
+        spracheVerwerfen(); zeigeMeldung(T.sprachFehler);
+      });
+      rek.addEventListener('stop', function () { spracheFertig(s, rek.mimeType || mime); });
+      s.phase = 'nimmt';
+      s.t0 = Date.now();
+      rek.start(1000);
+      s.uhr = window.setInterval(function () {
+        s.sek = (Date.now() - s.t0) / 1000;
+        if (s.sek >= SPRACHE_MAX_SEK) { spracheStoppen(); return; }
+        spracheZeigen();
+      }, 250);
+      spracheZeigen();
+    }).catch(function (e) {
+      if (zustand.sprache !== s) return;
+      spracheVerwerfen();
+      zeigeMeldung(e && (e.name === 'NotFoundError' || e.name === 'OverconstrainedError') ? T.sprachKeinMikro : T.sprachNeinMikro);
+    });
+  }
+
+  function spracheStoppen() {
+    var s = zustand.sprache;
+    if (!s || s.phase !== 'nimmt') return;
+    s.sek = Math.min(SPRACHE_MAX_SEK, (Date.now() - s.t0) / 1000);
+    s.phase = 'fertigt';
+    if (s.uhr) { window.clearInterval(s.uhr); s.uhr = null; }
+    try { s.rekorder.stop(); } catch (e) { spracheVerwerfen(); zeigeMeldung(T.sprachFehler); return; }
+    spracheZeigen();
+  }
+
+  function spracheFertig(s, mime) {
+    spracheEnde(s); // Mikrofon erst nach dem Ende der Aufnahme freigeben
+    if (zustand.sprache !== s || s.verworfen) return;
+    var typ = String(mime || '').split(';')[0] || 'audio/webm';
+    var blob = new Blob(s.chunks, { type: typ });
+    s.chunks = [];
+    var sek = Math.round(s.sek);
+    if (sek < 1) { spracheVerwerfen(); zeigeMeldung(T.sprachZuKurz); return; }
+    if (blob.size < 1 || blob.size > SPRACHE_MAX_BYTES) { spracheVerwerfen(); zeigeMeldung(blob.size < 1 ? T.sprachFehler : T.fehlerSpracheFormat); return; }
+    s.blob = blob;
+    s.dauer = Math.min(SPRACHE_MAX_SEK, sek);
+    s.url = URL.createObjectURL(blob);
+    s.phase = 'bereit';
+    spracheZeigen();
+    pruefen();
+  }
+
+  function spracheZeigen() {
+    if (!spracheBox) return;
+    spracheBox.textContent = '';
+    var s = zustand.sprache;
+    spracheBox.hidden = !s;
+    if (!s) return;
+    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.sprachAbbrechen, text: '✕' });
+    weg.addEventListener('click', function () { spracheVerwerfen(); if (feldText) feldText.focus(); });
+    if (s.phase === 'bereit') {
+      spracheBox.appendChild(el('audio', { class: 'kv-chat-audio kv-chat-audio-vorschau', src: s.url, controls: '', preload: 'metadata', 'aria-label': T.sprachVorschau }));
+      var senden = el('button', { type: 'button', class: 'kv-chat-senden kv-chat-sprache-senden', text: T.sprachSenden });
+      senden.disabled = !!zustand.sendet;
+      if (zustand.sendet) senden.textContent = T.sendet;
+      senden.addEventListener('click', sendeSprache);
+      spracheBox.appendChild(senden);
+      spracheBox.appendChild(weg);
+      return;
+    }
+    spracheBox.appendChild(el('span', { class: 'kv-chat-aufnahme-punkt', 'aria-hidden': 'true' }));
+    spracheBox.appendChild(el('span', { class: 'kv-chat-zitat-text kv-chat-aufnahme-zeit', role: 'status', text: (s.phase === 'nimmt' ? T.sprachNimmtAuf + ' ' : '') + zeitText(s.sek) + ' / ' + zeitText(SPRACHE_MAX_SEK) }));
+    if (s.phase === 'nimmt') {
+      var stopp = el('button', { type: 'button', class: 'kv-chat-senden kv-chat-sprache-stopp', 'aria-label': T.sprachStopp, text: '■ ' + T.sprachStopp });
+      stopp.addEventListener('click', spracheStoppen);
+      spracheBox.appendChild(stopp);
+    }
+    spracheBox.appendChild(weg);
+  }
+
+  /** Aufnahme an die Sprach-Funktion; dieselbe Anfrage-ID bei Wiederholung. */
+  function sendeSprache() {
+    var s = zustand.sprache;
+    if (!s || s.phase !== 'bereit' || zustand.sendet || !zustand.token) return;
+    if (!zustand.versuchSprache || zustand.versuchSprache.blob !== s.blob) zustand.versuchSprache = { id: neueId(), blob: s.blob };
+    var endung = /ogg/.test(s.blob.type) ? 'ogg' : /mp4/.test(s.blob.type) ? 'm4a' : 'webm';
+    var f = new FormData();
+    f.append('token', zustand.token);
+    f.append('request_id', zustand.versuchSprache.id);
+    f.append('dauer', String(s.dauer));
+    f.append('datei', s.blob, 'sprache.' + endung);
+    f.append('hp', honigtopf ? honigtopf.value : '');
+    zustand.sendet = true;
+    zeigeMeldung('');
+    spracheZeigen();
+    pruefen();
+    mitLimit(API_SPRACHE, { method: 'POST', body: f, credentials: 'omit', referrerPolicy: 'no-referrer' }, 60000).then(function (r) {
+      zustand.sendet = false;
+      if (r.status === 200) {
+        spracheVerwerfen();
+        pruefen();
+        lesen().then(takt);
+        return;
+      }
+      if (r.status === 404) { vergessen(); zeigeMeldung(T.fehlerNetz); fussAufbauen(); verlaufZeichnen(); punktSetzen(); return; }
+      zeigeMeldung(r.status === 429 ? T.fehlerSpracheZuViele : (r.status === 413 || r.status === 415 || r.status === 400) ? T.fehlerSpracheFormat : T.fehlerNetz);
+      spracheZeigen();
+      pruefen();
+    }).catch(function () {
+      zustand.sendet = false;
+      zeigeMeldung(T.fehlerNetz);
+      spracheZeigen();
+      pruefen();
+    });
   }
 
   // --- Senden ---------------------------------------------------------------

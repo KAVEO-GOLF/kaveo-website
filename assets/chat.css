@@ -101,3 +101,14 @@ button.kv-chat-chip { cursor: pointer; border-color: #1f9a6a; min-height: 24px; 
 .kv-chat-bildlink { display: block; }
 .kv-chat-bild { display: block; max-width: 100%; max-height: 240px; width: auto; height: auto; border-radius: 10px; margin-bottom: 4px; }
 .kv-chat-bild-fehlt { color: rgba(255,255,255,.6); font-size: 13px; }
+
+/* Sprachnachrichten */
+.kv-chat-mikroknopf:disabled { opacity: .4; cursor: not-allowed; }
+.kv-chat-sprachleiste { flex-wrap: wrap; }
+.kv-chat-audio { display: block; width: 100%; max-width: 260px; height: 36px; margin: 2px 0 4px; }
+.kv-chat-audio-vorschau { flex: 1 1 160px; min-width: 0; margin: 0; }
+.kv-chat-aufnahme-punkt { width: 10px; height: 10px; border-radius: 50%; background: #e0483c; flex: none; animation: kv-chat-puls 1.2s ease-in-out infinite; }
+.kv-chat-aufnahme-zeit { flex: 1 1 auto; font-variant-numeric: tabular-nums; }
+.kv-chat-sprache-stopp, .kv-chat-sprache-senden { flex: none; padding: 8px 12px; }
+@keyframes kv-chat-puls { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .kv-chat-aufnahme-punkt { animation: none; } }

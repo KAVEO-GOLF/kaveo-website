@@ -145,14 +145,23 @@
   }
 
   /** POST an die Funktion; liefert { status, daten }. */
+  /** fetch mit Zeitlimit: haengt die Verbindung, wird abgebrochen und der Besucher bekommt die Netz-Meldung. */
+  function mitLimit(url, opt, ms) {
+    if (typeof AbortController === 'undefined') return fetch(url, opt);
+    var ac = new AbortController();
+    var uhr = setTimeout(function () { ac.abort(); }, ms);
+    opt.signal = ac.signal;
+    return fetch(url, opt).then(function (r) { clearTimeout(uhr); return r; }, function (e) { clearTimeout(uhr); throw e; });
+  }
+
   function aufruf(body) {
-    return fetch(API, {
+    return mitLimit(API, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(body),
       credentials: 'omit',
       referrerPolicy: 'no-referrer'
-    }).then(function (r) {
+    }, 15000).then(function (r) {
       return r.json().catch(function () { return null; }).then(function (d) { return { status: r.status, daten: d }; });
     });
   }
@@ -341,6 +350,7 @@
   function bildWaehlen(datei) {
     zeigeMeldung('');
     bildVerwerfen();
+    zustand.antwortAuf = null; zitatZeigen(); // Zitat und Bild schliessen sich aus: die letzte Wahl gilt
     zustand.bild = { blob: null, url: null };
     var diese = zustand.bild;
     bildZeigen();
@@ -500,6 +510,7 @@
       var a = el('button', { type: 'button', class: 'kv-chat-aktion', 'aria-label': T.antworten, text: '↩' });
       a.addEventListener('click', function (ev) {
         ev.stopPropagation();
+        if (zustand.bild) bildVerwerfen(); // Zitat und Bild schliessen sich aus: die letzte Wahl gilt
         zustand.antwortAuf = { id: n.id, text: textVon(n), von_team: !!n.von_team };
         zustand.waehlen = null; zustand.aktiv = null;
         zitatZeigen(); verlaufZeichnen();
@@ -650,7 +661,7 @@
     zustand.sendet = true;
     zeigeMeldung('');
     pruefen();
-    fetch(API_BILD, { method: 'POST', body: f, credentials: 'omit', referrerPolicy: 'no-referrer' }).then(function (r) {
+    mitLimit(API_BILD, { method: 'POST', body: f, credentials: 'omit', referrerPolicy: 'no-referrer' }, 45000).then(function (r) {
       zustand.sendet = false;
       if (r.status === 200) {
         bildVerwerfen();

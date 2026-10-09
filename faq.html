@@ -124,11 +124,12 @@
       .rv { opacity: 1; transform: none; }
     }
   </style>
+  <link rel="stylesheet" href="assets/chat.css" />
 </head>
 <body>
 
   <header class="nav">
-    <a class="logo" href="index.html" aria-label="KAVEO GOLF Startseite"><img src="assets/logo-lockup.webp" alt="KAVEO GOLF" width="512" height="341" /></a>
+    <a class="logo" href="index.html" aria-label="KAVEO GOLF Startseite"><img src="assets/logo-lockup-256.webp" alt="KAVEO GOLF" width="256" height="66" /></a>
     <ul>
       <li><a href="index.html#runde">So funktioniert's</a></li>
       <li><a href="index.html#funktionen">Funktionen</a></li>
@@ -173,7 +174,7 @@
 
   <footer>
     <div class="wrap">
-      <img src="assets/logo-lockup.webp" alt="KAVEO GOLF" width="512" height="341" />
+      <img src="assets/logo-lockup-256.webp" alt="KAVEO GOLF" width="256" height="66" />
       <nav><a href="ueber-uns.html">Über uns</a><a href="faq.html" aria-current="page">FAQ</a><a href="https://kaveo-golf.app/impressum/">Impressum</a><a href="https://kaveo-golf.app/datenschutz/">Datenschutz</a></nav>
       
         <div class="social"><a href="https://www.facebook.com/profile.php?id=61594981341610" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a><a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a><a href="https://www.tiktok.com/@kaveogolf" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf TikTok" title="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a></div>
@@ -185,5 +186,6 @@
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.15 });
     document.querySelectorAll(".rv").forEach((el) => io.observe(el));
   </script>
+  <script src="assets/chat.js" defer></script>
 </body>
 </html>

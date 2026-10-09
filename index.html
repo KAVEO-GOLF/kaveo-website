@@ -7,6 +7,8 @@
   <meta name="description" content="KAVEO GOLF ist die Golf-App, die wir gerade bauen: Runde spielen, Regeln am Platzplan finden, Wetter golfgerecht lesen." />
   <link rel="icon" href="assets/favicon.png" />
   <link rel="canonical" href="https://kaveo-golf.app/" />
+  <link rel="preload" as="image" href="assets/film-poster-hoch.webp" media="(max-width: 560px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/film-poster-quer.webp" media="(min-width: 561px)" fetchpriority="high" />
   <link rel="preload" href="assets/fonts/Manrope_700Bold.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/Manrope_400Regular.woff2" as="font" type="font/woff2" crossorigin />
   <script src="vendor/hyperframes/hyperframes-player.global.js" defer></script>
@@ -177,7 +179,7 @@
     .strip { position: absolute; left: 30px; right: 30px; top: 50%; translate: 0 -50%; display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; }
     .strip div { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
     .strip b { width: 100%; max-width: 46px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-size: 15px; border: 1px solid rgba(255,255,255,.25); }
-    .strip b.g { background: var(--green); border-color: var(--green); }
+    .strip b.g { background: var(--green); border-color: var(--green); color: #fff; }
     .strip b.o { background: #262626; border-color: #262626; }
     .bignum { position: absolute; top: 18px; left: 30px; font-size: 120px; font-weight: 700; letter-spacing: -.06em; line-height: 1; background: linear-gradient(180deg, #fff, rgba(255,255,255,.08)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .qr { position: absolute; top: 28px; left: 30px; width: 86px; height: 86px; border-radius: 14px; background:
@@ -190,20 +192,20 @@
     .plan { padding: 0 0 140px; }
     .plan-grid { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .lane { border-radius: var(--radius); border: 1px solid var(--line); padding: 28px; background: #101010; }
-    .lane h4 { margin: 0 0 18px; display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; letter-spacing: .02em; }
-    .lane h4 i { width: 10px; height: 10px; border-radius: 50%; }
+    .lane h3 { margin: 0 0 18px; display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; letter-spacing: .02em; }
+    .lane h3 i { width: 10px; height: 10px; border-radius: 50%; }
     .lane ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
     .lane li { font-size: 16px; color: #dcdcdc; padding: 14px 16px; border-radius: 14px; background: #161616; border: 1px solid var(--line); }
     .lane li small { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
-    .lane.now h4 i { background: var(--green-hi); box-shadow: 0 0 0 5px rgba(31,154,106,.2); }
-    .lane.next h4 i { background: #d9b871; }
-    .lane.later h4 i { background: #555; }
+    .lane.now h3 i { background: var(--green-hi); box-shadow: 0 0 0 5px rgba(31,154,106,.2); }
+    .lane.next h3 i { background: #d9b871; }
+    .lane.later h3 i { background: #555; }
     .lane.later li { color: #9a9a9a; }
 
     /* ---------- finale: landing on the green ---------- */
     /* Szene: ein Video-Hintergrund für Finale und Mitmachen */
     .scene { position: relative; isolation: isolate; overflow: hidden; }
-    .scene > .bg { position: absolute; inset: 0; z-index: -2; background: #0d0d0d url("assets/gruen-klippe-poster.jpg") 60% 50% / cover no-repeat; }
+    .scene > .bg { position: absolute; inset: 0; z-index: -2; background: #0d0d0d url("assets/gruen-klippe-poster.webp") 60% 50% / cover no-repeat; }
     .scene > .bg video { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; display: block; transform: scale(var(--z, 1.18)); transform-origin: 60% 60%; will-change: transform; }
     .finale { position: relative; overflow: hidden; padding: 60px 0 0; text-align: center; }
     .scene::after {
@@ -293,11 +295,12 @@
       .rv { opacity: 1; transform: none; }
     }
   </style>
+  <link rel="stylesheet" href="assets/chat.css" />
 </head>
 <body>
 
   <header class="nav" id="nav">
-    <a class="logo" href="#top" aria-label="KAVEO GOLF Startseite"><img src="assets/logo-lockup.webp" alt="KAVEO GOLF" width="512" height="341" /></a>
+    <a class="logo" href="#top" aria-label="KAVEO GOLF Startseite"><img src="assets/logo-lockup-256.webp" alt="KAVEO GOLF" width="256" height="66" /></a>
     <ul>
       <li><a href="#runde">So funktioniert's</a></li>
       <li><a href="#funktionen">Funktionen</a></li>
@@ -325,7 +328,7 @@
             <div class="inner">
               <picture class="fallback">
                 <source media="(max-width: 560px)" srcset="assets/film-poster-hoch.webp" width="720" height="1280" />
-                <img src="assets/film-poster-quer.webp" alt="KAVEO GOLF App: Wetter-Ansicht mit „Gut spielbar“ und letztem Start" width="1280" height="720" />
+                <img fetchpriority="high" src="assets/film-poster-quer.webp" alt="KAVEO GOLF App: Wetter-Ansicht mit „Gut spielbar“ und letztem Start" width="1280" height="720" />
               </picture>
               <hyperframes-player loop muted></hyperframes-player>
             </div>
@@ -357,38 +360,38 @@
               <div class="phone" aria-hidden="true">
                 <div class="notch"></div>
 
-                <div class="scr on real" data-scr="0"><img src="assets/screens/07_runde_spielen.webp" alt="" width="390" height="760" /></div>
-                <div class="scr real" data-scr="1"><img src="assets/screens/10_scorekarte.webp" alt="" width="390" height="760" loading="lazy" /></div>
-                <div class="scr real" data-scr="2"><img src="assets/screens/05_wetter.webp" alt="" width="390" height="760" loading="lazy" /></div>
-                <div class="scr real" data-scr="3"><img src="assets/screens/02_regeln.webp" alt="" width="390" height="760" loading="lazy" /></div>
+                <div class="scr on real" data-scr="0"><img src="assets/screens/07_runde_spielen_300.webp" alt="" width="300" height="585" /></div>
+                <div class="scr real" data-scr="1"><img src="assets/screens/10_scorekarte_300.webp" alt="" width="300" height="585" loading="lazy" /></div>
+                <div class="scr real" data-scr="2"><img src="assets/screens/05_wetter_300.webp" alt="" width="300" height="585" loading="lazy" /></div>
+                <div class="scr real" data-scr="3"><img src="assets/screens/02_regeln_300.webp" alt="" width="300" height="585" loading="lazy" /></div>
               </div>
             </div>
           </div>
 
           <div class="steps">
             <article class="step on" data-step="0">
-              <img class="icon" src="assets/icons/runden.png" alt="" width="192" height="192" />
+              <img class="icon" src="assets/icons/runden.webp" alt="" width="128" height="128" />
               <div class="num">01 · Runde starten</div>
               <h3>Spielform wählen. Gäste dazu. Los.</h3>
               <p>Zählspiel, Stableford, Maximum Score oder gegen Par, brutto oder netto. Bis zu drei Gäste spielen mit, auch ohne eigenes Konto.</p>
               <div class="facts"><span>4 Spielformen</span><span>Brutto &amp; Netto</span><span>Bis zu 3 Gäste</span></div>
             </article>
             <article class="step" data-step="1">
-              <img class="icon" src="assets/icons/runden.png" alt="" width="192" height="192" />
+              <img class="icon" src="assets/icons/runden.webp" alt="" width="128" height="128" />
               <div class="num">02 · Loch für Loch</div>
               <h3>Schläge eintragen. Ergebnis steht.</h3>
               <p>Die Scorekarte rechnet mit und speichert jeden Schlag sofort. Kein Netz am 7. Loch? Macht nichts, die Runde läuft weiter.</p>
               <div class="facts"><span>Scorekarte</span><span>Auch ohne Netz</span></div>
             </article>
             <article class="step" data-step="2">
-              <img class="icon" src="assets/icons/wetter.png" alt="" width="192" height="192" />
+              <img class="icon" src="assets/icons/wetter.webp" alt="" width="128" height="128" />
               <div class="num">03 · Vor dem Abschlag</div>
               <h3>Wetter, das Golf versteht.</h3>
               <p>Gut spielbar oder nicht? Dazu Wind, Böen, Regen und Tageslicht, mit dem letzten sinnvollen Start für 9 und 18 Löcher. Sieben Tage im Voraus, die ersten drei Stunde für Stunde.</p>
               <div class="facts"><span>Gut spielbar</span><span>Letzter Start</span><span>7 Tage</span></div>
             </article>
             <article class="step" data-step="3">
-              <img class="icon" src="assets/icons/regeln.png" alt="" width="192" height="192" />
+              <img class="icon" src="assets/icons/regeln.webp" alt="" width="128" height="128" />
               <div class="num">04 · Wenn's knifflig wird</div>
               <h3>Die Regel. Direkt am Platzplan.</h3>
               <p>Tippe auf den Bereich, in dem dein Ball liegt, oder suche direkt. 66 eigene Erklärtexte zu den allgemeinen offiziellen Golfregeln. Die Platzregeln deines Clubs gelten zusätzlich.</p>
@@ -416,19 +419,19 @@
             <div class="strip" aria-hidden="true">
               <div><b>4</b>1</div><div><b class="g">2</b>2</div><div><b>5</b>3</div><div><b class="o">5</b>4</div><div><b>4</b>5</div><div><b>3</b>6</div><div><b class="g">3</b>7</div><div><b>4</b>8</div><div><b class="o">6</b>9</div>
             </div>
-            <img class="ic" src="assets/icons/runden.png" alt="" width="192" height="192" />
+            <img class="ic" src="assets/icons/runden.webp" alt="" width="128" height="128" />
             <h3>Runde spielen</h3>
             <p>Starten, Loch für Loch eintragen, abschließen. Mit Gästen ohne Konto und auch ohne Netz.</p>
           </article>
           <article class="tile t-b rv">
-            <div class="bignum">66</div>
-            <img class="ic" src="assets/icons/regeln.png" alt="" width="192" height="192" />
+            <div class="bignum" aria-hidden="true">66</div>
+            <img class="ic" src="assets/icons/regeln.webp" alt="" width="128" height="128" />
             <h3>Regelhilfe</h3>
             <p>Eigene Erklärtexte zu den allgemeinen offiziellen Golfregeln, gefunden über eine Platzzeichnung oder die Suche.</p>
           </article>
           <article class="tile t-c rv">
-            <div class="bignum">7</div>
-            <img class="ic" src="assets/icons/wetter.png" alt="" width="192" height="192" />
+            <div class="bignum" aria-hidden="true">7</div>
+            <img class="ic" src="assets/icons/wetter.webp" alt="" width="128" height="128" />
             <h3>Golfwetter</h3>
             <p>Sieben Tage im Voraus, mit „Gut spielbar“ und dem letzten Start.</p>
           </article>
@@ -458,7 +461,7 @@
         </div>
         <div class="plan-grid">
           <div class="lane now rv">
-            <h4><i></i>Läuft in der frühen Version</h4>
+            <h3><i></i>Läuft in der frühen Version</h3>
             <ul>
               <li>Runde spielen<small>Vier Spielformen, Gäste, offline</small></li>
               <li>Regelhilfe am Platzplan</li>
@@ -467,7 +470,7 @@
             </ul>
           </div>
           <div class="lane next rv">
-            <h4><i></i>Für den Start geplant</h4>
+            <h3><i></i>Für den Start geplant</h3>
             <ul>
               <li>Freunde<small>Anfragen, Suche, Blockieren</small></li>
               <li>Gemeinsame Runden</li>
@@ -475,7 +478,7 @@
             </ul>
           </div>
           <div class="lane later rv">
-            <h4><i></i>Später</h4>
+            <h3><i></i>Später</h3>
             <ul>
               <li>Live-Runde auf mehreren Geräten</li>
               <li>Rundenanalyse mit Trends</li>
@@ -489,7 +492,7 @@
     <!-- FINALE: Landung auf dem Grün an der Klippe -->
     <div class="scene" id="scene">
       <div class="bg" aria-hidden="true">
-        <video id="green-video" muted loop playsinline preload="none" poster="assets/gruen-klippe-poster.jpg" data-src="assets/gruen-klippe-loop.mp4"></video>
+        <video id="green-video" muted loop playsinline preload="none" poster="assets/gruen-klippe-poster.webp" data-src="assets/gruen-klippe-loop.mp4"></video>
       </div>
     <section class="finale">
       <div class="ball" id="ball" aria-hidden="true"></div>
@@ -522,7 +525,7 @@
     </div>
     <footer>
       <div class="wrap">
-        <img src="assets/logo-lockup.webp" alt="KAVEO GOLF" width="512" height="341" />
+        <img src="assets/logo-lockup-256.webp" alt="KAVEO GOLF" width="256" height="66" />
         <nav><a href="ueber-uns.html">Über uns</a><a href="faq.html">FAQ</a><a href="https://kaveo-golf.app/impressum/">Impressum</a><a href="https://kaveo-golf.app/datenschutz/">Datenschutz</a></nav>
         
         <div class="social"><a href="https://www.facebook.com/profile.php?id=61594981341610" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a><a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a><a href="https://www.tiktok.com/@kaveogolf" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf TikTok" title="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a></div>
@@ -766,5 +769,6 @@
       }
     })();
   </script>
+  <script src="assets/chat.js" defer></script>
 </body>
 </html>

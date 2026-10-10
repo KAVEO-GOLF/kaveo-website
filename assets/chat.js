@@ -9,6 +9,8 @@
   var API = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage';
   var API_BILD = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-bild';
   var API_SPRACHE = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-sprache';
+  var API_DATEI = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-datei';
+  var DATEI_MAX_BYTES = 10 * 1024 * 1024;
   var SPRACHE_MAX_SEK = 600; // 10 Minuten
   var SPRACHE_MAX_BYTES = 6 * 1024 * 1024;
   var SPRACHE_STOPP_BYTES = 5.5 * 1024 * 1024; // Sicherheitsabstand zur Serverobergrenze von 6 MB
@@ -83,7 +85,19 @@
     fehlerSpracheZuViele: 'Gerade zu viele Sprachnachrichten – bitte warte etwas.',
     fehlerSpracheFormat: 'Diese Sprachnachricht kann nicht gesendet werden (höchstens 10 Minuten).',
     sprachNichtDa: 'Sprachnachricht nicht verfügbar',
-    sprachPlayer: 'Sprachnachricht abspielen'
+    sprachPlayer: 'Sprachnachricht abspielen',
+    anhaengen: 'Bild oder PDF anhängen',
+    anhaengenErst: 'Schick zuerst eine Nachricht, dann kannst du Bilder oder PDFs anhängen.',
+    dateiBereit: 'PDF bereit – sie wird ohne Text gesendet.',
+    dateiWeg: 'PDF entfernen',
+    dateiZuGross: 'Diese PDF ist größer als 10 MB und kann nicht gesendet werden.',
+    dateiNichtLesbar: 'Das ist keine gültige PDF-Datei. Bitte wähle eine andere.',
+    dateiSenden: 'PDF senden',
+    fehlerDateiZuViele: 'Gerade zu viele Dateien – bitte warte etwas.',
+    fehlerDateiFormat: 'Diese Datei kann nicht gesendet werden (nur PDF, höchstens 10 MB).',
+    dateiNichtDa: 'Datei nicht verfügbar',
+    dateiOeffnen: 'PDF öffnen: ',
+    dateiZitat: '📎 '
   };
 
   // Schnellauswahl zum Reagieren (wie im Mitglieder-Chat) und Auswahl fürs Schreiben.
@@ -117,6 +131,8 @@
     versuchBild: null, // { id, text } – gleiche Anfrage-ID bei Wiederholung
     sprache: null, // { phase: 'nimmt'|'bereit', ... } – Sprachaufnahme
     versuchSprache: null, // { id, blob } – gleiche Anfrage-ID bei Wiederholung
+    datei: null, // { blob, name } – gewählte PDF, wird mit „Senden“ verschickt
+    versuchDatei: null, // { id, blob } – gleiche Anfrage-ID bei Wiederholung
     audioNeu: {} // Nachrichten-Id -> true: neue Adresse wurde schon einmal geholt
   };
 
@@ -139,6 +155,7 @@
   }
   function vergessen() {
     bildVerwerfen();
+    dateiVerwerfen();
     spracheVerwerfen();
     zustand.bildUrls = {};
     zustand.audioNeu = {};
@@ -194,7 +211,7 @@
 
   // --- Aufbau ---------------------------------------------------------------
   var knopf, fenster, verlauf, fuss, punkt;
-  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox, mikroKnopf, spracheBox;
+  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox, dateiBox, mikroKnopf, spracheBox;
 
   function aufbauen() {
     knopf = el('button', { type: 'button', class: 'kv-chat-knopf', 'aria-label': T.oeffnen, 'aria-expanded': 'false', 'aria-controls': 'kv-chat-fenster' });
@@ -250,16 +267,18 @@
     fenster.appendChild(emojiBox);
     zustand.emojiOffen = false;
 
-    bildKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-bildknopf', 'aria-label': T.bildAnhaengen, title: zustand.token ? T.bildAnhaengen : T.bildErstSchreiben, text: '📎' });
+    bildKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-bildknopf', 'aria-label': T.anhaengen, title: zustand.token ? T.anhaengen : T.anhaengenErst, text: '📎' });
     bildKnopf.disabled = !zustand.token;
     bildKnopf.addEventListener('click', function () { if (zustand.token) bildEingabe.click(); });
-    bildEingabe = el('input', { type: 'file', accept: 'image/*', class: 'kv-chat-honig', tabindex: '-1', 'aria-hidden': 'true' });
+    bildEingabe = el('input', { type: 'file', accept: 'image/*,application/pdf,.pdf', class: 'kv-chat-honig', tabindex: '-1', 'aria-hidden': 'true' });
     bildEingabe.addEventListener('change', function () {
       var d = bildEingabe.files && bildEingabe.files[0];
       bildEingabe.value = '';
-      if (d) bildWaehlen(d);
+      if (!d) return;
+      if (d.type === 'application/pdf' || /\.pdf$/i.test(d.name || '')) dateiWaehlen(d); else bildWaehlen(d);
     });
     bildBox = el('div', { class: 'kv-chat-bildleiste', hidden: '' });
+    dateiBox = el('div', { class: 'kv-chat-bildleiste', hidden: '' });
 
     spracheBox = el('div', { class: 'kv-chat-bildleiste kv-chat-sprachleiste', hidden: '' });
     mikroKnopf = null;
@@ -270,7 +289,7 @@
     }
 
     var zeile = el('div', { class: 'kv-chat-zeile' }, [bildKnopf, mikroKnopf, emojiKnopf, feldText, sendeKnopf]);
-    var teile = [meldung, zitatBox, bildBox, spracheBox, bildEingabe, zeile, zaehler, honigtopf];
+    var teile = [meldung, zitatBox, bildBox, dateiBox, spracheBox, bildEingabe, zeile, zaehler, honigtopf];
 
     if (!zustand.token) {
       // Erste Nachricht: Name/E-Mail freiwillig, Datenschutz-Haken Pflicht.
@@ -291,6 +310,7 @@
     }
     teile.forEach(function (t) { fuss.appendChild(t); });
     zitatZeigen();
+    dateiZeigen();
     spracheZeigen();
     pruefen();
   }
@@ -385,6 +405,7 @@
   function bildWaehlen(datei) {
     zeigeMeldung('');
     bildVerwerfen();
+    dateiVerwerfen();
     spracheVerwerfen();
     zustand.antwortAuf = null; zitatZeigen(); // Zitat und Bild schliessen sich aus: die letzte Wahl gilt
     zustand.bild = { blob: null, url: null };
@@ -420,9 +441,99 @@
     bildBox.appendChild(weg);
   }
 
+  // --- PDF-Dateien ------------------------------------------------------------
+  function dateiVerwerfen() {
+    zustand.datei = null;
+    zustand.versuchDatei = null;
+    if (dateiBox) dateiZeigen();
+  }
+
+  /** Größe für die Anzeige, z. B. „1,2 MB“. */
+  function groesseText(b) {
+    b = Number(b) || 0;
+    if (b < 1024 * 1024) return Math.max(1, Math.round(b / 1024)) + ' KB';
+    return (Math.round(b / (1024 * 1024) * 10) / 10).toString().replace('.', ',') + ' MB';
+  }
+
+  /** PDF wählen: Größe und Dateikopf (%PDF-) prüfen; der Server prüft noch einmal. */
+  function dateiWaehlen(datei) {
+    zeigeMeldung('');
+    if (datei.size > DATEI_MAX_BYTES) { zeigeMeldung(T.dateiZuGross); return; }
+    if (datei.size < 8) { zeigeMeldung(T.dateiNichtLesbar); return; }
+    var leser = new FileReader();
+    leser.onload = function () {
+      var b = new Uint8Array(leser.result);
+      var ok = b.length >= 5 && b[0] === 0x25 && b[1] === 0x50 && b[2] === 0x44 && b[3] === 0x46 && b[4] === 0x2d;
+      if (!ok) { zeigeMeldung(T.dateiNichtLesbar); return; }
+      bildVerwerfen();
+      spracheVerwerfen();
+      dateiVerwerfen();
+      zustand.antwortAuf = null; zitatZeigen(); // Zitat und Datei schliessen sich aus: die letzte Wahl gilt
+      zustand.datei = { blob: datei, name: String(datei.name || 'Dokument.pdf').split(/[\\/]/).pop().slice(0, 120) };
+      dateiZeigen();
+      pruefen();
+      feldText.focus();
+    };
+    leser.onerror = function () { zeigeMeldung(T.dateiNichtLesbar); };
+    leser.readAsArrayBuffer(datei.slice(0, 8));
+  }
+
+  function dateiZeigen() {
+    if (!dateiBox) return;
+    dateiBox.textContent = '';
+    var d = zustand.datei;
+    dateiBox.hidden = !d;
+    if (!d) return;
+    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.dateiWeg, text: '✕' });
+    weg.addEventListener('click', function () { dateiVerwerfen(); pruefen(); feldText.focus(); });
+    dateiBox.appendChild(el('span', { class: 'kv-chat-dateisymbol', 'aria-hidden': 'true', text: '📄' }));
+    dateiBox.appendChild(el('span', { class: 'kv-chat-zitat-text', text: d.name + ' (' + groesseText(d.blob.size) + ') – ' + T.dateiBereit }));
+    dateiBox.appendChild(weg);
+  }
+
+  /** PDF an die Datei-Funktion; dieselbe Anfrage-ID bei Wiederholung. */
+  function sendeDatei() {
+    var d = zustand.datei;
+    if (!d || zustand.sendet || !zustand.token) return;
+    if (!zustand.versuchDatei || zustand.versuchDatei.blob !== d.blob) zustand.versuchDatei = { id: neueId(), blob: d.blob };
+    var f = new FormData();
+    f.append('token', zustand.token);
+    f.append('request_id', zustand.versuchDatei.id);
+    f.append('name', d.name);
+    f.append('datei', d.blob, 'dokument.pdf');
+    f.append('hp', honigtopf ? honigtopf.value : '');
+    zustand.sendet = true;
+    zeigeMeldung('');
+    pruefen();
+    mitLimit(API_DATEI, { method: 'POST', body: f, credentials: 'omit', referrerPolicy: 'no-referrer' }, 60000).then(function (r) {
+      zustand.sendet = false;
+      if (r.status === 200) {
+        dateiVerwerfen();
+        pruefen();
+        lesen().then(takt);
+        return;
+      }
+      if (r.status === 404) {
+        // Nur wenn die Sitzung wirklich unbekannt ist, wird sie vergessen (nicht bei einer noch fehlenden Funktion).
+        r.json().catch(function () { return null; }).then(function (d) {
+          if (d && d.fehler === 'sitzung_unbekannt') { vergessen(); zeigeMeldung(T.fehlerNetz); fussAufbauen(); verlaufZeichnen(); punktSetzen(); return; }
+          zeigeMeldung(T.fehlerNetz);
+          pruefen();
+        });
+        return;
+      }
+      zeigeMeldung(r.status === 429 ? T.fehlerDateiZuViele : (r.status === 413 || r.status === 415 || r.status === 400) ? T.fehlerDateiFormat : T.fehlerNetz);
+      pruefen();
+    }).catch(function () {
+      zustand.sendet = false;
+      zeigeMeldung(T.fehlerNetz);
+      pruefen();
+    });
+  }
+
   /** Stabile Adresse je Nachricht: die Antwort der Funktion bringt bei jeder Abfrage eine neue. */
   function bildAdresseMerken(n) {
-    var m = n.bild || n.audio;
+    var m = n.bild || n.audio || n.datei;
     if (!m) return;
     var alt = zustand.bildUrls[n.id];
     var jetzt = Date.now();
@@ -433,7 +544,7 @@
 
   /** Text, der beim Zitieren oder in der Vorschau für eine Nachricht steht. */
   function textVon(n) {
-    return typeof n.text === 'string' && n.text ? n.text : (n.bild ? T.fotoZitat : (n.audio ? T.sprachZitat : ''));
+    return typeof n.text === 'string' && n.text ? n.text : (n.bild ? T.fotoZitat : (n.audio ? T.sprachZitat : (n.datei ? T.dateiZitat + n.datei.name : '')));
   }
 
   /** Leiste über dem Feld: auf welche Nachricht die nächste antwortet. */
@@ -488,7 +599,8 @@
     zaehler.hidden = !zuLang;
     zaehler.textContent = zuLang ? T.zeichenUeber : '';
     var hatBild = !!(zustand.token && zustand.bild && zustand.bildBereit);
-    var ok = (text !== '' || hatBild) && !zuLang && !zustand.sendet && (zustand.token || (haken && haken.checked));
+    var hatDatei = !!(zustand.token && zustand.datei);
+    var ok = (text !== '' || hatBild || hatDatei) && !zuLang && !zustand.sendet && (zustand.token || (haken && haken.checked));
     sendeKnopf.disabled = !ok;
     sendeKnopf.textContent = zustand.sendet ? T.sendet : T.senden;
     if (mikroKnopf) mikroKnopf.disabled = !zustand.token || !!zustand.sprache || zustand.sendet;
@@ -544,6 +656,18 @@
         blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.sprachNichtDa }));
       }
     }
+    if (n.datei) {
+      if (n.datei.url) {
+        var dname = typeof n.datei.name === 'string' && n.datei.name ? n.datei.name : 'Dokument.pdf';
+        blase.appendChild(el('a', { class: 'kv-chat-datei', href: n.datei.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': T.dateiOeffnen + dname }, [
+          el('span', { class: 'kv-chat-dateisymbol', 'aria-hidden': 'true', text: '📄' }),
+          el('span', { class: 'kv-chat-dateiname', text: dname }),
+          el('span', { class: 'kv-chat-dateigroesse', text: groesseText(n.datei.groesse) })
+        ]));
+      } else {
+        blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.dateiNichtDa }));
+      }
+    }
     if (typeof n.text === 'string' && n.text !== '') blase.appendChild(el('p', { text: n.text }));
     blase.appendChild(el('span', { class: 'kv-chat-zeit', text: (n.von_team ? T.wir : T.du) + ' · ' + uhrzeit(n.gesendet) }));
 
@@ -565,6 +689,7 @@
       a.addEventListener('click', function (ev) {
         ev.stopPropagation();
         if (zustand.bild) bildVerwerfen(); // Zitat und Bild schliessen sich aus: die letzte Wahl gilt
+        dateiVerwerfen();
         spracheVerwerfen(); // Sprachnachrichten können nichts zitieren
         zustand.antwortAuf = { id: n.id, text: textVon(n), von_team: !!n.von_team };
         zustand.waehlen = null; zustand.aktiv = null;
@@ -636,7 +761,7 @@
 
   function signatur(liste) {
     return JSON.stringify(liste.map(function (n) {
-      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0];
+      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0, n.datei ? (n.datei.url || 1) : 0];
     }));
   }
 
@@ -647,7 +772,7 @@
       if (r.status === 404) { vergessen(); fussAufbauen(); verlaufZeichnen(); punktSetzen(); return; }
       if (r.status !== 200 || !r.daten || !Array.isArray(r.daten.nachrichten)) return;
       var alt = signatur(zustand.nachrichten);
-      zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && (typeof n.text === 'string' || (n.bild && typeof n.bild === 'object') || (n.audio && typeof n.audio === 'object')); });
+      zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && (typeof n.text === 'string' || (n.bild && typeof n.bild === 'object') || (n.audio && typeof n.audio === 'object') || (n.datei && typeof n.datei === 'object')); });
       zustand.nachrichten.forEach(bildAdresseMerken);
       // Eine Reaktion, die gerade gespeichert wird, nicht von einer älteren Antwort überschreiben lassen.
       zustand.nachrichten.forEach(function (n) {
@@ -735,6 +860,7 @@
     if (zustand.sprache || !zustand.token || zustand.sendet) return;
     zeigeMeldung('');
     bildVerwerfen();
+    dateiVerwerfen();
     zustand.antwortAuf = null; zitatZeigen();
     var s = { phase: 'start', sek: 0, chunks: [], t0: 0 };
     zustand.sprache = s;
@@ -872,6 +998,7 @@
   function absenden() {
     if (sendeKnopf.disabled) return;
     var text = feldText.value.trim();
+    if (zustand.token && zustand.datei) { sendeDatei(); return; }
     if (zustand.token && zustand.bild && zustand.bildBereit) { sendeBild(text); return; }
     if (!text) return;
     sende(text, false);

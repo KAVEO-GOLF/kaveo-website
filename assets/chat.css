@@ -112,3 +112,10 @@ button.kv-chat-chip { cursor: pointer; border-color: #1f9a6a; min-height: 24px; 
 .kv-chat-sprache-stopp, .kv-chat-sprache-senden { flex: none; padding: 8px 12px; }
 @keyframes kv-chat-puls { 50% { opacity: .35; } }
 @media (prefers-reduced-motion: reduce) { .kv-chat-aufnahme-punkt { animation: none; } }
+
+/* PDF-Dateien */
+.kv-chat-datei { display: flex; align-items: center; gap: 8px; max-width: 100%; padding: 8px 10px; margin: 2px 0 4px; border: 1px solid rgba(255,255,255,.18); border-radius: 10px; color: inherit; text-decoration: none; background: rgba(255,255,255,.06); }
+.kv-chat-datei:hover, .kv-chat-datei:focus-visible { border-color: #045C3C; }
+.kv-chat-dateisymbol { flex: none; font-size: 20px; line-height: 1; }
+.kv-chat-dateiname { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+.kv-chat-dateigroesse { flex: none; font-size: 12px; opacity: .65; }

@@ -1,191 +1,116 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FAQ – KAVEO GOLF</title>
-  <meta name="description" content="Häufige Fragen zu KAVEO GOLF: Kosten, Daten, Handy und Gäste." />
-  <link rel="icon" href="assets/favicon.png" />
-  <link rel="canonical" href="https://kaveo-golf.app/faq.html" />
-  <link rel="preload" href="assets/fonts/Manrope_700Bold.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="assets/fonts/Manrope_400Regular.woff2" as="font" type="font/woff2" crossorigin />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="KAVEO GOLF" />
-  <meta property="og:locale" content="de_DE" />
-  <meta property="og:url" content="https://kaveo-golf.app/faq.html" />
-  <meta property="og:title" content="FAQ – KAVEO GOLF" />
-  <meta property="og:description" content="Häufige Fragen zu KAVEO GOLF: Kosten, Daten, Handy und Gäste." />
-  <meta property="og:image" content="https://kaveo-golf.app/assets/og-kaveo-golf.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="KAVEO GOLF App: Wetter-Ansicht mit „Gut spielbar“ und letztem Start" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#0d0d0d" />
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kaveo-golf.app/#organisation","name":"KAVEO GOLF","url":"https://kaveo-golf.app/","logo":"https://kaveo-golf.app/assets/logo-lockup.webp","email":"info@kaveo-golf.app","founder":{"@type":"Person","name":"Philipp Butkus"},"address":{"@type":"PostalAddress","addressLocality":"Overath","addressCountry":"DE"},"sameAs":["https://www.facebook.com/profile.php?id=61594981341610","https://www.instagram.com/kaveogolf/","https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw","https://www.tiktok.com/@kaveogolf"]},{"@type":"WebSite","@id":"https://kaveo-golf.app/#website","url":"https://kaveo-golf.app/","name":"KAVEO GOLF","inLanguage":"de","publisher":{"@id":"https://kaveo-golf.app/#organisation"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Was kostet KAVEO GOLF?","acceptedAnswer":{"@type":"Answer","text":"KAVEO GOLF ist kostenlos nutzbar."}},{"@type":"Question","name":"Was passiert mit meinen Daten?","acceptedAnswer":{"@type":"Answer","text":"Deine Daten liegen in einer Datenbank in Frankfurt. Kein Tracking, keine Werbung, kein Verkauf von Daten. Alle Details stehen in der Datenschutzerklärung."}},{"@type":"Question","name":"Läuft die App auf meinem Handy?","acceptedAnswer":{"@type":"Answer","text":"Ja. KAVEO GOLF läuft schon heute auf deinem Handy. Bald gibt es die App auch im Apple App Store und bei Google Play."}},{"@type":"Question","name":"Können Gäste ohne Konto mitspielen?","acceptedAnswer":{"@type":"Answer","text":"Ja. Bis zu drei Gäste spielen in deiner Runde mit, auch ohne eigenes Konto."}}]}]}</script>
-  <style>
-    @font-face { font-family: "Instrument Serif"; src: url("assets/fonts/InstrumentSerif-Italic-latin.woff2") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
-    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_400Regular.woff2") format("woff2"), url("assets/fonts/Manrope_400Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_500Medium.woff2") format("woff2"), url("assets/fonts/Manrope_500Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_600SemiBold.woff2") format("woff2"), url("assets/fonts/Manrope_600SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
-    @font-face { font-family: "Manrope"; src: url("assets/fonts/Manrope_700Bold.woff2") format("woff2"), url("assets/fonts/Manrope_700Bold.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FAQ – KAVEO GOLF</title>
+<meta name="description" content="Häufige Fragen zu KAVEO GOLF: Kosten, Daten, Handy und Gäste." />
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preload" href="/zs/fonts/Archivo-Variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/zs/unterseiten.css?v=20261012b">
+<style>
+  /* Kopf: links die Überschrift auf Papier, rechts der Kontaktweg auf Grün */
+  .intro .side { min-height: 62svh; display: flex; flex-direction: column; justify-content: flex-end; }
+  .intro .paper { padding-top: 7rem; }
 
-    /* Farben, Schriften und Bausteine wie auf der Startseite (index.html) */
-    :root {
-      --ink: #0d0d0d;
-      --ink-2: #111111;
-      --line: rgba(255, 255, 255, 0.1);
-      --muted: #a3a3a3;
-      --green: #045c3c;
-      --green-hi: #1f9a6a;
-      --mint: #d6f5e7;
-      --cream: #f3f0e8;
-      --cream-2: #e9e4d8;
-      --cream-ink: #14231b;
-      --cream-muted: #5d6a62;
-      --radius: 28px;
-      --serif: "Instrument Serif", Georgia, serif;
-      --sans: "Manrope", system-ui, sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; overflow-x: clip; }
-    body { margin: 0; background: var(--ink); color: #fff; font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
-    .wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
-    .serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
-    .eyebrow { font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase; font-weight: 600; color: var(--green-hi); }
-
-    /* ---------- nav (wie Startseite) ---------- */
-    .nav {
-      position: fixed; top: 16px; left: 50%; translate: -50% 0; z-index: 50;
-      width: min(1180px, 100% - 32px); display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 10px 10px 20px; border-radius: 999px; background: rgba(13, 13, 13, 0.82);
-      border: 1px solid var(--line); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    }
-    .nav .logo { flex: none; } .nav .logo img { height: 30px; width: auto; }
-    .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 14px; font-weight: 500; opacity: .85; }
-    .nav ul a:hover, .nav ul a[aria-current] { opacity: 1; color: var(--green-hi); }
-    .btn {
-      display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer; font: 600 15px var(--sans);
-      padding: 13px 22px; border-radius: 999px; background: #fff; color: var(--ink); transition: transform .2s, background .2s;
-    }
-    .btn:hover { transform: translateY(-1px); background: var(--mint); }
-    .btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-hi); box-shadow: 0 0 0 4px rgba(31, 154, 106, .25); }
-
-    /* ---------- FAQ ---------- */
-    .faq { position: relative; padding: 170px 0 120px; isolation: isolate; overflow-x: clip; }
-    .faq::before {
-      content: ""; position: absolute; inset: -20% -10% auto; height: 900px; z-index: -1;
-      background: radial-gradient(45% 45% at 50% 25%, rgba(4, 92, 60, .5), transparent 70%), radial-gradient(30% 30% at 10% 10%, rgba(31, 154, 106, .16), transparent 70%);
-    }
-    .faq .head { text-align: center; }
-    .faq h1 { margin: 22px auto 0; font-size: clamp(44px, 7vw, 96px); line-height: .98; letter-spacing: -0.045em; font-weight: 700; }
-    .faq h1 .serif { font-size: 1.1em; color: var(--mint); }
-    .list { max-width: 820px; margin: 64px auto 0; display: flex; flex-direction: column; gap: 14px; }
-    .qa { border-radius: 24px; border: 1px solid var(--line); background: linear-gradient(180deg, #171717, #111); transition: border-color .3s; }
-    .qa[open], .qa:hover { border-color: rgba(31,154,106,.5); }
-    .qa summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 28px; font-size: clamp(18px, 2.2vw, 22px); font-weight: 600; letter-spacing: -.01em; }
-    .qa summary::-webkit-details-marker { display: none; }
-    .qa summary:focus-visible { outline: 2px solid var(--green-hi); outline-offset: 4px; border-radius: 24px; }
-    .qa summary i { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); position: relative; transition: background .3s, rotate .3s; }
-    .qa summary i::before, .qa summary i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 2px; background: #fff; border-radius: 2px; translate: -50% -50%; }
-    .qa summary i::after { rotate: 90deg; transition: rotate .3s; }
-    .qa[open] summary i { background: var(--green); border-color: var(--green); }
-    .qa[open] summary i::after { rotate: 0deg; }
-    .qa p { margin: 0; padding: 0 28px 26px; font-size: 18px; line-height: 1.65; color: #cfcfcf; max-width: 680px; }
-    .qa p a { color: var(--mint); text-decoration: underline; text-underline-offset: 3px; }
-    .more { text-align: center; margin-top: 56px; color: var(--muted); font-size: 17px; line-height: 1.6; }
-    .more a { color: #fff; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
-    .more .btn { margin-top: 26px; padding: 18px 26px; font-size: 17px; text-decoration: none; }
-
-    footer { background: #0d0d0d; border-top: 1px solid var(--line); padding: 40px 0 60px; color: var(--muted); font-size: 14px; }
-    footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
-    footer img { height: 26px; width: auto; }
-    footer nav { display: flex; gap: 22px; }
-    .social { display: flex; gap: 10px; }
-    .social a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); color: #cfcfcf; transition: color .2s, border-color .2s, background .2s; }
-    .social a:hover { color: #fff; border-color: rgba(31,154,106,.6); background: rgba(31,154,106,.12); }
-    .social svg { width: 20px; height: 20px; fill: currentColor; }
-
-    /* reveal */
-    .rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
-    .rv.in { opacity: 1; transform: none; }
-
-    @media (max-width: 960px) { .nav ul { display: none; } }
-    @media (max-width: 560px) {
-      .faq { padding-top: 130px; padding-bottom: 90px; }
-      .nav .btn { padding: 13px 16px; font-size: 14px; }
-      footer nav a { padding: 12px 4px; }
-      .qa summary { padding: 20px 20px; }
-      .qa p { padding: 0 20px 22px; font-size: 17px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-      .rv { opacity: 1; transform: none; }
-    }
-  </style>
-  <link rel="stylesheet" href="assets/chat.css?v=20261012b" />
+  /* Fragen als Zählkarte: jede Frage eine Zeile, aufklappbar */
+  .karte-wrap { padding: var(--section) var(--pad); background: var(--paper); }
+  .karte { max-width: 64rem; background: #FBF9F4; box-shadow: 0 1px 0 rgba(35,34,31,.15), 0 40px 80px -46px rgba(35,34,31,.6); }
+  .karte__head { display: flex; justify-content: space-between; padding: .9rem 1.2rem; background: var(--charcoal); color: var(--chalk); font-size: .8rem; }
+  .qa { border-top: 1px solid #d8d3c6; }
+  .qa summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 1.2rem; align-items: center; padding: 1.3rem 1.2rem;
+    font: 800 clamp(1.15rem, 2vw, 1.6rem)/1.15 "Archivo", sans-serif; font-stretch: 78%; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary:hover { background: #F2EFE7; }
+  .qa summary i { width: 2.2rem; height: 2.2rem; border: 2px solid var(--pencil); display: grid; place-items: center; position: relative; transition: background .16s; }
+  .qa summary i::before, .qa summary i::after { content: ""; position: absolute; width: 12px; height: 2px; background: currentColor; }
+  .qa summary i::after { transform: rotate(90deg); transition: transform .2s var(--ease); }
+  .qa[open] summary i { background: var(--green); color: var(--chalk); border-color: var(--green); }
+  .qa[open] summary i::after { transform: rotate(0deg); }
+  .qa p { margin: 0; padding: 0 1.2rem 1.5rem; max-width: 60ch; font-size: 1.05rem; line-height: 1.65; color: var(--pencil-soft); }
+  .qa p a { color: var(--green); font-weight: 600; }
+  .close { padding: var(--section) var(--pad); }
+  @media (max-width: 760px) {
+    .intro .side { min-height: 0; }
+    .intro .paper { padding-top: 5.5rem; }
+    .qa summary { padding: 1.1rem 1rem; }
+    .qa p { padding: 0 1rem 1.3rem; }
+  }
+</style>
+<link rel="stylesheet" href="/assets/chat.css?v=20261012b">
+<link rel="canonical" href="https://kaveo-golf.app/faq.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="KAVEO GOLF" />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:url" content="https://kaveo-golf.app/faq.html" />
+<meta property="og:title" content="FAQ – KAVEO GOLF" />
+<meta property="og:description" content="Häufige Fragen zu KAVEO GOLF: Kosten, Daten, Handy und Gäste." />
+<meta property="og:image" content="https://kaveo-golf.app/assets/og-kaveo-golf.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="KAVEO GOLF App: Wetter-Ansicht mit „Gut spielbar“ und letztem Start" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#0d0d0d" />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kaveo-golf.app/#organisation","name":"KAVEO GOLF","url":"https://kaveo-golf.app/","logo":"https://kaveo-golf.app/assets/logo-lockup.webp","email":"info@kaveo-golf.app","founder":{"@type":"Person","name":"Philipp Butkus"},"address":{"@type":"PostalAddress","addressLocality":"Overath","addressCountry":"DE"},"sameAs":["https://www.facebook.com/profile.php?id=61594981341610","https://www.instagram.com/kaveogolf/","https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw","https://www.tiktok.com/@kaveogolf"]},{"@type":"WebSite","@id":"https://kaveo-golf.app/#website","url":"https://kaveo-golf.app/","name":"KAVEO GOLF","inLanguage":"de","publisher":{"@id":"https://kaveo-golf.app/#organisation"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Was kostet KAVEO GOLF?","acceptedAnswer":{"@type":"Answer","text":"KAVEO GOLF ist kostenlos nutzbar."}},{"@type":"Question","name":"Was passiert mit meinen Daten?","acceptedAnswer":{"@type":"Answer","text":"Deine Daten liegen in einer Datenbank in Frankfurt. Kein Tracking, keine Werbung, kein Verkauf von Daten. Alle Details stehen in der Datenschutzerklärung."}},{"@type":"Question","name":"Läuft die App auf meinem Handy?","acceptedAnswer":{"@type":"Answer","text":"Ja. KAVEO GOLF läuft schon heute auf deinem Handy. Bald gibt es die App auch im Apple App Store und bei Google Play."}},{"@type":"Question","name":"Können Gäste ohne Konto mitspielen?","acceptedAnswer":{"@type":"Answer","text":"Ja. Bis zu drei Gäste spielen in deiner Runde mit, auch ohne eigenes Konto."}}]}]}</script>
 </head>
 <body>
 
-  <header class="nav">
-    <a class="logo" href="index.html" aria-label="KAVEO GOLF Startseite"><img src="assets/logo-lockup-256.webp" alt="KAVEO GOLF" width="256" height="66" /></a>
-    <ul>
-      <li><a href="index.html#runde">So funktioniert's</a></li>
-      <li><a href="index.html#funktionen">Funktionen</a></li>
-      <li><a href="index.html#plan">Der Plan</a></li>
-      <li><a href="ueber-uns.html">Über uns</a></li>
-    </ul>
-    <a class="btn" href="https://app.kaveo-golf.app/register"><span class="dot"></span>Registrieren</a>
-  </header>
+<nav class="plate board" aria-label="Seiten">
+  <a class="k" href="/" aria-label="KAVEO GOLF Startseite"><img src="/zs/img/k-kreis-160.webp" width="160" height="160" alt=""></a>
+  <a href="/">Start</a><a href="/ueber-uns.html">Über uns</a><a href="/faq.html" aria-current="page">FAQ</a>
+</nav>
 
-  <main>
-    <section class="faq">
-      <div class="wrap">
-        <div class="head">
-          <div class="eyebrow rv">FAQ</div>
-          <h1 class="rv">Häufige <span class="serif">Fragen.</span></h1>
-        </div>
-        <div class="list">
-          <details class="qa rv" open>
-            <summary><span>Was kostet KAVEO GOLF?</span><i aria-hidden="true"></i></summary>
-            <p>KAVEO GOLF ist kostenlos nutzbar.</p>
-          </details>
-          <details class="qa rv">
-            <summary><span>Was passiert mit meinen Daten?</span><i aria-hidden="true"></i></summary>
-            <p>Deine Daten liegen in einer Datenbank in Frankfurt. Kein Tracking, keine Werbung, kein Verkauf von Daten. Alle Details stehen in der <a href="https://kaveo-golf.app/datenschutz/">Datenschutzerklärung</a>.</p>
-          </details>
-          <details class="qa rv">
-            <summary><span>Läuft die App auf meinem Handy?</span><i aria-hidden="true"></i></summary>
-            <p>Ja. KAVEO GOLF läuft schon heute auf deinem Handy. Bald gibt es die App auch im Apple App Store und bei Google Play.</p>
-          </details>
-          <details class="qa rv">
-            <summary><span>Können Gäste ohne Konto mitspielen?</span><i aria-hidden="true"></i></summary>
-            <p>Ja. Bis zu drei Gäste spielen in deiner Runde mit, auch ohne eigenes Konto.</p>
-          </details>
-        </div>
-        <div class="more rv">
-          <p>Noch eine Frage? Schreib an <a href="mailto:info@kaveo-golf.app">info@kaveo-golf.app</a>.</p>
-          <a class="btn" href="https://app.kaveo-golf.app/register"><span class="dot"></span>Jetzt registrieren</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap">
-      <img src="assets/logo-lockup-256.webp" alt="KAVEO GOLF" width="256" height="66" />
-      <nav><a href="ueber-uns.html">Über uns</a><a href="faq.html" aria-current="page">FAQ</a><a href="https://kaveo-golf.app/impressum/">Impressum</a><a href="https://kaveo-golf.app/datenschutz/">Datenschutz</a></nav>
-      
-        <div class="social"><a href="https://www.facebook.com/profile.php?id=61594981341610" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a><a href="https://www.instagram.com/kaveogolf/" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a><a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a><a href="https://www.tiktok.com/@kaveogolf" target="_blank" rel="noopener" aria-label="KAVEO GOLF auf TikTok" title="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a></div>
+<main>
+  <section class="duel intro">
+    <div class="side paper">
+      <p class="board rv"><span class="tag">FAQ</span></p>
+      <h1 class="hl hl--xl rv" style="margin-top:1.4rem">Häufige Fragen.</h1>
     </div>
-  </footer>
+    <div class="side on-green seam-line">
+      <p class="lede rv">Noch eine Frage? Schreib an <a href="mailto:info@kaveo-golf.app">info@kaveo-golf.app</a>.</p>
+    </div>
+  </section>
 
-  <script>
-    // Einblenden beim Scrollen (wie Startseite)
-    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.15 });
-    document.querySelectorAll(".rv").forEach((el) => io.observe(el));
-  </script>
-  <script src="assets/chat.js?v=20261012b" defer></script>
+  <section class="karte-wrap">
+    <div class="karte rv">
+      <div class="karte__head board"><span>KAVEO GOLF</span><span>Fragen</span></div>
+      <details class="qa" open><summary><span>Was kostet KAVEO GOLF?</span><i aria-hidden="true"></i></summary>
+        <p>KAVEO GOLF ist kostenlos nutzbar.</p></details>
+      <details class="qa"><summary><span>Was passiert mit meinen Daten?</span><i aria-hidden="true"></i></summary>
+        <p>Deine Daten liegen in einer Datenbank in Frankfurt. Kein Tracking, keine Werbung, kein Verkauf von Daten. Alle Details stehen in der <a href="/datenschutz/">Datenschutzerklärung</a>.</p></details>
+      <details class="qa"><summary><span>Läuft die App auf meinem Handy?</span><i aria-hidden="true"></i></summary>
+        <p>Ja. KAVEO GOLF läuft schon heute auf deinem Handy. Bald gibt es die App auch im Apple App Store und bei Google Play.</p></details>
+      <details class="qa"><summary><span>Können Gäste ohne Konto mitspielen?</span><i aria-hidden="true"></i></summary>
+        <p>Ja. Bis zu drei Gäste spielen in deiner Runde mit, auch ohne eigenes Konto.</p></details>
+    </div>
+  </section>
+
+  <section class="close on-green">
+    <div class="rv">
+      <a class="cta" href="https://app.kaveo-golf.app/register" style="margin-top:0">Jetzt registrieren
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+      <img src="/zs/img/logo-lockup-512.webp" width="512" height="131" alt="KAVEO GOLF" loading="lazy" decoding="async">
+      <nav aria-label="Rechtliches"><a href="/ueber-uns.html">Über uns</a><a href="/faq.html">FAQ</a><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></nav>
+      <div class="social">
+        <a href="https://www.facebook.com/profile.php?id=61594981341610" aria-label="KAVEO GOLF auf Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a>
+        <a href="https://www.instagram.com/kaveogolf/" aria-label="KAVEO GOLF auf Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" aria-label="KAVEO GOLF auf YouTube"><svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a>
+        <a href="https://www.tiktok.com/@kaveogolf" aria-label="KAVEO GOLF auf TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a>
+      </div>
+      <span class="small">© 2026 KAVEO GOLF</span>
+    </footer>
+
+<script>
+  (function () {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -12% 0px" });
+    document.querySelectorAll(".rv").forEach(function (el, i) { el.style.transitionDelay = (i % 4) * 60 + "ms"; io.observe(el); });
+  })();
+</script>
+<script src="/assets/chat.js?v=20261012b" defer></script>
 </body>
 </html>

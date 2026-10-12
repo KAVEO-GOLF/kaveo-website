@@ -10,7 +10,11 @@
   var API_BILD = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-bild';
   var API_SPRACHE = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-sprache';
   var API_DATEI = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-datei';
+  var API_VIDEO = 'https://xyakqziopzjjihovyesj.supabase.co/functions/v1/nachrichten-homepage-video';
   var DATEI_MAX_BYTES = 10 * 1024 * 1024;
+  var VIDEO_MAX_BYTES = 25 * 1024 * 1024;
+  // Videos gehen direkt in den Speicher (signierter Link der Video-Funktion), nicht durch die Funktion.
+  var SPEICHER_UPLOAD = 'https://xyakqziopzjjihovyesj.supabase.co/storage/v1/object/upload/sign/inbox-medien/homepage/';
   var SPRACHE_MAX_SEK = 600; // 10 Minuten
   var SPRACHE_MAX_BYTES = 6 * 1024 * 1024;
   var SPRACHE_STOPP_BYTES = 5.5 * 1024 * 1024; // Sicherheitsabstand zur Serverobergrenze von 6 MB
@@ -86,8 +90,8 @@
     fehlerSpracheFormat: 'Diese Sprachnachricht kann nicht gesendet werden (höchstens 10 Minuten).',
     sprachNichtDa: 'Sprachnachricht nicht verfügbar',
     sprachPlayer: 'Sprachnachricht abspielen',
-    anhaengen: 'Bild oder PDF anhängen',
-    anhaengenErst: 'Schick zuerst eine Nachricht, dann kannst du Bilder oder PDFs anhängen.',
+    anhaengen: 'Bild, PDF oder Video anhängen',
+    anhaengenErst: 'Schick zuerst eine Nachricht, dann kannst du Bilder, PDFs oder Videos anhängen.',
     dateiBereit: 'PDF bereit – sie wird ohne Text gesendet.',
     dateiWeg: 'PDF entfernen',
     dateiZuGross: 'Diese PDF ist größer als 10 MB und kann nicht gesendet werden.',
@@ -97,7 +101,20 @@
     fehlerDateiFormat: 'Diese Datei kann nicht gesendet werden (nur PDF, höchstens 10 MB).',
     dateiNichtDa: 'Datei nicht verfügbar',
     dateiOeffnen: 'PDF öffnen: ',
-    dateiZitat: '📎 '
+    dateiZitat: '📎 ',
+    videoBereit: 'Video bereit – es wird ohne Text gesendet.',
+    videoWeg: 'Video entfernen',
+    videoZuGross: 'Dieses Video ist größer als 25 MB und kann nicht gesendet werden. Bitte schick einen kürzeren Ausschnitt.',
+    videoNichtLesbar: 'Dieses Video kann nicht gesendet werden. Erlaubt sind MP4 und MOV (z. B. vom Handy).',
+    videoLaedt: 'Video wird hochgeladen …',
+    fehlerVideoZuViele: 'Gerade zu viele Videos – bitte warte etwas.',
+    fehlerVideoFormat: 'Dieses Video kann nicht gesendet werden (nur MP4 oder MOV, höchstens 25 MB).',
+    videoNichtDa: 'Video nicht verfügbar',
+    videoPlayer: 'Video abspielen',
+    videoNichtAbspielbar: 'Dieses Video kann dein Browser nicht abspielen.',
+    videoHerunterladen: 'Herunterladen',
+    videoNichtHochgeladen: 'Das Video konnte nicht hochgeladen werden. Bitte versuch es noch einmal oder schick ein kürzeres Video.',
+    videoZitat: '🎬 Video'
   };
 
   // Schnellauswahl zum Reagieren (wie im Mitglieder-Chat) und Auswahl fürs Schreiben.
@@ -133,6 +150,10 @@
     versuchSprache: null, // { id, blob } – gleiche Anfrage-ID bei Wiederholung
     datei: null, // { blob, name } – gewählte PDF, wird mit „Senden“ verschickt
     versuchDatei: null, // { id, blob } – gleiche Anfrage-ID bei Wiederholung
+    video: null, // { blob, name } – gewähltes Video (MP4/MOV), wird mit „Senden“ verschickt
+    versuchVideo: null, // { id, blob } – gleiche Anfrage-ID bei Wiederholung
+    videoProzent: null, // Fortschritt beim Hochladen
+    spaeterZeichnen: false, // neue Nachrichten erst zeigen, wenn kein Video/keine Sprachnachricht mehr läuft
     audioNeu: {} // Nachrichten-Id -> true: neue Adresse wurde schon einmal geholt
   };
 
@@ -156,6 +177,7 @@
   function vergessen() {
     bildVerwerfen();
     dateiVerwerfen();
+    videoVerwerfen();
     spracheVerwerfen();
     zustand.bildUrls = {};
     zustand.audioNeu = {};
@@ -211,7 +233,7 @@
 
   // --- Aufbau ---------------------------------------------------------------
   var knopf, fenster, verlauf, fuss, punkt;
-  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox, dateiBox, mikroKnopf, spracheBox;
+  var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox, dateiBox, videoBox, mikroKnopf, spracheBox;
 
   function aufbauen() {
     knopf = el('button', { type: 'button', class: 'kv-chat-knopf', 'aria-label': T.oeffnen, 'aria-expanded': 'false', 'aria-controls': 'kv-chat-fenster' });
@@ -270,15 +292,18 @@
     bildKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-bildknopf', 'aria-label': T.anhaengen, title: zustand.token ? T.anhaengen : T.anhaengenErst, text: '📎' });
     bildKnopf.disabled = !zustand.token;
     bildKnopf.addEventListener('click', function () { if (zustand.token) bildEingabe.click(); });
-    bildEingabe = el('input', { type: 'file', accept: 'image/*,application/pdf,.pdf', class: 'kv-chat-honig', tabindex: '-1', 'aria-hidden': 'true' });
+    bildEingabe = el('input', { type: 'file', accept: 'image/*,application/pdf,.pdf,video/mp4,video/quicktime,.mp4,.mov,.m4v', class: 'kv-chat-honig', tabindex: '-1', 'aria-hidden': 'true' });
     bildEingabe.addEventListener('change', function () {
       var d = bildEingabe.files && bildEingabe.files[0];
       bildEingabe.value = '';
       if (!d) return;
-      if (d.type === 'application/pdf' || /\.pdf$/i.test(d.name || '')) dateiWaehlen(d); else bildWaehlen(d);
+      if (d.type === 'application/pdf' || /\.pdf$/i.test(d.name || '')) dateiWaehlen(d);
+      else if (/^video\//.test(d.type || '') || /\.(mp4|mov|m4v)$/i.test(d.name || '')) videoWaehlen(d);
+      else bildWaehlen(d);
     });
     bildBox = el('div', { class: 'kv-chat-bildleiste', hidden: '' });
     dateiBox = el('div', { class: 'kv-chat-bildleiste', hidden: '' });
+    videoBox = el('div', { class: 'kv-chat-bildleiste', hidden: '' });
 
     spracheBox = el('div', { class: 'kv-chat-bildleiste kv-chat-sprachleiste', hidden: '' });
     mikroKnopf = null;
@@ -289,7 +314,7 @@
     }
 
     var zeile = el('div', { class: 'kv-chat-zeile' }, [bildKnopf, mikroKnopf, emojiKnopf, feldText, sendeKnopf]);
-    var teile = [meldung, zitatBox, bildBox, dateiBox, spracheBox, bildEingabe, zeile, zaehler, honigtopf];
+    var teile = [meldung, zitatBox, bildBox, dateiBox, videoBox, spracheBox, bildEingabe, zeile, zaehler, honigtopf];
 
     if (!zustand.token) {
       // Erste Nachricht: Name/E-Mail freiwillig, Datenschutz-Haken Pflicht.
@@ -311,6 +336,7 @@
     teile.forEach(function (t) { fuss.appendChild(t); });
     zitatZeigen();
     dateiZeigen();
+    videoZeigen();
     spracheZeigen();
     pruefen();
   }
@@ -406,6 +432,7 @@
     zeigeMeldung('');
     bildVerwerfen();
     dateiVerwerfen();
+    videoVerwerfen();
     spracheVerwerfen();
     zustand.antwortAuf = null; zitatZeigen(); // Zitat und Bild schliessen sich aus: die letzte Wahl gilt
     zustand.bild = { blob: null, url: null };
@@ -468,6 +495,7 @@
       bildVerwerfen();
       spracheVerwerfen();
       dateiVerwerfen();
+      videoVerwerfen();
       zustand.antwortAuf = null; zitatZeigen(); // Zitat und Datei schliessen sich aus: die letzte Wahl gilt
       zustand.datei = { blob: datei, name: String(datei.name || 'Dokument.pdf').split(/[\\/]/).pop().slice(0, 120) };
       dateiZeigen();
@@ -531,9 +559,156 @@
     });
   }
 
+  // --- Videos -------------------------------------------------------------------
+  function videoVerwerfen() {
+    zustand.video = null;
+    zustand.versuchVideo = null;
+    if (videoBox) videoZeigen();
+  }
+
+  /** MP4 und MOV beginnen mit einem Kasten „ftyp“ an Stelle 4; der Server prüft genauer (Marke). */
+  function istVideoKopf(b) {
+    return b.length >= 12 && b[4] === 0x66 && b[5] === 0x74 && b[6] === 0x79 && b[7] === 0x70;
+  }
+
+  /** Video wählen: Größe und Dateikopf prüfen; der Server prüft noch einmal. */
+  function videoWaehlen(datei) {
+    zeigeMeldung('');
+    if (datei.size > VIDEO_MAX_BYTES) { zeigeMeldung(T.videoZuGross); return; }
+    if (datei.size < 12) { zeigeMeldung(T.videoNichtLesbar); return; }
+    var leser = new FileReader();
+    leser.onload = function () {
+      if (!istVideoKopf(new Uint8Array(leser.result))) { zeigeMeldung(T.videoNichtLesbar); return; }
+      bildVerwerfen();
+      spracheVerwerfen();
+      dateiVerwerfen();
+      videoVerwerfen();
+      zustand.antwortAuf = null; zitatZeigen(); // Zitat und Video schliessen sich aus: die letzte Wahl gilt
+      zustand.video = { blob: datei, name: String(datei.name || 'Video').split(/[\\/]/).pop().slice(0, 120) };
+      videoZeigen();
+      pruefen();
+      feldText.focus();
+    };
+    leser.onerror = function () { zeigeMeldung(T.videoNichtLesbar); };
+    leser.readAsArrayBuffer(datei.slice(0, 12));
+  }
+
+  function videoZeigen() {
+    if (!videoBox) return;
+    videoBox.textContent = '';
+    var v = zustand.video;
+    videoBox.hidden = !v;
+    if (!v) return;
+    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.videoWeg, text: '✕' });
+    weg.disabled = !!zustand.sendet;
+    weg.addEventListener('click', function () { videoVerwerfen(); pruefen(); feldText.focus(); });
+    var stand = zustand.sendet
+      ? T.videoLaedt + (typeof zustand.videoProzent === 'number' ? ' ' + zustand.videoProzent + ' %' : '')
+      : T.videoBereit;
+    videoBox.appendChild(el('span', { class: 'kv-chat-dateisymbol', 'aria-hidden': 'true', text: '🎬' }));
+    videoBox.appendChild(el('span', { class: 'kv-chat-zitat-text', role: 'status', text: v.name + ' (' + groesseText(v.blob.size) + ') – ' + stand }));
+    videoBox.appendChild(weg);
+  }
+
+  /** JSON an die Video-Funktion; liefert { status, daten }. */
+  function videoAufruf(body) {
+    return mitLimit(API_VIDEO, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+      credentials: 'omit',
+      referrerPolicy: 'no-referrer'
+    }, 20000).then(function (r) {
+      return r.json().catch(function () { return null; }).then(function (d) { return { status: r.status, daten: d }; });
+    });
+  }
+
+  /** Datei direkt in den privaten Speicher laden (Link der Video-Funktion, ohne Überschreiben) und den Fortschritt melden. */
+  function videoHochladen(link, blob, fortschritt) {
+    return new Promise(function (ok, fehl) {
+      var x = new XMLHttpRequest();
+      x.open('PUT', link);
+      x.timeout = 15 * 60 * 1000; // langsames Handynetz: 25 MB dürfen dauern
+      x.setRequestHeader('content-type', 'video/mp4');
+      x.setRequestHeader('x-upsert', 'false');
+      if (x.upload) {
+        x.upload.onprogress = function (e) {
+          if (e.lengthComputable && e.total > 0) fortschritt(Math.min(99, Math.floor(e.loaded / e.total * 100)));
+        };
+      }
+      // Jede Antwort des Speichers geht zum Abschluss: Ob die Datei da ist und passt, prüft der Server.
+      x.onload = function () { ok(x.status); };
+      x.onerror = function () { fehl(new Error('netz')); };
+      x.ontimeout = function () { fehl(new Error('zeit')); };
+      x.send(blob);
+    });
+  }
+
+  /** Video senden: reservieren, direkt hochladen, abschließen; dieselbe Anfrage-ID bei Wiederholung. */
+  function sendeVideo() {
+    var v = zustand.video;
+    if (!v || zustand.sendet || !zustand.token) return;
+    if (!zustand.versuchVideo || zustand.versuchVideo.blob !== v.blob) zustand.versuchVideo = { id: neueId(), blob: v.blob };
+    var versuch = zustand.versuchVideo;
+    var token = zustand.token;
+    zustand.sendet = true;
+    zustand.videoProzent = null;
+    zeigeMeldung('');
+    videoZeigen();
+    pruefen();
+    function ende(text) {
+      zustand.sendet = false;
+      zustand.videoProzent = null;
+      zeigeMeldung(text);
+      videoZeigen();
+      pruefen();
+    }
+    function fehler(r) {
+      if (r.status === 404 && r.daten && r.daten.fehler === 'sitzung_unbekannt') {
+        zustand.sendet = false;
+        zustand.videoProzent = null;
+        vergessen(); zeigeMeldung(T.fehlerNetz); fussAufbauen(); verlaufZeichnen(); punktSetzen();
+        return;
+      }
+      // Verworfen oder abgelaufen: ein neuer Versuch braucht eine neue Anfrage-ID.
+      if (r.status === 410 || r.status === 413 || r.status === 415) zustand.versuchVideo = null;
+      ende(r.status === 429 ? T.fehlerVideoZuViele : (r.status === 413 || r.status === 415 || r.status === 400) ? T.fehlerVideoFormat : T.fehlerNetz);
+    }
+    function geschafft() {
+      zustand.sendet = false;
+      zustand.videoProzent = null;
+      if (zustand.video && zustand.video.blob === versuch.blob) videoVerwerfen(); else videoZeigen();
+      pruefen();
+      lesen().then(takt);
+    }
+    videoAufruf({ aktion: 'start', token: token, request_id: versuch.id, groesse: v.blob.size, hp: honigtopf ? honigtopf.value : '' }).then(function (r) {
+      if (r.status !== 200 || !r.daten) { fehler(r); return; }
+      if (r.daten.zustand === 'gesendet') { geschafft(); return; }
+      var link = r.daten.upload;
+      if (r.daten.zustand !== 'hochladen' || typeof link !== 'string' || link.indexOf(SPEICHER_UPLOAD) !== 0) { ende(T.fehlerNetz); return; }
+      var hochgeladen = 0;
+      return videoHochladen(link, v.blob, function (prozent) { zustand.videoProzent = prozent; videoZeigen(); }).then(function (status) {
+        hochgeladen = status;
+        zustand.videoProzent = 100;
+        videoZeigen();
+        // Auch bei einer Absage des Speichers abschließen: Bei einer Wiederholung liegt die Datei schon dort.
+        return videoAufruf({ aktion: 'fertig', token: token, request_id: versuch.id });
+      }).then(function (f) {
+        if (f.status === 200) { geschafft(); return; }
+        if (f.status === 409 && hochgeladen >= 400) {
+          // Der Speicher hat die Datei abgelehnt: mit derselben Anfrage klappt es nicht besser.
+          zustand.versuchVideo = null;
+          ende(T.videoNichtHochgeladen);
+          return;
+        }
+        fehler(f);
+      });
+    }).catch(function () { ende(T.fehlerNetz); });
+  }
+
   /** Stabile Adresse je Nachricht: die Antwort der Funktion bringt bei jeder Abfrage eine neue. */
   function bildAdresseMerken(n) {
-    var m = n.bild || n.audio || n.datei;
+    var m = n.bild || n.audio || n.datei || n.video;
     if (!m) return;
     var alt = zustand.bildUrls[n.id];
     var jetzt = Date.now();
@@ -544,7 +719,7 @@
 
   /** Text, der beim Zitieren oder in der Vorschau für eine Nachricht steht. */
   function textVon(n) {
-    return typeof n.text === 'string' && n.text ? n.text : (n.bild ? T.fotoZitat : (n.audio ? T.sprachZitat : (n.datei ? T.dateiZitat + n.datei.name : '')));
+    return typeof n.text === 'string' && n.text ? n.text : (n.bild ? T.fotoZitat : (n.audio ? T.sprachZitat : (n.datei ? T.dateiZitat + n.datei.name : (n.video ? T.videoZitat : ''))));
   }
 
   /** Leiste über dem Feld: auf welche Nachricht die nächste antwortet. */
@@ -600,16 +775,28 @@
     zaehler.textContent = zuLang ? T.zeichenUeber : '';
     var hatBild = !!(zustand.token && zustand.bild && zustand.bildBereit);
     var hatDatei = !!(zustand.token && zustand.datei);
-    var ok = (text !== '' || hatBild || hatDatei) && !zuLang && !zustand.sendet && (zustand.token || (haken && haken.checked));
+    var hatVideo = !!(zustand.token && zustand.video);
+    var ok = (text !== '' || hatBild || hatDatei || hatVideo) && !zuLang && !zustand.sendet && (zustand.token || (haken && haken.checked));
     sendeKnopf.disabled = !ok;
     sendeKnopf.textContent = zustand.sendet ? T.sendet : T.senden;
     if (mikroKnopf) mikroKnopf.disabled = !zustand.token || !!zustand.sprache || zustand.sendet;
+    if (bildKnopf) bildKnopf.disabled = !zustand.token || zustand.sendet;
   }
 
   function uhrzeit(iso) {
     var d = new Date(iso);
     if (isNaN(d.getTime())) return '';
     return d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  /** Läuft im Verlauf gerade ein Video oder eine Sprachnachricht? Dann nicht neu zeichnen (sonst bricht es ab). */
+  function spieltGerade() {
+    var l = verlauf.querySelectorAll('video, audio');
+    for (var i = 0; i < l.length; i++) { if (!l[i].paused && !l[i].ended) return true; }
+    return false;
+  }
+  function nachDemAbspielen() {
+    if (zustand.spaeterZeichnen && !spieltGerade()) { zustand.spaeterZeichnen = false; verlaufZeichnen(); }
   }
 
   function verlaufZeichnen() {
@@ -651,6 +838,8 @@
           delete zustand.bildUrls[n.id];
           lesen();
         });
+        spieler.addEventListener('pause', nachDemAbspielen);
+        spieler.addEventListener('ended', nachDemAbspielen);
         blase.appendChild(spieler);
       } else {
         blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.sprachNichtDa }));
@@ -666,6 +855,31 @@
         ]));
       } else {
         blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.dateiNichtDa }));
+      }
+    }
+    if (n.video) {
+      if (n.video.url) {
+        var film = el('video', { class: 'kv-chat-video', src: n.video.url, controls: '', preload: 'metadata', playsinline: '', 'aria-label': T.videoPlayer + (n.video.groesse ? ' (' + groesseText(n.video.groesse) + ')' : '') });
+        // Abgelaufener Link (Tab lange offen): einmal neue Adresse holen. Scheitert es dann noch
+        // (Format, das dieser Browser nicht kann, z. B. HEVC), Hinweis mit Link statt schwarzem Kasten.
+        film.addEventListener('error', function () {
+          if (!zustand.audioNeu[n.id]) {
+            zustand.audioNeu[n.id] = true;
+            delete zustand.bildUrls[n.id];
+            lesen();
+            return;
+          }
+          if (!film.parentNode) return;
+          film.parentNode.replaceChild(el('p', { class: 'kv-chat-bild-fehlt' }, [
+            document.createTextNode(T.videoNichtAbspielbar + ' '),
+            el('a', { href: n.video.url, target: '_blank', rel: 'noopener noreferrer', text: T.videoHerunterladen })
+          ]), film);
+        });
+        film.addEventListener('pause', nachDemAbspielen);
+        film.addEventListener('ended', nachDemAbspielen);
+        blase.appendChild(film);
+      } else {
+        blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.videoNichtDa }));
       }
     }
     if (typeof n.text === 'string' && n.text !== '') blase.appendChild(el('p', { text: n.text }));
@@ -688,8 +902,10 @@
       var a = el('button', { type: 'button', class: 'kv-chat-aktion', 'aria-label': T.antworten, text: '↩' });
       a.addEventListener('click', function (ev) {
         ev.stopPropagation();
+        if (zustand.sendet) return; // erst fertig senden
         if (zustand.bild) bildVerwerfen(); // Zitat und Bild schliessen sich aus: die letzte Wahl gilt
         dateiVerwerfen();
+        videoVerwerfen();
         spracheVerwerfen(); // Sprachnachrichten können nichts zitieren
         zustand.antwortAuf = { id: n.id, text: textVon(n), von_team: !!n.von_team };
         zustand.waehlen = null; zustand.aktiv = null;
@@ -712,7 +928,7 @@
     var box = el('div', { class: 'kv-chat-eintrag ' + seite + (zustand.aktiv === n.id ? ' aktiv' : '') }, teile);
     // Tippen auf die Blase zeigt oder versteckt Reagieren/Antworten (am Handy gibt es kein Überfahren).
     box.addEventListener('click', function (ev) {
-      if (ev.target && ev.target.closest && ev.target.closest('a, audio')) return;
+      if (ev.target && ev.target.closest && ev.target.closest('a, audio, video')) return;
       var sel = window.getSelection && window.getSelection();
       if (sel && String(sel).length > 0) return;
       zustand.aktiv = zustand.aktiv === n.id ? null : n.id;
@@ -761,7 +977,7 @@
 
   function signatur(liste) {
     return JSON.stringify(liste.map(function (n) {
-      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0, n.datei ? (n.datei.url || 1) : 0];
+      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0, n.datei ? (n.datei.url || 1) : 0, n.video ? (n.video.url || 1) : 0];
     }));
   }
 
@@ -772,13 +988,15 @@
       if (r.status === 404) { vergessen(); fussAufbauen(); verlaufZeichnen(); punktSetzen(); return; }
       if (r.status !== 200 || !r.daten || !Array.isArray(r.daten.nachrichten)) return;
       var alt = signatur(zustand.nachrichten);
-      zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && (typeof n.text === 'string' || (n.bild && typeof n.bild === 'object') || (n.audio && typeof n.audio === 'object') || (n.datei && typeof n.datei === 'object')); });
+      zustand.nachrichten = r.daten.nachrichten.filter(function (n) { return n && (typeof n.text === 'string' || (n.bild && typeof n.bild === 'object') || (n.audio && typeof n.audio === 'object') || (n.datei && typeof n.datei === 'object') || (n.video && typeof n.video === 'object')); });
       zustand.nachrichten.forEach(bildAdresseMerken);
       // Eine Reaktion, die gerade gespeichert wird, nicht von einer älteren Antwort überschreiben lassen.
       zustand.nachrichten.forEach(function (n) {
         if (Object.prototype.hasOwnProperty.call(zustand.reaktionWartet, n.id)) n.reaktion_ich = zustand.reaktionWartet[n.id] || null;
       });
-      if (signatur(zustand.nachrichten) !== alt) verlaufZeichnen();
+      if (signatur(zustand.nachrichten) !== alt) {
+        if (spieltGerade()) zustand.spaeterZeichnen = true; else verlaufZeichnen();
+      }
       if (zustand.offen) { zustand.gesehenTeam = teamZaehlen(); speichern(); }
       punktSetzen();
     }).catch(function () { /* beim nächsten Mal wieder */ });
@@ -861,6 +1079,7 @@
     zeigeMeldung('');
     bildVerwerfen();
     dateiVerwerfen();
+    videoVerwerfen();
     zustand.antwortAuf = null; zitatZeigen();
     var s = { phase: 'start', sek: 0, chunks: [], t0: 0 };
     zustand.sprache = s;
@@ -999,6 +1218,7 @@
     if (sendeKnopf.disabled) return;
     var text = feldText.value.trim();
     if (zustand.token && zustand.datei) { sendeDatei(); return; }
+    if (zustand.token && zustand.video) { sendeVideo(); return; }
     if (zustand.token && zustand.bild && zustand.bildBereit) { sendeBild(text); return; }
     if (!text) return;
     sende(text, false);

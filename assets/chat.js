@@ -291,7 +291,7 @@
   }
 
   // --- Aufbau ---------------------------------------------------------------
-  var knopf, fenster, kopf, start, startLos, verlauf, fuss, punkt, hinweis, erstKarte;
+  var knopf, fenster, kopf, start, startLos, bereich, verlauf, fuss, punkt, hinweis, erstKarte;
   var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox, dateiBox, videoBox, mikroKnopf, spracheBox;
 
   /** Rundes „K“ wie im Logo, für Kopf, Hinweisblase und Team-Nachrichten. */
@@ -316,9 +316,11 @@
       zu
     ]);
     start = startAufbauen();
-    verlauf = el('div', { class: 'kv-chat-verlauf', role: 'log', 'aria-live': 'polite', 'aria-relevant': 'additions' });
+    // Bereich scrollt; darin der Live-Bereich (nur Nachrichten) und darunter ggf. die Karte für die erste Nachricht.
+    verlauf = el('div', { class: 'kv-chat-log', role: 'log', 'aria-live': 'polite', 'aria-relevant': 'additions' });
+    bereich = el('div', { class: 'kv-chat-verlauf' }, [verlauf]);
     fuss = el('div', { class: 'kv-chat-fuss' });
-    fenster = el('div', { class: 'kv-chat-fenster', id: 'kv-chat-fenster', role: 'dialog', 'aria-label': T.titel + ' Chat', hidden: '' }, [start, kopf, verlauf, fuss]);
+    fenster = el('div', { class: 'kv-chat-fenster', id: 'kv-chat-fenster', role: 'dialog', 'aria-label': T.titel + ' Chat', hidden: '' }, [start, kopf, bereich, fuss]);
     fenster.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
       if (zustand.emojiOffen) { emojiUmschalten(false); emojiKnopf.focus(); return; }
@@ -379,13 +381,14 @@
     var istStart = a === 'start';
     start.hidden = !istStart;
     kopf.hidden = istStart;
-    verlauf.hidden = istStart;
+    bereich.hidden = istStart;
     fuss.hidden = istStart;
     if (istStart && zustand.emojiOffen) emojiUmschalten(false);
+    if (istStart && zustand.sprache && zustand.sprache.phase !== 'bereit') spracheVerwerfen(); // Mikrofon nie unsichtbar weiterlaufen lassen
     startLos.lastChild.textContent = zustand.token ? T.startWeiter : T.startLos;
     if (still || !zustand.offen) return;
     if (istStart) startLos.focus();
-    else { verlauf.scrollTop = verlauf.scrollHeight; feldText.focus(); }
+    else { bereich.scrollTop = bereich.scrollHeight; feldText.focus(); }
   }
 
   /** Thema übernehmen: Chat öffnen und das Thema vorne ins Textfeld schreiben (ohne Thema: nur öffnen). */
@@ -398,7 +401,7 @@
     }
     hoeheAnpassen();
     pruefen();
-    verlauf.scrollTop = verlauf.scrollHeight;
+    bereich.scrollTop = bereich.scrollHeight;
     feldText.focus();
     var ende = feldText.value.length;
     try { feldText.setSelectionRange(ende, ende); } catch (x) { /* egal */ }
@@ -406,7 +409,7 @@
 
   /** Kleine Blase neben dem geschlossenen Knopf; nur auf großen Bildschirmen, ohne Speicherung. */
   function hinweisAufbauen() {
-    var auf = el('button', { type: 'button', class: 'kv-chat-hinweis-auf', 'aria-label': T.oeffnen }, [
+    var auf = el('button', { type: 'button', class: 'kv-chat-hinweis-auf' }, [
       kZeichen(),
       el('span', { class: 'kv-chat-hinweis-texte' }, [
         el('span', { class: 'kv-chat-hinweis-titel' }, [document.createTextNode(T.hinweisTitelA), el('span', { class: 'kv-chat-serif', text: T.hinweisTitelB })]),
@@ -432,6 +435,8 @@
 
   function fussAufbauen() {
     fuss.textContent = '';
+    if (erstKarte && erstKarte.parentNode) erstKarte.parentNode.removeChild(erstKarte);
+    erstKarte = null;
     meldung = el('p', { class: 'kv-chat-meldung', role: 'status', 'aria-live': 'polite' });
     var alterText = feldText ? feldText.value : '';
     feldText = el('textarea', { class: 'kv-chat-text', rows: '1', maxlength: String(MAX_ZEICHEN + 200), placeholder: T.platzhalter, 'aria-label': T.nachricht });
@@ -499,6 +504,7 @@
         el('label', { class: 'kv-chat-label', for: 'kv-chat-mail', text: T.mailLabel }), feldMail,
         label
       ]);
+      bereich.appendChild(erstKarte);
       teile = [meldung, zeile, el('p', { class: 'kv-chat-hinweis mitte', text: T.anhaengenErst }), zaehler, honigtopf];
     } else {
       haken = null; feldName = null; feldMail = null; erstKarte = null;
@@ -950,6 +956,7 @@
   function zeigeMeldung(t) { if (meldung) meldung.textContent = t || ''; }
 
   function pruefen() {
+    hoeheAnpassen();
     var text = feldText.value.trim();
     var zuLang = feldText.value.length > MAX_ZEICHEN;
     zaehler.hidden = !zuLang;
@@ -986,15 +993,14 @@
   }
 
   function verlaufZeichnen() {
-    var amEnde = verlauf.scrollHeight - verlauf.scrollTop - verlauf.clientHeight < 60;
-    var oben = verlauf.scrollTop;
+    var amEnde = bereich.scrollHeight - bereich.scrollTop - bereich.clientHeight < 60;
+    var oben = bereich.scrollTop;
     verlauf.textContent = '';
     verlauf.appendChild(el('div', { class: 'kv-chat-eintrag wir' }, [
       el('div', { class: 'kv-chat-blase wir' }, [el('p', { text: T.begruessung })])
     ]));
     zustand.nachrichten.forEach(function (n) { verlauf.appendChild(eintrag(n)); });
-    if (erstKarte && !zustand.token) verlauf.appendChild(erstKarte);
-    verlauf.scrollTop = amEnde || !zustand.offen ? verlauf.scrollHeight : oben;
+    bereich.scrollTop = amEnde || !zustand.offen ? bereich.scrollHeight : oben;
   }
 
   function eintrag(n) {
@@ -1011,7 +1017,7 @@
         var bild = el('img', { class: 'kv-chat-bild', src: n.bild.url, alt: T.bildGross, loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' });
         // Bild lädt nach: war man unten, unten bleiben (sonst steht die neueste Nachricht außer Sicht).
         bild.addEventListener('load', function () {
-          if (verlauf.scrollHeight - verlauf.scrollTop - verlauf.clientHeight < bild.clientHeight + 80) verlauf.scrollTop = verlauf.scrollHeight;
+          if (bereich.scrollHeight - bereich.scrollTop - bereich.clientHeight < bild.clientHeight + 80) bereich.scrollTop = bereich.scrollHeight;
         });
         blase.appendChild(el('a', { class: 'kv-chat-bildlink', href: n.bild.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': T.bildGross }, [bild]));
       } else {
@@ -1215,7 +1221,7 @@
     hinweisWeg();
     punktSetzen();
     ansichtZeigen(zustand.ansicht, true);
-    lesen().then(function () { verlauf.scrollTop = verlauf.scrollHeight; });
+    lesen().then(function () { bereich.scrollTop = bereich.scrollHeight; });
     takt();
     window.setTimeout(function () { if (zustand.ansicht === 'start') startLos.focus(); else feldText.focus(); }, 30);
   }

@@ -32,9 +32,33 @@
     oeffnen: 'Chat öffnen',
     schliessen: 'Chat schließen',
     titel: 'KAVEO',
-    unterzeile: 'Schreib uns – wir antworten persönlich.',
-    begruessung: 'Hallo! Was möchtest du wissen? Wir melden uns, sobald wir online sind.',
-    platzhalter: 'Deine Nachricht',
+    team: 'KAVEO Team',
+    unterzeile: 'Wir antworten persönlich.',
+    begruessung: 'Moin! Schreib uns einfach, worum es geht – wir melden uns persönlich.',
+    startKlein: 'Livechat',
+    startTitelA: 'Moin!',
+    startTitelB: 'Wie können wir ',
+    startTitelC: 'helfen?',
+    startText: 'Hier schreibst du direkt mit unserem Team. Wir antworten persönlich.',
+    startLos: 'Nachricht schreiben',
+    startWeiter: 'Zum Gespräch',
+    themenTitel: 'Häufige Themen',
+    startDatenschutz: 'Datenschutz: ',
+    startDatenschutzLink: 'So verarbeiten wir deine Nachricht',
+    zurueck: 'Zurück zur Startansicht',
+    logo: 'KAVEO GOLF',
+    erstTitel: 'Wie erreichen wir dich?',
+    erstText: 'Beides freiwillig. Mit E-Mail bekommst du die Antwort auch, wenn du den Chat schon verlassen hast.',
+    nameLabel: 'Name',
+    namePlatz: 'Wie dürfen wir dich nennen?',
+    mailLabel: 'E-Mail',
+    mailPlatz: 'deine@email.de',
+    hinweisTitelA: 'Fragen zu ',
+    hinweisTitelB: 'KAVEO?',
+    hinweisText: 'Schreib uns – wir antworten persönlich.',
+    hinweisWeg: 'Hinweis ausblenden',
+    platzhalter: 'Nachricht schreiben …',
+    nachricht: 'Nachricht',
     senden: 'Senden',
     sendet: 'Wird gesendet …',
     name: 'Name (freiwillig)',
@@ -117,6 +141,39 @@
     videoZitat: '🎬 Video'
   };
 
+  // Startansicht: ein Klick öffnet den Chat und schreibt das Thema vorne ins Textfeld (nichts wird mitgeschickt).
+  var THEMEN = ['Fragen zur App', 'Konto & Anmeldung', 'Fehler melden', 'Idee oder Feedback', 'Etwas anderes'];
+  var LOGO = '/assets/logo-lockup-256.webp';
+  var HINWEIS_NACH_MS = 6000;
+
+  // Symbole als eigene SVG (feste Zeichenketten, nie Besuchertext).
+  var SYMBOL = {
+    chat: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6a.6.6 0 0 1-1-.46V16H6.5A2.5 2.5 0 0 1 4 13.5z"/><path d="M8.5 8.5h7M8.5 11.5h4"/>',
+    runter: '<path d="M6 9l6 6 6-6"/>',
+    zurueck: '<path d="M15 18l-6-6 6-6"/>',
+    weiter: '<path d="M9 6l6 6-6 6"/>',
+    zu: '<path d="M6 6l12 12M18 6L6 18"/>',
+    klammer: '<path d="M21 11.5l-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/>',
+    smiley: '<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.3 2 3.5 2 3.5-2 3.5-2"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.6"/>',
+    mikro: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+    hoch: '<path d="M12 19V5M6 11l6-6 6 6"/>',
+    antworten: '<path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
+    datei: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',
+    film: '<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/>',
+    stopp: '<rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/>'
+  };
+  function symbol(name, groesse) {
+    var s = groesse || 20;
+    var h = document.createElement('span');
+    h.className = 'kv-chat-symbol';
+    h.setAttribute('aria-hidden', 'true');
+    h.innerHTML = '<svg viewBox="0 0 24 24" width="' + s + '" height="' + s + '" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" focusable="false">' + SYMBOL[name] + '</svg>';
+    return h.firstChild;
+  }
+  function wegKnopf(label) {
+    return el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': label }, [symbol('zu', 14)]);
+  }
+
   // Schnellauswahl zum Reagieren (wie im Mitglieder-Chat) und Auswahl fürs Schreiben.
   var REAKTIONEN = ['👍', '❤️', '😂', '😮', '😢', '🙏', '⛳'];
   var EMOJI_GRUPPEN = [
@@ -131,6 +188,8 @@
     token: null,
     einwilligung: false,
     offen: false,
+    ansicht: 'start', // 'start' (Begrüßung mit Themen) oder 'chat'
+    hinweisWeg: false, // Hinweisblase für diesen Seitenaufruf erledigt (nicht gespeichert)
     geoeffnetAm: 0,
     nachrichten: [],
     gesehenTeam: 0,
@@ -232,25 +291,34 @@
   }
 
   // --- Aufbau ---------------------------------------------------------------
-  var knopf, fenster, verlauf, fuss, punkt;
+  var knopf, fenster, kopf, start, startLos, verlauf, fuss, punkt, hinweis, erstKarte;
   var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox, dateiBox, videoBox, mikroKnopf, spracheBox;
 
+  /** Rundes „K“ wie im Logo, für Kopf, Hinweisblase und Team-Nachrichten. */
+  function kZeichen(klasse) {
+    return el('span', { class: 'kv-chat-k ' + (klasse || ''), 'aria-hidden': 'true', text: 'K' });
+  }
+
   function aufbauen() {
-    knopf = el('button', { type: 'button', class: 'kv-chat-knopf', 'aria-label': T.oeffnen, 'aria-expanded': 'false', 'aria-controls': 'kv-chat-fenster' });
-    knopf.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.6a.6.6 0 0 1-1-.46V16H6.5A2.5 2.5 0 0 1 4 13.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>';
+    knopf = el('button', { type: 'button', class: 'kv-chat-knopf', 'aria-label': T.oeffnen, 'aria-expanded': 'false', 'aria-controls': 'kv-chat-fenster' }, [symbol('chat', 26)]);
     punkt = el('span', { class: 'kv-chat-punkt', hidden: '' });
     knopf.appendChild(punkt);
     knopf.addEventListener('click', function () { zustand.offen ? schliessen() : oeffnen(); });
 
-    var zu = el('button', { type: 'button', class: 'kv-chat-zu', 'aria-label': T.schliessen, text: '✕' });
-    zu.addEventListener('click', schliessen);
-    var kopf = el('div', { class: 'kv-chat-kopf' }, [
-      el('div', {}, [el('p', { class: 'kv-chat-titel', text: T.titel }), el('p', { class: 'kv-chat-unter', text: T.unterzeile })]),
+    var zu = el('button', { type: 'button', class: 'kv-chat-zu', 'aria-label': T.schliessen }, [symbol('runter')]);
+    zu.addEventListener('click', function () { schliessen(); knopf.focus(); });
+    var zurueck = el('button', { type: 'button', class: 'kv-chat-zurueck', 'aria-label': T.zurueck }, [symbol('zurueck')]);
+    zurueck.addEventListener('click', function () { ansichtZeigen('start'); });
+    kopf = el('div', { class: 'kv-chat-kopf' }, [
+      zurueck,
+      kZeichen('gross'),
+      el('div', { class: 'kv-chat-kopf-text' }, [el('p', { class: 'kv-chat-titel', text: T.team }), el('p', { class: 'kv-chat-unter', text: T.unterzeile })]),
       zu
     ]);
+    start = startAufbauen();
     verlauf = el('div', { class: 'kv-chat-verlauf', role: 'log', 'aria-live': 'polite', 'aria-relevant': 'additions' });
     fuss = el('div', { class: 'kv-chat-fuss' });
-    fenster = el('div', { class: 'kv-chat-fenster', id: 'kv-chat-fenster', role: 'dialog', 'aria-label': T.titel + ' Chat', hidden: '' }, [kopf, verlauf, fuss]);
+    fenster = el('div', { class: 'kv-chat-fenster', id: 'kv-chat-fenster', role: 'dialog', 'aria-label': T.titel + ' Chat', hidden: '' }, [start, kopf, verlauf, fuss]);
     fenster.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
       if (zustand.emojiOffen) { emojiUmschalten(false); emojiKnopf.focus(); return; }
@@ -260,36 +328,134 @@
     fenster.addEventListener('click', function (e) {
       if (zustand.emojiOffen && !emojiBox.contains(e.target) && !emojiKnopf.contains(e.target)) emojiUmschalten(false);
     });
+    hinweis = hinweisAufbauen();
     document.body.appendChild(fenster);
+    document.body.appendChild(hinweis);
     document.body.appendChild(knopf);
+    zustand.ansicht = zustand.token ? 'chat' : 'start';
     fussAufbauen();
     verlaufZeichnen();
+    ansichtZeigen(zustand.ansicht, true);
+  }
+
+  /** Startansicht: Begrüßung, „Nachricht schreiben“, häufige Themen, Datenschutz-Link. */
+  function startAufbauen() {
+    var zu = el('button', { type: 'button', class: 'kv-chat-zu kv-chat-zu-rund', 'aria-label': T.schliessen }, [symbol('runter', 18)]);
+    zu.addEventListener('click', function () { schliessen(); knopf.focus(); });
+    var logo = el('img', { class: 'kv-chat-logo', src: LOGO, alt: T.logo, decoding: 'async' });
+    var titel = el('h2', { class: 'kv-chat-start-titel' }, [
+      document.createTextNode(T.startTitelA), el('br'), document.createTextNode(T.startTitelB),
+      el('span', { class: 'kv-chat-serif', text: T.startTitelC })
+    ]);
+    startLos = el('button', { type: 'button', class: 'kv-chat-start-los' }, [el('span', { class: 'kv-chat-los-punkt', 'aria-hidden': 'true' }), el('span', { text: T.startLos })]);
+    startLos.addEventListener('click', function () { themaWaehlen(null); });
+    var liste = el('ul', { class: 'kv-chat-themen', 'aria-label': T.themenTitel });
+    THEMEN.forEach(function (t) {
+      var b = el('button', { type: 'button', class: 'kv-chat-thema' }, [el('span', { text: t }), symbol('weiter', 18)]);
+      b.addEventListener('click', function () { themaWaehlen(t); });
+      liste.appendChild(el('li', {}, [b]));
+    });
+    return el('div', { class: 'kv-chat-start' }, [
+      el('div', { class: 'kv-chat-start-oben' }, [
+        el('div', { class: 'kv-chat-start-leiste' }, [logo, zu]),
+        el('div', { class: 'kv-chat-start-texte' }, [
+          el('p', { class: 'kv-chat-klein', text: T.startKlein }),
+          titel,
+          el('p', { class: 'kv-chat-start-text', text: T.startText })
+        ]),
+        startLos
+      ]),
+      el('div', { class: 'kv-chat-start-themen' }, [el('p', { class: 'kv-chat-klein grau', text: T.themenTitel }), liste]),
+      el('p', { class: 'kv-chat-start-fuss' }, [
+        document.createTextNode(T.startDatenschutz),
+        el('a', { href: DATENSCHUTZ, target: '_blank', rel: 'noopener', text: T.startDatenschutzLink })
+      ])
+    ]);
+  }
+
+  /** Zwischen Startansicht und Chat wechseln. */
+  function ansichtZeigen(a, still) {
+    zustand.ansicht = a;
+    var istStart = a === 'start';
+    start.hidden = !istStart;
+    kopf.hidden = istStart;
+    verlauf.hidden = istStart;
+    fuss.hidden = istStart;
+    if (istStart && zustand.emojiOffen) emojiUmschalten(false);
+    startLos.lastChild.textContent = zustand.token ? T.startWeiter : T.startLos;
+    if (still || !zustand.offen) return;
+    if (istStart) startLos.focus();
+    else { verlauf.scrollTop = verlauf.scrollHeight; feldText.focus(); }
+  }
+
+  /** Thema übernehmen: Chat öffnen und das Thema vorne ins Textfeld schreiben (ohne Thema: nur öffnen). */
+  function themaWaehlen(thema) {
+    ansichtZeigen('chat', true);
+    if (thema) {
+      var rest = feldText.value;
+      THEMEN.forEach(function (t) { if (rest.indexOf(t + ': ') === 0) rest = rest.slice(t.length + 2); });
+      feldText.value = thema + ': ' + rest;
+    }
+    hoeheAnpassen();
+    pruefen();
+    verlauf.scrollTop = verlauf.scrollHeight;
+    feldText.focus();
+    var ende = feldText.value.length;
+    try { feldText.setSelectionRange(ende, ende); } catch (x) { /* egal */ }
+  }
+
+  /** Kleine Blase neben dem geschlossenen Knopf; nur auf großen Bildschirmen, ohne Speicherung. */
+  function hinweisAufbauen() {
+    var auf = el('button', { type: 'button', class: 'kv-chat-hinweis-auf', 'aria-label': T.oeffnen }, [
+      kZeichen(),
+      el('span', { class: 'kv-chat-hinweis-texte' }, [
+        el('span', { class: 'kv-chat-hinweis-titel' }, [document.createTextNode(T.hinweisTitelA), el('span', { class: 'kv-chat-serif', text: T.hinweisTitelB })]),
+        el('span', { class: 'kv-chat-hinweis-text', text: T.hinweisText })
+      ])
+    ]);
+    auf.addEventListener('click', function () { hinweisWeg(); oeffnen(); });
+    var weg = el('button', { type: 'button', class: 'kv-chat-hinweis-weg', 'aria-label': T.hinweisWeg }, [symbol('zu', 14)]);
+    weg.addEventListener('click', function () { hinweisWeg(); knopf.focus(); });
+    return el('div', { class: 'kv-chat-blase-hinweis', hidden: '' }, [auf, weg]);
+  }
+  function hinweisWeg() {
+    zustand.hinweisWeg = true;
+    if (hinweis) hinweis.hidden = true;
+  }
+  function hinweisPlanen() {
+    window.setTimeout(function () {
+      var gross = !window.matchMedia || window.matchMedia('(min-width: 521px)').matches;
+      if (zustand.hinweisWeg || zustand.offen || zustand.token || !gross) return;
+      hinweis.hidden = false;
+    }, HINWEIS_NACH_MS);
   }
 
   function fussAufbauen() {
     fuss.textContent = '';
     meldung = el('p', { class: 'kv-chat-meldung', role: 'status', 'aria-live': 'polite' });
-    feldText = el('textarea', { class: 'kv-chat-text', rows: '2', maxlength: String(MAX_ZEICHEN + 200), placeholder: T.platzhalter, 'aria-label': T.platzhalter });
+    var alterText = feldText ? feldText.value : '';
+    feldText = el('textarea', { class: 'kv-chat-text', rows: '1', maxlength: String(MAX_ZEICHEN + 200), placeholder: T.platzhalter, 'aria-label': T.nachricht });
+    feldText.value = alterText;
     feldText.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); absenden(); }
     });
-    feldText.addEventListener('input', pruefen);
+    feldText.addEventListener('input', function () { hoeheAnpassen(); pruefen(); });
     zaehler = el('p', { class: 'kv-chat-zaehler', hidden: '' });
-    sendeKnopf = el('button', { type: 'button', class: 'kv-chat-senden', text: T.senden });
+    sendeKnopf = el('button', { type: 'button', class: 'kv-chat-senden', 'aria-label': T.senden, title: T.senden }, [symbol('hoch', 18)]);
     sendeKnopf.addEventListener('click', absenden);
 
     // Verstecktes Feld: Menschen sehen es nie, einfache Bots füllen es aus.
     honigtopf = el('input', { type: 'text', name: 'website', tabindex: '-1', autocomplete: 'off', 'aria-hidden': 'true', class: 'kv-chat-honig' });
 
     zitatBox = el('div', { class: 'kv-chat-zitatleiste', hidden: '' });
-    emojiKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf', 'aria-label': T.emojiOeffnen, 'aria-expanded': 'false', text: '☺' });
+    emojiKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf', 'aria-label': T.emojiOeffnen, title: T.emojiOeffnen, 'aria-expanded': 'false' }, [symbol('smiley')]);
     emojiKnopf.addEventListener('click', function () { emojiUmschalten(); });
     if (emojiBox && emojiBox.parentNode) emojiBox.parentNode.removeChild(emojiBox);
     emojiBox = emojiAuswahlBauen();
     fenster.appendChild(emojiBox);
     zustand.emojiOffen = false;
 
-    bildKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-bildknopf', 'aria-label': T.anhaengen, title: zustand.token ? T.anhaengen : T.anhaengenErst, text: '📎' });
+    bildKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-bildknopf', 'aria-label': T.anhaengen, title: zustand.token ? T.anhaengen : T.anhaengenErst }, [symbol('klammer')]);
     bildKnopf.disabled = !zustand.token;
     bildKnopf.addEventListener('click', function () { if (zustand.token) bildEingabe.click(); });
     bildEingabe = el('input', { type: 'file', accept: 'image/*,application/pdf,.pdf,video/mp4,video/quicktime,.mp4,.mov,.m4v', class: 'kv-chat-honig', tabindex: '-1', 'aria-hidden': 'true' });
@@ -308,27 +474,34 @@
     spracheBox = el('div', { class: 'kv-chat-bildleiste kv-chat-sprachleiste', hidden: '' });
     mikroKnopf = null;
     if (spracheMoeglich()) {
-      mikroKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-mikroknopf', 'aria-label': T.sprachAufnehmen, title: zustand.token ? T.sprachAufnehmen : T.sprachErstSchreiben, text: '🎤' });
+      mikroKnopf = el('button', { type: 'button', class: 'kv-chat-emoji-knopf kv-chat-mikroknopf', 'aria-label': T.sprachAufnehmen, title: zustand.token ? T.sprachAufnehmen : T.sprachErstSchreiben }, [symbol('mikro', 18)]);
       mikroKnopf.disabled = !zustand.token;
       mikroKnopf.addEventListener('click', function () { if (zustand.token) spracheStarten(); });
     }
 
-    var zeile = el('div', { class: 'kv-chat-zeile' }, [bildKnopf, mikroKnopf, emojiKnopf, feldText, sendeKnopf]);
+    var zeile = el('div', { class: 'kv-chat-zeile' }, [bildKnopf, emojiKnopf, feldText, mikroKnopf, sendeKnopf]);
     var teile = [meldung, zitatBox, bildBox, dateiBox, videoBox, spracheBox, bildEingabe, zeile, zaehler, honigtopf];
 
     if (!zustand.token) {
-      // Erste Nachricht: Name/E-Mail freiwillig, Datenschutz-Haken Pflicht.
-      feldName = el('input', { type: 'text', class: 'kv-chat-feld', maxlength: '80', autocomplete: 'name', placeholder: T.name, 'aria-label': T.name });
-      feldMail = el('input', { type: 'email', class: 'kv-chat-feld', maxlength: '254', autocomplete: 'email', placeholder: T.email, 'aria-label': T.email });
+      // Erste Nachricht: Name/E-Mail freiwillig, Datenschutz-Haken Pflicht. Die Karte steht im Verlauf.
+      feldName = el('input', { type: 'text', id: 'kv-chat-name', class: 'kv-chat-feld', maxlength: '80', autocomplete: 'name', placeholder: T.namePlatz });
+      feldMail = el('input', { type: 'email', id: 'kv-chat-mail', class: 'kv-chat-feld', maxlength: '254', autocomplete: 'email', placeholder: T.mailPlatz });
       feldMail.addEventListener('input', pruefen);
       haken = el('input', { type: 'checkbox', id: 'kv-chat-haken' });
       haken.checked = zustand.einwilligung;
       haken.addEventListener('change', pruefen);
       var link = el('a', { href: DATENSCHUTZ, target: '_blank', rel: 'noopener', text: T.datenschutzLink });
       var label = el('label', { class: 'kv-chat-haken', for: 'kv-chat-haken' }, [haken, el('span', {}, [document.createTextNode(T.datenschutzA), link, document.createTextNode(T.datenschutzB)])]);
-      teile = [meldung, feldName, feldMail, el('p', { class: 'kv-chat-hinweis', text: T.emailHinweis }), label, zeile, zaehler, honigtopf];
+      erstKarte = el('div', { class: 'kv-chat-erstkarte', role: 'group', 'aria-label': T.erstTitel }, [
+        el('p', { class: 'kv-chat-erst-titel', text: T.erstTitel }),
+        el('p', { class: 'kv-chat-hinweis', text: T.erstText }),
+        el('label', { class: 'kv-chat-label', for: 'kv-chat-name', text: T.nameLabel }), feldName,
+        el('label', { class: 'kv-chat-label', for: 'kv-chat-mail', text: T.mailLabel }), feldMail,
+        label
+      ]);
+      teile = [meldung, zeile, el('p', { class: 'kv-chat-hinweis mitte', text: T.anhaengenErst }), zaehler, honigtopf];
     } else {
-      haken = null; feldName = null; feldMail = null;
+      haken = null; feldName = null; feldMail = null; erstKarte = null;
       kontaktBox = el('div', { class: 'kv-chat-kontakt' });
       kontaktAnzeigen(false);
       teile.push(kontaktBox);
@@ -338,7 +511,15 @@
     dateiZeigen();
     videoZeigen();
     spracheZeigen();
+    hoeheAnpassen();
     pruefen();
+  }
+
+  /** Textfeld wächst mit (bis zur Höchsthöhe aus dem CSS). */
+  function hoeheAnpassen() {
+    if (!feldText) return;
+    feldText.style.height = 'auto';
+    if (feldText.scrollHeight > 0) feldText.style.height = feldText.scrollHeight + 'px';
   }
 
   /** Emoji-Auswahl wie bei WhatsApp: Fenster über dem Schreibfeld, oben die Gruppen, darunter ein Raster. */
@@ -461,7 +642,7 @@
     bildBox.hidden = !b;
     if (!b) return;
     if (!zustand.bildBereit) { bildBox.appendChild(el('span', { class: 'kv-chat-zitat-text', role: 'status', text: T.bildLesen })); return; }
-    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.bildWeg, text: '✕' });
+    var weg = wegKnopf(T.bildWeg);
     weg.addEventListener('click', function () { bildVerwerfen(); pruefen(); feldText.focus(); });
     bildBox.appendChild(el('img', { class: 'kv-chat-bildvorschau', src: b.url, alt: T.bildVorschau }));
     bildBox.appendChild(el('span', { class: 'kv-chat-zitat-text', text: T.bildBereit }));
@@ -512,9 +693,9 @@
     var d = zustand.datei;
     dateiBox.hidden = !d;
     if (!d) return;
-    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.dateiWeg, text: '✕' });
+    var weg = wegKnopf(T.dateiWeg);
     weg.addEventListener('click', function () { dateiVerwerfen(); pruefen(); feldText.focus(); });
-    dateiBox.appendChild(el('span', { class: 'kv-chat-dateisymbol', 'aria-hidden': 'true', text: '📄' }));
+    dateiBox.appendChild(el('span', { class: 'kv-chat-dateisymbol' }, [symbol('datei')]));
     dateiBox.appendChild(el('span', { class: 'kv-chat-zitat-text', text: d.name + ' (' + groesseText(d.blob.size) + ') – ' + T.dateiBereit }));
     dateiBox.appendChild(weg);
   }
@@ -599,13 +780,13 @@
     var v = zustand.video;
     videoBox.hidden = !v;
     if (!v) return;
-    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.videoWeg, text: '✕' });
+    var weg = wegKnopf(T.videoWeg);
     weg.disabled = !!zustand.sendet;
     weg.addEventListener('click', function () { videoVerwerfen(); pruefen(); feldText.focus(); });
     var stand = zustand.sendet
       ? T.videoLaedt + (typeof zustand.videoProzent === 'number' ? ' ' + zustand.videoProzent + ' %' : '')
       : T.videoBereit;
-    videoBox.appendChild(el('span', { class: 'kv-chat-dateisymbol', 'aria-hidden': 'true', text: '🎬' }));
+    videoBox.appendChild(el('span', { class: 'kv-chat-dateisymbol' }, [symbol('film')]));
     videoBox.appendChild(el('span', { class: 'kv-chat-zitat-text', role: 'status', text: v.name + ' (' + groesseText(v.blob.size) + ') – ' + stand }));
     videoBox.appendChild(weg);
   }
@@ -729,7 +910,7 @@
     var z = zustand.antwortAuf;
     zitatBox.hidden = !z;
     if (!z) return;
-    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.zitatWeg, text: '✕' });
+    var weg = wegKnopf(T.zitatWeg);
     weg.addEventListener('click', function () { zustand.antwortAuf = null; zitatZeigen(); feldText.focus(); });
     zitatBox.appendChild(el('div', { class: 'kv-chat-zitat-inhalt' }, [
       el('span', { class: 'kv-chat-zitat-von', text: T.antwortAuf + ' ' + (z.von_team ? T.wir : T.du) }),
@@ -754,7 +935,7 @@
     }
     var n = el('input', { type: 'text', class: 'kv-chat-feld', maxlength: '80', autocomplete: 'name', placeholder: T.name, 'aria-label': T.name });
     var m = el('input', { type: 'email', class: 'kv-chat-feld', maxlength: '254', autocomplete: 'email', placeholder: T.email, 'aria-label': T.email });
-    var s = el('button', { type: 'button', class: 'kv-chat-senden', text: T.kontaktSpeichern });
+    var s = el('button', { type: 'button', class: 'kv-chat-pille', text: T.kontaktSpeichern });
     s.addEventListener('click', function () {
       s.disabled = true;
       aufruf({ aktion: 'kontakt', token: zustand.token, name: n.value, email: m.value }).then(function (r) {
@@ -778,8 +959,13 @@
     var hatVideo = !!(zustand.token && zustand.video);
     var ok = (text !== '' || hatBild || hatDatei || hatVideo) && !zuLang && !zustand.sendet && (zustand.token || (haken && haken.checked));
     sendeKnopf.disabled = !ok;
-    sendeKnopf.textContent = zustand.sendet ? T.sendet : T.senden;
+    sendeKnopf.setAttribute('aria-label', zustand.sendet ? T.sendet : T.senden);
+    sendeKnopf.classList.toggle('sendet', !!zustand.sendet);
     if (mikroKnopf) mikroKnopf.disabled = !zustand.token || !!zustand.sprache || zustand.sendet;
+    // Leeres Feld mit Sitzung: Mikrofon statt Senden (wie im Entwurf). Ohne Mikrofon bleibt Senden.
+    var mikroStatt = !!(mikroKnopf && zustand.token && text === '' && !hatBild && !hatDatei && !hatVideo && !zustand.sendet && !zustand.sprache && !zustand.bild);
+    if (mikroKnopf) mikroKnopf.hidden = !mikroStatt;
+    sendeKnopf.hidden = mikroStatt || !!(zustand.sprache && !zustand.sendet);
     if (bildKnopf) bildKnopf.disabled = !zustand.token || zustand.sendet;
   }
 
@@ -807,6 +993,7 @@
       el('div', { class: 'kv-chat-blase wir' }, [el('p', { text: T.begruessung })])
     ]));
     zustand.nachrichten.forEach(function (n) { verlauf.appendChild(eintrag(n)); });
+    if (erstKarte && !zustand.token) verlauf.appendChild(erstKarte);
     verlauf.scrollTop = amEnde || !zustand.offen ? verlauf.scrollHeight : oben;
   }
 
@@ -822,6 +1009,10 @@
     if (n.bild) {
       if (n.bild.url) {
         var bild = el('img', { class: 'kv-chat-bild', src: n.bild.url, alt: T.bildGross, loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' });
+        // Bild lädt nach: war man unten, unten bleiben (sonst steht die neueste Nachricht außer Sicht).
+        bild.addEventListener('load', function () {
+          if (verlauf.scrollHeight - verlauf.scrollTop - verlauf.clientHeight < bild.clientHeight + 80) verlauf.scrollTop = verlauf.scrollHeight;
+        });
         blase.appendChild(el('a', { class: 'kv-chat-bildlink', href: n.bild.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': T.bildGross }, [bild]));
       } else {
         blase.appendChild(el('p', { class: 'kv-chat-bild-fehlt', text: T.bildNichtDa }));
@@ -849,7 +1040,7 @@
       if (n.datei.url) {
         var dname = typeof n.datei.name === 'string' && n.datei.name ? n.datei.name : 'Dokument.pdf';
         blase.appendChild(el('a', { class: 'kv-chat-datei', href: n.datei.url, target: '_blank', rel: 'noopener noreferrer', 'aria-label': T.dateiOeffnen + dname }, [
-          el('span', { class: 'kv-chat-dateisymbol', 'aria-hidden': 'true', text: '📄' }),
+          el('span', { class: 'kv-chat-dateisymbol' }, [symbol('datei')]),
           el('span', { class: 'kv-chat-dateiname', text: dname }),
           el('span', { class: 'kv-chat-dateigroesse', text: groesseText(n.datei.groesse) })
         ]));
@@ -897,9 +1088,9 @@
 
     if (zustand.token) {
       var aktionen = el('div', { class: 'kv-chat-aktionen' });
-      var r = el('button', { type: 'button', class: 'kv-chat-aktion', 'data-fokus': n.id, 'aria-label': T.reagieren, 'aria-expanded': zustand.waehlen === n.id ? 'true' : 'false', text: '☺' });
+      var r = el('button', { type: 'button', class: 'kv-chat-aktion', 'data-fokus': n.id, 'aria-label': T.reagieren, 'aria-expanded': zustand.waehlen === n.id ? 'true' : 'false' }, [symbol('smiley', 18)]);
       r.addEventListener('click', function (ev) { ev.stopPropagation(); zustand.waehlen = zustand.waehlen === n.id ? null : n.id; zustand.aktiv = n.id; verlaufZeichnen(); fokusAuf(n.id); });
-      var a = el('button', { type: 'button', class: 'kv-chat-aktion', 'aria-label': T.antworten, text: '↩' });
+      var a = el('button', { type: 'button', class: 'kv-chat-aktion', 'aria-label': T.antworten }, [symbol('antworten', 18)]);
       a.addEventListener('click', function (ev) {
         ev.stopPropagation();
         if (zustand.sendet) return; // erst fertig senden
@@ -1021,10 +1212,12 @@
     knopf.setAttribute('aria-expanded', 'true');
     knopf.setAttribute('aria-label', T.schliessen);
     document.documentElement.classList.add('kv-chat-offen');
+    hinweisWeg();
     punktSetzen();
+    ansichtZeigen(zustand.ansicht, true);
     lesen().then(function () { verlauf.scrollTop = verlauf.scrollHeight; });
     takt();
-    window.setTimeout(function () { feldText.focus(); }, 30);
+    window.setTimeout(function () { if (zustand.ansicht === 'start') startLos.focus(); else feldText.focus(); }, 30);
   }
   function schliessen() {
     if (zustand.sprache && zustand.sprache.phase === 'nimmt') spracheVerwerfen(); // laufende Aufnahme endet mit dem Schließen
@@ -1155,11 +1348,11 @@
     var s = zustand.sprache;
     spracheBox.hidden = !s;
     if (!s) return;
-    var weg = el('button', { type: 'button', class: 'kv-chat-zitat-weg', 'aria-label': T.sprachAbbrechen, text: '✕' });
+    var weg = wegKnopf(T.sprachAbbrechen);
     weg.addEventListener('click', function () { spracheVerwerfen(); if (feldText) feldText.focus(); });
     if (s.phase === 'bereit') {
       spracheBox.appendChild(el('audio', { class: 'kv-chat-audio kv-chat-audio-vorschau', src: s.url, controls: '', preload: 'metadata', 'aria-label': T.sprachVorschau }));
-      var senden = el('button', { type: 'button', class: 'kv-chat-senden kv-chat-sprache-senden', text: T.sprachSenden });
+      var senden = el('button', { type: 'button', class: 'kv-chat-pille kv-chat-sprache-senden', text: T.sprachSenden });
       senden.disabled = !!zustand.sendet;
       if (zustand.sendet) senden.textContent = T.sendet;
       senden.addEventListener('click', sendeSprache);
@@ -1170,7 +1363,7 @@
     spracheBox.appendChild(el('span', { class: 'kv-chat-aufnahme-punkt', 'aria-hidden': 'true' }));
     spracheBox.appendChild(el('span', { class: 'kv-chat-zitat-text kv-chat-aufnahme-zeit', role: 'status', text: (s.phase === 'nimmt' ? T.sprachNimmtAuf + ' ' : '') + zeitText(s.sek) + ' / ' + zeitText(SPRACHE_MAX_SEK) }));
     if (s.phase === 'nimmt') {
-      var stopp = el('button', { type: 'button', class: 'kv-chat-senden kv-chat-sprache-stopp', 'aria-label': T.sprachStopp, text: '■ ' + T.sprachStopp });
+      var stopp = el('button', { type: 'button', class: 'kv-chat-sprache-stopp', 'aria-label': T.sprachStopp, title: T.sprachStopp }, [symbol('stopp', 16)]);
       stopp.addEventListener('click', spracheStoppen);
       spracheBox.appendChild(stopp);
     }
@@ -1296,6 +1489,8 @@
         feldText.value = '';
         if (neueSitzung) {
           fussAufbauen();
+          verlaufZeichnen();
+          ansichtZeigen('chat', true);
           feldText.focus();
         } else {
           zitatZeigen();
@@ -1325,6 +1520,7 @@
     laden();
     aufbauen();
     if (zustand.token) { lesen().then(takt); }
+    hinweisPlanen();
     document.addEventListener('visibilitychange', function () { if (!document.hidden && zustand.token) lesen(); });
   }
 

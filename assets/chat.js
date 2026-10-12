@@ -33,6 +33,7 @@
     schliessen: 'Chat schließen',
     titel: 'KAVEO',
     team: 'KAVEO Team',
+    lina: 'Lina · KI',
     unterzeile: 'Wir antworten persönlich.',
     begruessung: 'Moin! Schreib uns einfach, worum es geht – wir melden uns persönlich.',
     startKlein: 'Livechat',
@@ -144,6 +145,11 @@
   // Startansicht: ein Klick öffnet den Chat und schreibt das Thema vorne ins Textfeld (nichts wird mitgeschickt).
   var THEMEN = ['Fragen zur App', 'Konto & Anmeldung', 'Fehler melden', 'Idee oder Feedback', 'Etwas anderes'];
   var LOGO = '/assets/logo-lockup-256.webp';
+  var K_LOGO = '/assets/chat-k.webp';
+  var LINA_ZEICHEN = '/assets/lina-zeichen.svg';
+  // Profilbilder nur als signierte Adresse aus unserem Speicher (Bucket avatars), nie von anderswo.
+  var PROFILBILD = 'https://xyakqziopzjjihovyesj.supabase.co/storage/v1/object/sign/avatars/';
+  function istProfilbild(u) { return typeof u === 'string' && u.indexOf(PROFILBILD) === 0; }
   var HINWEIS_NACH_MS = 6000;
 
   // Symbole als eigene SVG (feste Zeichenketten, nie Besuchertext).
@@ -294,9 +300,36 @@
   var knopf, fenster, kopf, start, startLos, bereich, verlauf, fuss, punkt, hinweis, erstKarte;
   var feldText, feldName, feldMail, haken, honigtopf, sendeKnopf, meldung, zaehler, kontaktBox, zitatBox, emojiKnopf, emojiBox, bildKnopf, bildEingabe, bildBox, dateiBox, videoBox, mikroKnopf, spracheBox;
 
-  /** Rundes „K“ wie im Logo, für Kopf, Hinweisblase und Team-Nachrichten. */
+  /** KAVEO-Zeichen (K im Kreis) für Kopf, Hinweisblase und Team-Nachrichten ohne Bild. */
   function kZeichen(klasse) {
-    return el('span', { class: 'kv-chat-k ' + (klasse || ''), 'aria-hidden': 'true', text: 'K' });
+    return el('span', { class: 'kv-chat-k ' + (klasse || ''), 'aria-hidden': 'true' }, [
+      el('img', { src: K_LOGO, alt: '', decoding: 'async' })
+    ]);
+  }
+
+  /** Bild neben einer Antwort: Lina-Zeichen (automatisch), Profilbild der Person oder das K. */
+  function absenderBild(n) {
+    var a = n.absender;
+    if (a && a.art === 'lina') {
+      return el('span', { class: 'kv-chat-ava lina', 'aria-hidden': 'true' }, [el('img', { src: LINA_ZEICHEN, alt: '', decoding: 'async' })]);
+    }
+    if (a && a.art === 'team' && istProfilbild(a.bild)) {
+      var box = el('span', { class: 'kv-chat-ava foto', 'aria-hidden': 'true' });
+      var img = el('img', { src: a.bild, alt: '', decoding: 'async', referrerpolicy: 'no-referrer' });
+      // Abgelaufene oder kaputte Adresse: das K statt eines leeren Kreises.
+      img.addEventListener('error', function () { if (box.parentNode) box.parentNode.replaceChild(kZeichen('kv-chat-ava'), box); });
+      box.appendChild(img);
+      return box;
+    }
+    return kZeichen('kv-chat-ava');
+  }
+
+  /** Name über einer Antwort: „Lina · KI“ oder der Vorname; ohne Angabe nichts. */
+  function absenderName(n) {
+    var a = n.absender;
+    if (a && a.art === 'lina') return T.lina;
+    if (a && a.art === 'team' && typeof a.name === 'string' && a.name) return a.name;
+    return '';
   }
 
   function aufbauen() {
@@ -895,6 +928,15 @@
 
   /** Stabile Adresse je Nachricht: die Antwort der Funktion bringt bei jeder Abfrage eine neue. */
   function bildAdresseMerken(n) {
+    // Profilbild: je Person eine stabile Adresse, sonst lädt das Bild bei jeder Abfrage neu.
+    if (n.absender && n.absender.art === 'team') {
+      var key = istProfilbild(n.absender.bild) ? 'ava:' + n.absender.bild.split('?')[0] : '';
+      var altA = key ? zustand.bildUrls[key] : null;
+      var jetztA = Date.now();
+      if (!key) n.absender.bild = null; // Bild verborgen oder fremde Adresse: sofort weg
+      else if (altA && jetztA - altA.seit < BILD_URL_MS) n.absender.bild = altA.url;
+      else zustand.bildUrls[key] = { url: n.absender.bild, seit: jetztA };
+    }
     var m = n.bild || n.audio || n.datei || n.video;
     if (!m) return;
     var alt = zustand.bildUrls[n.id];
@@ -997,6 +1039,7 @@
     var oben = bereich.scrollTop;
     verlauf.textContent = '';
     verlauf.appendChild(el('div', { class: 'kv-chat-eintrag wir' }, [
+      kZeichen('kv-chat-ava'),
       el('div', { class: 'kv-chat-blase wir' }, [el('p', { text: T.begruessung })])
     ]));
     zustand.nachrichten.forEach(function (n) { verlauf.appendChild(eintrag(n)); });
@@ -1080,9 +1123,14 @@
       }
     }
     if (typeof n.text === 'string' && n.text !== '') blase.appendChild(el('p', { text: n.text }));
-    blase.appendChild(el('span', { class: 'kv-chat-zeit', text: (n.von_team ? T.wir : T.du) + ' · ' + uhrzeit(n.gesendet) }));
+    blase.appendChild(el('span', { class: 'kv-chat-zeit', text: (n.von_team ? (absenderName(n) || T.wir) : T.du) + ' · ' + uhrzeit(n.gesendet) }));
 
     var teile = [blase];
+    if (n.von_team) {
+      var wer = absenderName(n);
+      if (wer) teile.unshift(el('span', { class: 'kv-chat-wer', 'aria-hidden': 'true', text: wer }));
+      teile.unshift(absenderBild(n));
+    }
     var chips = [];
     if (n.reaktion_team) chips.push(el('span', { class: 'kv-chat-chip team', title: T.teamReaktion, 'aria-label': T.teamReaktion + ': ' + n.reaktion_team, text: n.reaktion_team }));
     if (n.reaktion_ich) {
@@ -1174,7 +1222,7 @@
 
   function signatur(liste) {
     return JSON.stringify(liste.map(function (n) {
-      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0, n.datei ? (n.datei.url || 1) : 0, n.video ? (n.video.url || 1) : 0];
+      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0, n.datei ? (n.datei.url || 1) : 0, n.video ? (n.video.url || 1) : 0, n.absender ? n.absender.art + (n.absender.bild ? 1 : 0) : ''];
     }));
   }
 

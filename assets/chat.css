@@ -242,3 +242,15 @@ button.kv-chat-chip { cursor: pointer; background: var(--kv-mint); border-color:
 .kv-chat-dateisymbol { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 0; background: var(--kv-gruen); color: var(--kv-kreide); }
 .kv-chat-dateiname { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 600; }
 .kv-chat-dateigroesse { flex: none; font-size: 12px; opacity: .7; }
+
+/* Wer antwortet: K-Logo, Lina-Zeichen oder Profilbild neben der Antwort, Name darüber */
+.kv-chat-k img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.kv-chat-k { padding: 3px; font-size: 0; }
+.kv-chat-eintrag.wir::before { content: none; }
+.kv-chat-eintrag.wir > .kv-chat-ava { position: absolute; left: 0; top: 0; width: 28px; height: 28px; padding: 0; border-radius: 50%; overflow: hidden; border: 2px solid var(--kv-kohle); }
+.kv-chat-eintrag.wir > .kv-chat-k.kv-chat-ava { padding: 2px; background: var(--kv-gruen); }
+.kv-chat-ava.lina { background: #fff; display: grid; place-items: center; }
+.kv-chat-ava.lina img { width: 100%; height: 100%; display: block; transform: scale(1.12); }
+.kv-chat-ava.foto { background: var(--kv-karte); }
+.kv-chat-ava.foto img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.kv-chat-wer { font: 800 12px/1.2 var(--kv-titel); font-stretch: 78%; letter-spacing: .05em; text-transform: uppercase; color: var(--kv-bleistift-weich); padding: 6px 0 0 2px; }

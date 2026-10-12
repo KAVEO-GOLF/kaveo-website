@@ -59,6 +59,9 @@
 
   /* ---------- Die beiden Seiten ---------- */
   .duel { display: grid; grid-template-columns: var(--split) minmax(0, 1fr); }
+  /* Fließende Abschnitte folgen nur dem Ziehen, nicht dem Höhepunkt: sonst ändert sich oberhalb
+     die Höhe, der Browser verschiebt die Scrollposition und die Naht springt hin und her. */
+  .duel.row, .duel.quiet { grid-template-columns: var(--split-flow, 50%) minmax(0, 1fr); }
   .side { position: relative; min-width: 0; overflow: hidden; }
   .side--ohne { background: var(--paper); color: var(--pencil); }
   .side--mit  { background: var(--green); color: var(--chalk); }
@@ -149,7 +152,7 @@
   .rule-photo img { width: 100%; height: 118%; object-fit: cover; object-position: 50% 40%; }
 
   /* ---------- 4 · Stille ---------- */
-  .quiet { height: 70svh; }
+  .quiet { height: 16svh; }
 
   /* ---------- 5 · Höhepunkt (pin): die Naht fährt weg ---------- */
   #kippt [data-sc-stage] { height: 100svh; }
@@ -215,7 +218,7 @@
     .rule-photo { top: 52%; left: 1.1rem; right: 1.1rem; bottom: 1.1rem; }
     .stack-screens { width: 42%; margin-top: .8rem; }
     #regeln .lede { display: none; }
-    .quiet { height: 30svh; }
+    .quiet { height: 10svh; }
     .peak-copy { top: 4.2rem; left: 1.25rem; right: 1.25rem; }
     /* Platz für das feste Menü oben links */
     #runde .side--ohne .liga { padding-top: 3.6rem; }
@@ -237,7 +240,7 @@
     #kippt [data-sc-stage] { height: 100svh !important; }
     #kippt .duel { height: 100%; grid-template-columns: 0 1fr; }
     .seam { display: none; }
-    .quiet { height: 30svh !important; min-height: 0 !important; }
+    .quiet { height: 10svh !important; min-height: 0 !important; }
   }
 
   /* Menü oben links wie auf den Unterseiten, immer sichtbar (sticky) */
@@ -276,7 +279,7 @@
     .lane + .lane { border-left: 0; border-top: 2px solid #000; }
   }
 </style>
-<link rel="stylesheet" href="/assets/chat.css?v=20261012c">
+<link rel="stylesheet" href="/assets/chat.css?v=20261012d">
 <link rel="canonical" href="https://kaveo-golf.app/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="KAVEO GOLF" />
@@ -619,6 +622,7 @@
     var k = reduce ? (pk > .3 ? 1 : 0) : ease(clamp((pk - .1) / .42));
     var split = (50 + (k > 0 ? 0 : drag)) * (1 - k);
     root.style.setProperty("--split", split.toFixed(3) + "%");
+    root.style.setProperty("--split-flow", (50 + (k > 0 ? 0 : drag)).toFixed(3) + "%");
     root.style.setProperty("--k", k.toFixed(4));
     seam.classList.toggle("is-gone", k >= .98);
 
@@ -631,6 +635,6 @@
   requestAnimationFrame(tick);
 })();
 </script>
-<script src="/assets/chat.js?v=20261012c" defer></script>
+<script src="/assets/chat.js?v=20261012d" defer></script>
 </body>
 </html>

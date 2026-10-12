@@ -85,6 +85,7 @@
     emojiOeffnen: 'Emoji einfügen',
     deineReaktion: 'Deine Reaktion – zum Entfernen tippen',
     teamReaktion: 'Reaktion von KAVEO',
+    antwortWaehlen: 'Antwort wählen',
     fehlerReaktion: 'Die Reaktion konnte nicht gespeichert werden.',
     nachrichtMenue: 'Nachricht: Reagieren oder antworten',
     bildAnhaengen: 'Bild anhängen',
@@ -1123,6 +1124,9 @@
       }
     }
     if (typeof n.text === 'string' && n.text !== '') blase.appendChild(el('p', { text: n.text }));
+    if (n.von_team && n.link && typeof n.link.text === 'string' && typeof n.link.url === 'string' && /^https?:\/\/[^\s]+$/i.test(n.link.url)) {
+      blase.appendChild(el('a', { class: 'kv-chat-linkknopf', href: n.link.url, target: '_blank', rel: 'noopener noreferrer', text: n.link.text }));
+    }
     blase.appendChild(el('span', { class: 'kv-chat-zeit', text: (n.von_team ? (absenderName(n) || T.wir) : T.du) + ' · ' + uhrzeit(n.gesendet) }));
 
     var teile = [blase];
@@ -1139,6 +1143,39 @@
       chips.push(mein);
     }
     if (chips.length) teile.push(el('div', { class: 'kv-chat-chips' }, chips));
+
+    // Knöpfe und Liste einer Antwort von Lina: nur an der neuesten Nachricht tippbar (wie bei
+    // WhatsApp schickt ein Tipp die Beschriftung als normale Nachricht).
+    var neueste = zustand.nachrichten[zustand.nachrichten.length - 1] === n;
+    if (n.von_team && neueste && zustand.token) {
+      var beschriftungen = Array.isArray(n.knoepfe) ? n.knoepfe.filter(function (t) { return typeof t === 'string' && t !== ''; }).slice(0, 3) : [];
+      if (beschriftungen.length) {
+        teile.push(el('div', { class: 'kv-chat-knoepfe', role: 'group', 'aria-label': T.antwortWaehlen }, beschriftungen.map(function (t) {
+          var b = el('button', { type: 'button', class: 'kv-chat-antwortknopf', text: t });
+          b.addEventListener('click', function (ev) { ev.stopPropagation(); knopfSenden(t); });
+          return b;
+        })));
+      }
+      var eintraege = n.liste && typeof n.liste.knopf === 'string' && Array.isArray(n.liste.eintraege)
+        ? n.liste.eintraege.filter(function (e) { return e && typeof e.titel === 'string' && e.titel !== ''; }).slice(0, 10)
+        : [];
+      if (eintraege.length) {
+        var listeOffen = zustand.listeOffen === n.id;
+        var lk = el('button', { type: 'button', class: 'kv-chat-listenknopf', 'aria-expanded': listeOffen ? 'true' : 'false', text: n.liste.knopf });
+        lk.addEventListener('click', function (ev) { ev.stopPropagation(); zustand.listeOffen = listeOffen ? null : n.id; verlaufZeichnen(); });
+        teile.push(lk);
+        if (listeOffen) {
+          teile.push(el('div', { class: 'kv-chat-liste', role: 'group', 'aria-label': n.liste.knopf }, eintraege.map(function (e) {
+            var b = el('button', { type: 'button', class: 'kv-chat-listeneintrag' }, [
+              el('span', { class: 'kv-chat-listentitel', text: e.titel }),
+              typeof e.beschreibung === 'string' && e.beschreibung ? el('span', { class: 'kv-chat-listenbeschreibung', text: e.beschreibung }) : null
+            ]);
+            b.addEventListener('click', function (ev) { ev.stopPropagation(); zustand.listeOffen = null; knopfSenden(e.titel); });
+            return b;
+          })));
+        }
+      }
+    }
 
     if (zustand.token) {
       var aktionen = el('div', { class: 'kv-chat-aktionen' });
@@ -1222,7 +1259,7 @@
 
   function signatur(liste) {
     return JSON.stringify(liste.map(function (n) {
-      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0, n.datei ? (n.datei.url || 1) : 0, n.video ? (n.video.url || 1) : 0, n.absender ? n.absender.art + (n.absender.bild ? 1 : 0) : ''];
+      return [n.id, n.reaktion_ich || '', n.reaktion_team || '', n.antwort ? n.antwort.id : '', n.bild ? (n.bild.url ? 2 : 1) : 0, n.audio ? (n.audio.url || 1) : 0, n.datei ? (n.datei.url || 1) : 0, n.video ? (n.video.url || 1) : 0, n.absender ? n.absender.art + (n.absender.bild ? 1 : 0) : '', Array.isArray(n.knoepfe) ? n.knoepfe.length : 0, n.liste ? 1 : 0, n.link ? 1 : 0];
     }));
   }
 
@@ -1471,6 +1508,24 @@
     sende(text, false);
   }
 
+  /** Knopf oder Listeneintrag getippt: die Beschriftung geht als Nachricht raus. Das Textfeld
+   *  bleibt dabei unangetastet (auch was währenddessen getippt wird). */
+  function knopfSenden(text) {
+    if (zustand.sendet || !zustand.token) return;
+    zustand.knopfRest = { zitat: zustand.antwortAuf };
+    zustand.antwortAuf = null;
+    sende(text, false);
+  }
+
+  /** Nach dem Senden per Knopf: ein vorher gewähltes Zitat kommt zurück. */
+  function knopfRestHolen() {
+    var r = zustand.knopfRest;
+    if (!r) return;
+    zustand.knopfRest = null;
+    if (!zustand.antwortAuf) zustand.antwortAuf = r.zitat; // inzwischen neu gewählt: das gilt
+    zitatZeigen();
+  }
+
   /** Bild (mit Text als Unterschrift) an die Bild-Funktion; dieselbe Anfrage-ID bei Wiederholung. */
   function sendeBild(text) {
     if (zustand.sendet) return;
@@ -1539,8 +1594,11 @@
           speichern();
         }
         zustand.versuch = null;
-        zustand.antwortAuf = null;
-        feldText.value = '';
+        if (!zustand.knopfRest) {
+          zustand.antwortAuf = null;
+          feldText.value = '';
+        } // per Knopf gesendet: Textfeld und Zitat gehören weiter dem Besucher
+        knopfRestHolen();
         if (neueSitzung) {
           fussAufbauen();
           verlaufZeichnen();
@@ -1561,10 +1619,12 @@
         sende(text, true);
         return;
       }
+      knopfRestHolen();
       zeigeMeldung(r.status === 429 ? T.fehlerZuViele : r.status === 400 ? T.fehlerUngueltig : T.fehlerNetz);
       pruefen();
     }).catch(function () {
       zustand.sendet = false;
+      knopfRestHolen();
       zeigeMeldung(T.fehlerNetz);
       pruefen();
     });

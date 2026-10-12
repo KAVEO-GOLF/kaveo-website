@@ -254,3 +254,16 @@ button.kv-chat-chip { cursor: pointer; background: var(--kv-mint); border-color:
 .kv-chat-ava.foto { background: var(--kv-karte); }
 .kv-chat-ava.foto img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .kv-chat-wer { font: 800 12px/1.2 var(--kv-titel); font-stretch: 78%; letter-spacing: .05em; text-transform: uppercase; color: var(--kv-bleistift-weich); padding: 6px 0 0 2px; }
+
+/* Antworten von Lina mit Knöpfen, Liste oder Link (Aufgabe „KAVEO Chat-Abläufe für alle Kanäle“) */
+.kv-chat-knoepfe { display: flex; flex-wrap: wrap; gap: 6px; max-width: 100%; }
+.kv-chat-antwortknopf, .kv-chat-listenknopf, .kv-chat-linkknopf { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; max-width: 100%; padding: 0 14px; border: 2px solid var(--kv-gruen); border-radius: 0; background: #fff; color: var(--kv-gruen); font: 700 14px var(--kv-schrift); text-align: center; text-decoration: none; cursor: pointer; overflow-wrap: anywhere; }
+.kv-chat-antwortknopf:hover, .kv-chat-listenknopf:hover, .kv-chat-linkknopf:hover { background: var(--kv-mint); }
+.kv-chat-fenster a.kv-chat-linkknopf { margin-top: 6px; background: var(--kv-gruen); color: #fff; }
+.kv-chat-fenster a.kv-chat-linkknopf:hover { background: var(--kv-gruen-hover); color: #fff; }
+.kv-chat-listenknopf[aria-expanded="true"] { background: var(--kv-mint); }
+.kv-chat-liste { display: flex; flex-direction: column; width: 100%; max-width: 320px; background: #fff; border: 1px solid var(--kv-linie); box-shadow: 0 6px 14px -8px rgba(35,34,31,.35); }
+.kv-chat-listeneintrag { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 44px; padding: 8px 14px; border: 0; border-top: 1px solid var(--kv-linie); background: none; color: var(--kv-bleistift); font: 600 14px var(--kv-schrift); text-align: left; cursor: pointer; }
+.kv-chat-listeneintrag:first-child { border-top: 0; }
+.kv-chat-listeneintrag:hover { background: var(--kv-karte-hover); }
+.kv-chat-listenbeschreibung { font-weight: 400; font-size: 13px; color: var(--kv-bleistift-weich); }

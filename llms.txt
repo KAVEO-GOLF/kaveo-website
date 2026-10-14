@@ -25,6 +25,7 @@ Die Daten liegen in einer Datenbank in Frankfurt. Kein Tracking, keine Werbung, 
 - [Blog](https://kaveo-golf.app/blog/): Ratgeber zu den Spielformen und Geschichten rund um KAVEO GOLF
   - [Zählspiel Brutto und Netto erklärt](https://kaveo-golf.app/blog/zaehlspiel-brutto-netto/)
   - [Wie aus einer Excel-Tabelle eine App wurde](https://kaveo-golf.app/blog/excel-tabelle-app/)
+  - [Golfwetter lesen: Lohnt sich die Runde heute noch?](https://kaveo-golf.app/blog/golfwetter/)
 - [Registrierung](https://app.kaveo-golf.app/register)
 - [Impressum](https://kaveo-golf.app/impressum/) · [Datenschutz](https://kaveo-golf.app/datenschutz/)
 

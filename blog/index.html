@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blog – KAVEO GOLF</title>
+<meta name="description" content="Geschichten, Ratgeber und Neues rund um KAVEO GOLF.">
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preload" href="/zs/fonts/Archivo-Variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/zs/unterseiten.css?v=20261012b">
+<style>
+  /* Blog-Übersicht (Design freigegeben 12.10.2026). Live-Start 13.10.2026 vorbereitet: nur echte Artikel. */
+
+  /* Kopf: links Papier mit Überschrift, rechts empfohlener Artikel auf Grün */
+  .intro .side { min-height: 62svh; display: flex; flex-direction: column; justify-content: flex-end; }
+  .intro .paper { padding-top: 7rem; }
+  .intro .lede { color: var(--pencil-soft); }
+  .feat { display: flex; flex-direction: column; gap: .9rem; color: inherit; text-decoration: none; }
+  .feat .meta { font-size: .75rem; color: var(--chalk-soft); }
+  .feat .bild { position: relative; overflow: hidden; border: 2px solid var(--charcoal); box-shadow: 6px 6px 0 var(--charcoal); aspect-ratio: 16 / 9; max-width: 35rem; }
+  .feat .bild img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+  .feat:hover .bild img { transform: scale(1.04); }
+  .feat h2 { margin: .4rem 0 0; font: 800 clamp(1.75rem, 2.6vw, 2.5rem)/1.02 "Archivo", sans-serif; font-stretch: 78%; max-width: 22ch; text-wrap: balance; }
+  .feat p { margin: 0; max-width: 46ch; line-height: 1.6; }
+  .feat .cta { align-self: flex-start; margin-top: .4rem; padding: .9rem 1.25rem; font-size: .95rem; }
+
+  /* Filterleiste */
+  .filter { border-top: 2px solid var(--charcoal); border-bottom: 2px solid var(--charcoal); background: #FBF9F4; padding: 1.4rem var(--pad); display: flex; flex-direction: column; gap: 1.1rem; }
+  .filter__row { display: flex; flex-wrap: wrap; gap: .9rem; align-items: flex-end; justify-content: space-between; }
+  .filter__right { display: flex; flex-wrap: wrap; gap: .9rem; align-items: flex-end; }
+  .feld { display: flex; flex-direction: column; gap: .5rem; }
+  .feld--suche { flex: 1 1 20rem; max-width: 29rem; }
+  .feld > label, .feld > span { font-size: .75rem; color: var(--pencil-soft); }
+  .suche { display: flex; align-items: center; gap: .5rem; background: #fff; border: 1.5px solid var(--pencil-soft); padding: 0 .75rem; height: 48px; }
+  .suche svg { width: 18px; height: 18px; flex: none; }
+  .suche input { flex: 1; min-width: 0; border: 0; outline: none; font: inherit; font-size: 1rem; background: transparent; color: var(--pencil); }
+  .suche input::placeholder { color: #7b766c; }
+  .suche:focus-within { outline: 2px solid var(--green); outline-offset: 3px; }
+  .seg { display: flex; flex-wrap: wrap; border: 1.5px solid var(--pencil); }
+  .seg button { min-height: 44px; padding: 0 1rem; border: 0; background: #fff; color: var(--pencil); font: 800 .82rem "Archivo", sans-serif; font-stretch: 78%; text-transform: uppercase; letter-spacing: .03em; cursor: pointer; }
+  .seg button + button { border-left: 1.5px solid var(--pencil); }
+  .seg button[aria-pressed="true"] { background: var(--charcoal); color: var(--chalk); }
+  .sort { height: 48px; padding: 0 .75rem; border: 1.5px solid var(--pencil); background: #fff; font: inherit; font-size: .95rem; color: var(--pencil); }
+  .chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .chip { min-height: 44px; padding: 0 1rem; border: 1.5px solid var(--pencil-soft); background: #fff; color: var(--pencil); font: 700 .88rem "Manrope", system-ui, sans-serif; cursor: pointer; display: inline-flex; align-items: center; gap: .4rem; }
+  .chip:hover { border-color: var(--pencil); }
+  .chip span { opacity: .7; font-weight: 600; }
+  .chip[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: var(--chalk); }
+
+  /* Artikel-Raster */
+  .liste { padding: 2.5rem var(--pad) 6rem; }
+  .liste__kopf { display: flex; flex-wrap: wrap; gap: .75rem; align-items: baseline; justify-content: space-between; margin-bottom: 1.5rem; }
+  .treffer { margin: 0; font: 800 1.75rem "Archivo", sans-serif; font-stretch: 78%; }
+  .reset { border: 0; background: none; padding: .6rem 0; font: inherit; font-weight: 700; color: var(--green); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .leer { padding: 3rem 1.75rem; background: #FBF9F4; border: 2px dashed var(--pencil-soft); text-align: center; }
+  .leer p { margin: 0; color: var(--pencil-soft); }
+  .leer p:first-child { margin-bottom: .6rem; font: 800 1.6rem "Archivo", sans-serif; font-stretch: 78%; color: var(--pencil); }
+  .raster { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 1.75rem; }
+  .karte { display: flex; flex-direction: column; background: #FBF9F4; box-shadow: 0 1px 0 rgba(35,34,31,.15), 0 30px 50px -36px rgba(35,34,31,.55); }
+  .karte__bild { position: relative; overflow: hidden; aspect-ratio: 16 / 10; border-bottom: 2px solid var(--charcoal); background: var(--pencil); }
+  .karte__bild img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+  .karte:hover .karte__bild img { transform: scale(1.04); }
+  .karte__bild--screen { background: var(--green); display: flex; justify-content: center; }
+  .karte__bild--screen img { width: auto; height: 88%; margin-top: 6%; object-fit: contain; filter: drop-shadow(0 18px 24px rgba(0,0,0,.35)); }
+  .karte__kat { position: absolute; top: 12px; left: 12px; background: var(--charcoal); color: var(--chalk); font-size: .7rem; padding: .4rem .55rem; }
+  .karte__ki { position: absolute; bottom: 10px; right: 10px; background: rgba(13,13,13,.8); color: var(--chalk); font-size: .7rem; padding: .25rem .45rem; }
+  .karte__text { display: flex; flex-direction: column; gap: .6rem; padding: 1.25rem 1.4rem 1.5rem; flex: 1; }
+  .karte__meta { margin: 0; font-size: .82rem; color: var(--pencil-soft); }
+  .karte h3 { margin: 0; font: 800 1.56rem/1.08 "Archivo", sans-serif; font-stretch: 78%; }
+  .karte__teaser { margin: 0; font-size: .97rem; line-height: 1.6; color: #3d3a34; flex: 1; }
+  .lesen { align-self: flex-start; margin-top: .5rem; display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1rem; min-height: 44px; border: 2px solid var(--green); color: var(--green); text-decoration: none; font: 800 .88rem "Archivo", sans-serif; font-stretch: 80%; text-transform: uppercase; letter-spacing: .02em; transition: background .16s, color .16s; }
+  .lesen:hover { background: var(--green-deep); border-color: var(--green-deep); color: var(--chalk); }
+  .lesen svg { width: 14px; height: 14px; }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 760px) {
+    .intro .side { min-height: 0; }
+    .intro .paper { padding-top: 5.5rem; }
+    .filter { padding: 1.25rem; }
+    .feld--suche { max-width: none; }
+    .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; background: var(--pencil); }
+    .seg button + button { border-left: 0; }
+    .liste { padding: 2rem 1.25rem 4rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .feat .bild img, .karte__bild img { transition: none; }
+    .feat:hover .bild img, .karte:hover .karte__bild img { transform: none; }
+  }
+</style>
+<link rel="canonical" href="https://kaveo-golf.app/blog/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="KAVEO GOLF" />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:url" content="https://kaveo-golf.app/blog/" />
+<meta property="og:title" content="Blog – KAVEO GOLF" />
+<meta property="og:description" content="Geschichten, Ratgeber und Neues rund um KAVEO GOLF." />
+<meta property="og:image" content="https://kaveo-golf.app/assets/og-kaveo-golf.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="KAVEO GOLF App: Wetter-Ansicht mit „Gut spielbar“ und letztem Start" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#0d0d0d" />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kaveo-golf.app/#organisation","name":"KAVEO GOLF","url":"https://kaveo-golf.app/","logo":"https://kaveo-golf.app/assets/logo-lockup.webp","email":"info@kaveo-golf.app","founder":{"@type":"Person","name":"Philipp Butkus"},"address":{"@type":"PostalAddress","addressLocality":"Overath","addressCountry":"DE"},"sameAs":["https://www.facebook.com/profile.php?id=61594981341610","https://www.instagram.com/kaveogolf/","https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw","https://www.tiktok.com/@kaveogolf"]},{"@type":"WebSite","@id":"https://kaveo-golf.app/#website","url":"https://kaveo-golf.app/","name":"KAVEO GOLF","inLanguage":"de","publisher":{"@id":"https://kaveo-golf.app/#organisation"}},{"@type":"Blog","@id":"https://kaveo-golf.app/blog/#blog","url":"https://kaveo-golf.app/blog/","name":"Blog – KAVEO GOLF","description":"Geschichten, Ratgeber und Neues rund um KAVEO GOLF.","inLanguage":"de","publisher":{"@id":"https://kaveo-golf.app/#organisation"},"blogPost":[{"@id":"https://kaveo-golf.app/blog/zaehlspiel-brutto-netto/#artikel"},{"@id":"https://kaveo-golf.app/blog/excel-tabelle-app/#artikel"}]}]}</script>
+</head>
+<body>
+
+<nav class="plate board" aria-label="Seiten">
+  <a class="k" href="/" aria-label="KAVEO GOLF Startseite"><img src="/zs/img/k-kreis-160.webp" width="160" height="160" alt=""></a>
+  <a href="/">Start</a><a href="/ueber-uns.html">Über uns</a><a href="/faq.html">FAQ</a><a href="/blog/" aria-current="page">Blog</a>
+</nav>
+
+<main>
+  <section class="duel intro">
+    <div class="side paper">
+      <p class="board rv"><span class="tag">Blog</span></p>
+      <h1 class="hl hl--xl rv" style="margin-top:1.4rem">Vom Platz. Für den Platz.</h1>
+      <p class="lede rv">Geschichten, Ratgeber und Neues rund um KAVEO GOLF.</p>
+    </div>
+    <div class="side on-green seam-line">
+      <a class="feat rv" href="/blog/zaehlspiel-brutto-netto/">
+        <span class="meta board">Neu · Spielformen erklärt</span>
+        <div class="bild"><img src="/zs/img/blog-zaehlspiel-header.webp" width="1344" height="752" alt="Scorekarte, Bleistift, Golfball und Tees in der Ablage am Lenkrad eines Golfcarts, dahinter ein sonniges Fairway"><span class="karte__ki">KI-Visualisierung</span></div>
+        <h2>Zählspiel Brutto und Netto erklärt</h2>
+        <p>Eine Spielform, zwei Wertungen. So läuft Zählspiel ab, so rechnest du Brutto und Netto – und warum du hier nie aufhebst.</p>
+        <span class="cta">Weiterlesen
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="filter" aria-label="Artikel filtern">
+    <div class="filter__row">
+      <div class="feld feld--suche">
+        <label class="board" for="bl-suche">Suche</label>
+        <div class="suche">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="#5A564D" stroke-width="2"/><path d="m16 16 4.5 4.5" stroke="#5A564D" stroke-width="2" stroke-linecap="square"/></svg>
+          <input id="bl-suche" type="search" placeholder="Thema, Stichwort …" autocomplete="off">
+        </div>
+      </div>
+      <div class="filter__right">
+        <div class="feld">
+          <span class="board" id="bl-format-label">Format</span>
+          <div class="seg" role="group" aria-labelledby="bl-format-label" id="bl-formate">
+            <button type="button" data-format="Alle" aria-pressed="true">Alle</button>
+            <button type="button" data-format="Ratgeber" aria-pressed="false">Ratgeber</button>
+            <button type="button" data-format="Geschichte" aria-pressed="false">Geschichte</button>
+          </div>
+        </div>
+        <div class="feld">
+          <label class="board" for="bl-sort">Sortieren</label>
+          <select class="sort" id="bl-sort">
+            <option value="neu">Neueste zuerst</option>
+            <option value="az">A–Z</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="chips" role="group" aria-label="Kategorien" id="bl-kategorien">
+      <button type="button" class="chip" data-kat="Alle" aria-pressed="true">Alle <span></span></button>
+      <button type="button" class="chip" data-kat="Runde &amp; Spielformen" aria-pressed="false">Runde &amp; Spielformen <span></span></button>
+      <button type="button" class="chip" data-kat="Liga &amp; Freunde" aria-pressed="false">Liga &amp; Freunde <span></span></button>
+    </div>
+  </section>
+
+  <section class="liste" aria-label="Artikel">
+    <div class="liste__kopf">
+      <p class="treffer" id="bl-treffer" aria-live="polite">2 Artikel</p>
+      <button type="button" class="reset" id="bl-reset" hidden>Filter zurücksetzen</button>
+    </div>
+    <div class="leer" id="bl-leer" hidden>
+      <p>Nichts gefunden.</p>
+      <p>Probier ein anderes Stichwort oder setz die Filter zurück.</p>
+    </div>
+
+    <div class="raster" id="bl-raster">
+      <article class="karte" data-kat="Runde &amp; Spielformen" data-format="Ratgeber">
+        <div class="karte__bild"><img src="/zs/img/blog-zaehlspiel-header.webp" width="1344" height="752" alt="Scorekarte, Bleistift, Golfball und Tees in der Ablage am Lenkrad eines Golfcarts" loading="lazy"><span class="karte__kat board">Runde &amp; Spielformen</span><span class="karte__ki">KI-Visualisierung</span></div>
+        <div class="karte__text">
+          <p class="karte__meta">Ratgeber · 14.10.2026 · 5 Min. Lesezeit</p>
+          <h3>Zählspiel Brutto und Netto erklärt</h3>
+          <p class="karte__teaser">Eine Spielform, zwei Wertungen. So rechnest du Brutto und Netto – und warum du hier nie aufhebst.</p>
+          <a class="lesen" href="/blog/zaehlspiel-brutto-netto/" aria-label="Lesen: Zählspiel Brutto und Netto erklärt">Lesen <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></a>
+        </div>
+      </article>
+      <article class="karte" data-kat="Liga &amp; Freunde" data-format="Geschichte">
+        <div class="karte__bild"><img src="/zs/img/blog-header-a.webp" width="1600" height="894" alt="Golfhandschuh, Notizbuch, Bleistift und Tees auf einer Holzbank, dahinter ein Fairway im Morgennebel" loading="lazy"><span class="karte__kat board">Liga &amp; Freunde</span><span class="karte__ki">KI-Visualisierung</span></div>
+        <div class="karte__text">
+          <p class="karte__meta">Geschichte · 14.10.2026 · 2 Min. Lesezeit</p>
+          <h3>Wie aus einer Excel-Tabelle eine App wurde</h3>
+          <p class="karte__teaser">Unsere Liga, eine Tabelle und Scores, die nie stimmten. So fing KAVEO GOLF an.</p>
+          <a class="lesen" href="/blog/excel-tabelle-app/" aria-label="Lesen: Wie aus einer Excel-Tabelle eine App wurde">Lesen <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+      <img src="/zs/img/logo-lockup-512.webp" width="512" height="131" alt="KAVEO GOLF" loading="lazy" decoding="async">
+      <nav aria-label="Rechtliches"><a href="/ueber-uns.html">Über uns</a><a href="/faq.html">FAQ</a><a href="/blog/">Blog</a><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></nav>
+      <div class="social">
+        <a href="https://www.facebook.com/profile.php?id=61594981341610" aria-label="KAVEO GOLF auf Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a>
+        <a href="https://www.instagram.com/kaveogolf/" aria-label="KAVEO GOLF auf Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" aria-label="KAVEO GOLF auf YouTube"><svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a>
+        <a href="https://www.tiktok.com/@kaveogolf" aria-label="KAVEO GOLF auf TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a>
+      </div>
+      <span class="small">© 2026 KAVEO GOLF</span>
+    </footer>
+
+<script>
+  (function () {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -12% 0px" });
+    document.querySelectorAll(".rv").forEach(function (el, i) { el.style.transitionDelay = (i % 4) * 60 + "ms"; io.observe(el); });
+  })();
+
+  // Filter: Kategorie, Format, Suche, Sortierung (wie im freigegebenen Entwurf)
+  (function () {
+    var raster = document.getElementById("bl-raster");
+    var karten = Array.prototype.slice.call(raster.querySelectorAll(".karte"));
+    karten.forEach(function (k, i) { k.dataset.pos = i; });
+    var chips = Array.prototype.slice.call(document.querySelectorAll("#bl-kategorien .chip"));
+    var formate = Array.prototype.slice.call(document.querySelectorAll("#bl-formate button"));
+    var suche = document.getElementById("bl-suche"), sort = document.getElementById("bl-sort");
+    var treffer = document.getElementById("bl-treffer"), reset = document.getElementById("bl-reset"), leer = document.getElementById("bl-leer");
+    var st = { kat: "Alle", format: "Alle", q: "", sort: "neu" };
+    var text = function (k) { return (k.querySelector("h3").textContent + " " + k.querySelector(".karte__teaser").textContent + " " + k.dataset.kat).toLowerCase(); };
+    var passtOhneKat = function (k) {
+      if (st.format !== "Alle" && k.dataset.format !== st.format) return false;
+      if (st.q && text(k).indexOf(st.q) < 0) return false;
+      return true;
+    };
+    function zeigen() {
+      var sichtbar = karten.filter(function (k) { return passtOhneKat(k) && (st.kat === "Alle" || k.dataset.kat === st.kat); });
+      karten.forEach(function (k) { k.hidden = sichtbar.indexOf(k) < 0; });
+      var reihe = karten.slice().sort(st.sort === "az"
+        ? function (a, b) { return a.querySelector("h3").textContent.localeCompare(b.querySelector("h3").textContent, "de"); }
+        : function (a, b) { return a.dataset.pos - b.dataset.pos; });
+      reihe.forEach(function (k) { raster.appendChild(k); });
+      chips.forEach(function (c) {
+        var n = karten.filter(function (k) { return passtOhneKat(k) && (c.dataset.kat === "Alle" || k.dataset.kat === c.dataset.kat); }).length;
+        c.querySelector("span").textContent = "(" + n + ")";
+        c.setAttribute("aria-pressed", c.dataset.kat === st.kat ? "true" : "false");
+      });
+      formate.forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.format === st.format ? "true" : "false"); });
+      treffer.textContent = sichtbar.length === 1 ? "1 Artikel" : sichtbar.length + " Artikel";
+      leer.hidden = sichtbar.length > 0;
+      reset.hidden = !(st.kat !== "Alle" || st.format !== "Alle" || st.q !== "" || st.sort !== "neu");
+    }
+    chips.forEach(function (c) { c.addEventListener("click", function () { st.kat = c.dataset.kat; zeigen(); }); });
+    formate.forEach(function (b) { b.addEventListener("click", function () { st.format = b.dataset.format; zeigen(); }); });
+    suche.addEventListener("input", function () { st.q = suche.value.trim().toLowerCase(); zeigen(); });
+    sort.addEventListener("change", function () { st.sort = sort.value; zeigen(); });
+    reset.addEventListener("click", function () { st = { kat: "Alle", format: "Alle", q: "", sort: "neu" }; suche.value = ""; sort.value = "neu"; zeigen(); });
+    zeigen();
+  })();
+</script>
+</body>
+</html>

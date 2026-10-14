@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Philipp – Autor im KAVEO GOLF Blog</title>
+<meta name="description" content="Philipp spielt Golf, seit er 14 ist, und baut KAVEO GOLF – allein, aus Overath.">
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preload" href="/zs/fonts/Archivo-Variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/zs/unterseiten.css?v=20261012b">
+<link rel="stylesheet" href="/zs/blog.css?v=20261012b">
+<style>
+  /* Autorenseite Philipp (Design freigegeben 12.10.2026, für den Live-Start vorbereitet 13.10.2026). */
+  .portrait { display: flex; align-items: center; gap: 1.1rem; margin-top: .9rem; }
+  .portrait img { width: 96px; height: 96px; object-fit: cover; border: 2px solid var(--charcoal); box-shadow: 5px 5px 0 var(--green); }
+  .kopf h1 { font-size: clamp(3.5rem, 7vw, 7.5rem); line-height: .9; }
+  .kopf .lede { color: #3d3a34; font-size: clamp(1.1rem, 1rem + .4vw, 1.25rem); }
+  .kurz { list-style: none; margin: 1.75rem 0 0; padding: 1.4rem 0 0; border-top: 2px solid var(--pencil); display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; font-size: .94rem; }
+  .kurz li { display: flex; flex-direction: column; gap: 2px; }
+  .kurz span { font-size: .8rem; color: var(--pencil-soft); }
+  .kurz b { font-weight: 700; }
+  .on-green .kopfbild { margin: 0; max-width: 30rem; width: 100%; }
+  .on-green .kopfbild img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border: 2px solid var(--charcoal); box-shadow: 8px 8px 0 var(--charcoal); }
+  .on-green .kopfbild figcaption { margin-top: .75rem; font-size: .82rem; color: var(--chalk-soft); }
+  .on-green .video { max-width: 40rem; width: 100%; }
+  .on-green .video .flaeche { box-shadow: 8px 8px 0 var(--charcoal); }
+  .on-green .video .flaeche > img { object-position: center 30%; opacity: .62; }
+  .on-green .video .ki { top: 1.1rem; right: 1.25rem; }
+  .on-green .video figcaption { color: var(--chalk-soft); line-height: 1.55; }
+  .on-green .video figcaption b { color: var(--chalk); }
+
+  .ueber { display: flex; flex-wrap: wrap; gap: 2.5rem clamp(2rem, 5vw, 5.5rem); align-items: flex-start; padding: 4.5rem var(--pad); }
+  .ueber__text { flex: 1 1 19rem; max-width: 26rem; display: flex; flex-direction: column; gap: 1rem; }
+  .ueber__text p { margin: 0; }
+  .ueber__text .board { font-size: .82rem; color: var(--green); }
+  .ueber__text .hl { font-size: clamp(2.25rem, 4vw, 3.75rem); }
+  .ueber__text p:not(.board) { font-size: 1.06rem; line-height: 1.65; color: #3d3a34; }
+  .ueber__text a { align-self: flex-start; color: var(--green); font-weight: 700; padding: .6rem 0; }
+  .ueber .tafel { flex: 999 1 32rem; min-width: 0; max-width: 54rem; }
+  .ueber .tafel li { grid-template-columns: 7.5rem minmax(0, 1fr); }
+  .ueber .tafel .nr:empty { background: #111; }
+
+  .wir { border-top: 2px solid var(--charcoal); display: flex; flex-wrap: wrap; }
+  .wir figure { flex: 1 1 32rem; min-width: 0; margin: 0; position: relative; min-height: 35rem; background: var(--pencil); }
+  .wir figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+  .wir figcaption { position: absolute; left: 16px; bottom: 16px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .wir figcaption .board { background: var(--charcoal); color: var(--chalk); font-size: .75rem; padding: .45rem .65rem; }
+  .wir figcaption .ki { position: static; }
+  .wir .on-green { flex: 1 1 26rem; min-width: 0; border-left: 2px solid var(--charcoal); padding: 5.5rem var(--pad); display: flex; flex-direction: column; justify-content: center; }
+  .wir blockquote { margin: 0; max-width: 39rem; }
+  .wir blockquote p { margin: 0; font: 800 clamp(2.5rem, 4.6vw, 4.75rem)/.96 "Archivo", sans-serif; font-stretch: 78%; letter-spacing: -.01em; }
+  .wir blockquote footer { margin-top: 1.25rem; color: var(--chalk-soft); }
+
+  .themen { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.75rem; }
+  .chip { min-height: 44px; padding: 0 1rem; border: 1.5px solid var(--pencil-soft); background: #FBF9F4; color: var(--pencil); font: 700 .875rem "Manrope", system-ui, sans-serif; cursor: pointer; }
+  .chip:hover { border-color: var(--pencil); background: #fff; }
+  .chip[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: var(--chalk); }
+
+  .kontakt { border-top: 2px solid var(--charcoal); display: flex; flex-wrap: wrap; }
+  .kontakt > div { flex: 1 1 28rem; min-width: 0; padding: 5.5rem var(--pad); display: flex; flex-direction: column; gap: 1rem; }
+  .kontakt__links { background: #FBF9F4; }
+  .kontakt__links .hl { font-size: clamp(2.75rem, 5vw, 5rem); }
+  .kontakt__links p { margin: 0; max-width: 40ch; font-size: 1.125rem; line-height: 1.6; color: #3d3a34; }
+  .kontakt__links p a { color: var(--green); font-weight: 700; }
+  .kontakt__links .cta { align-self: flex-start; margin-top: .6rem; background: var(--green); color: var(--chalk); }
+  .kontakt__links .cta:hover { background: var(--green-deep); }
+  .kontakt__rechts { background: var(--charcoal); color: var(--chalk); justify-content: center; }
+  .kontakt__rechts .board { margin: 0; font-size: .82rem; color: var(--chalk-soft); }
+  .kontakt__rechts .social a { width: 52px; height: 52px; border-color: #444; }
+  .kontakt__rechts .social a:hover { border-color: var(--chalk); }
+  .kontakt__rechts .social svg { width: 22px; height: 22px; }
+  .kontakt__rechts p:last-child { margin: 0; max-width: 40ch; font-size: .94rem; line-height: 1.6; color: #cfcfcf; }
+  .kontakt :focus-visible { outline-color: var(--chalk); }
+  .kontakt__links :focus-visible { outline-color: var(--green); }
+
+  @media (max-width: 760px) {
+    .ueber { padding: 3.5rem 1.25rem; }
+    .ueber .tafel li { grid-template-columns: 4.75rem minmax(0, 1fr); }
+    .wir figure { min-height: 26rem; }
+    .wir .on-green { border-left: 0; border-top: 2px solid var(--charcoal); padding: 4rem 1.25rem; }
+    .kontakt > div { padding: 4rem 1.25rem; }
+  }
+</style>
+<link rel="canonical" href="https://kaveo-golf.app/blog/philipp/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="KAVEO GOLF" />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:url" content="https://kaveo-golf.app/blog/philipp/" />
+<meta property="og:title" content="Philipp – Autor im KAVEO GOLF Blog" />
+<meta property="og:description" content="Philipp spielt Golf, seit er 14 ist, und baut KAVEO GOLF – allein, aus Overath." />
+<meta property="og:image" content="https://kaveo-golf.app/assets/og-kaveo-golf.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="KAVEO GOLF App: Wetter-Ansicht mit „Gut spielbar“ und letztem Start" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#0d0d0d" />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kaveo-golf.app/#organisation","name":"KAVEO GOLF","url":"https://kaveo-golf.app/","logo":"https://kaveo-golf.app/assets/logo-lockup.webp","email":"info@kaveo-golf.app","founder":{"@type":"Person","name":"Philipp Butkus"},"address":{"@type":"PostalAddress","addressLocality":"Overath","addressCountry":"DE"},"sameAs":["https://www.facebook.com/profile.php?id=61594981341610","https://www.instagram.com/kaveogolf/","https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw","https://www.tiktok.com/@kaveogolf"]},{"@type":"WebSite","@id":"https://kaveo-golf.app/#website","url":"https://kaveo-golf.app/","name":"KAVEO GOLF","inLanguage":"de","publisher":{"@id":"https://kaveo-golf.app/#organisation"}},{"@type":"ProfilePage","url":"https://kaveo-golf.app/blog/philipp/","name":"Philipp – Autor im KAVEO GOLF Blog","mainEntity":{"@type":"Person","@id":"https://kaveo-golf.app/blog/philipp/#person","name":"Philipp Butkus","url":"https://kaveo-golf.app/blog/philipp/"}}]}</script>
+</head>
+<body>
+
+<nav class="plate board" aria-label="Seiten">
+  <a class="k" href="/" aria-label="KAVEO GOLF Startseite"><img src="/zs/img/k-kreis-160.webp" width="160" height="160" alt=""></a>
+  <a href="/">Start</a><a href="/ueber-uns.html">Über uns</a><a href="/faq.html">FAQ</a><a href="/blog/" aria-current="page">Blog</a>
+</nav>
+
+<main>
+  <header class="duel kopf">
+    <div class="side paper">
+      <nav class="krumen" aria-label="Brotkrumen">
+        <a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>Autor</span>
+      </nav>
+      <div class="portrait">
+        <img src="/zs/img/philipp-golfplatz.webp" width="760" height="760" alt="Philipp im grünen KAVEO-Poloshirt auf einem Golfplatz">
+        <span class="etikett board">Autor</span>
+        <span class="ki-text">Bild: KI-Visualisierung</span>
+      </div>
+      <h1 class="hl" style="margin-top:1.5rem">Philipp.</h1>
+      <p class="lede">Ich spiele Golf, seit ich 14 bin, und ich baue KAVEO GOLF – allein, aus Overath.</p>
+      <ul class="kurz" aria-label="Kurzinfos">
+        <li><span>Golf seit</span><b>dem 14. Lebensjahr</b></li>
+        <li><span>Heimatclub</span><b>Golfclub Schloss Auel</b></li>
+        <li><span>Artikel</span><b>2</b></li>
+      </ul>
+    </div>
+    <div class="side on-green seam-line" style="display:flex;align-items:flex-end">
+      <figure class="kopfbild">
+        <img src="/zs/img/philipp-golfplatz.webp" width="760" height="760" alt="Philipp im grünen KAVEO-Poloshirt auf einem Golfplatz">
+        <figcaption>KI-Visualisierung</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section class="ueber band" style="padding-top:4.5rem" aria-labelledby="tafel-titel">
+    <div class="ueber__text">
+      <p class="board">Kurz zu mir</p>
+      <h2 class="hl" id="tafel-titel">Golfen ist mein Hobby.</h2>
+      <p>Mit meinen Freunden und meinen zwei Hunden versuche ich so viel es geht Golf zu spielen. Egal ob am Wochenende privat oder für unseren Club in der DGL.</p>
+      <a href="/ueber-uns.html">Die ganze Geschichte auf „Über uns“</a>
+    </div>
+    <div class="tafel">
+      <div class="tafel__kopf board"><span>Philipp</span><span>Anzeigetafel</span></div>
+      <ul>
+        <li><span class="nr" aria-hidden="true">14</span><span class="txt"><b>Golf seit dem 14. Lebensjahr</b></span></li>
+        <li><span class="nr" aria-hidden="true">0,0</span><span class="txt"><b>Handicap: in der Spitze 0,0</b><small>heute um 4–5</small></span></li>
+        <li><span class="nr" aria-hidden="true"></span><span class="txt"><b>Angefangen im Golfclub Burg Overbach,</b><small>heute im Golfclub Schloss Auel</small></span></li>
+        <li><span class="nr" aria-hidden="true"></span><span class="txt"><b>Fast immer mit Hund auf der Runde</b><small>Franzi und Hermann</small></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wir" aria-label="Philipp mit Franzi und Hermann">
+    <figure>
+      <img src="/zs/img/autor-hunde-v3.webp" width="1600" height="1195" alt="Philipp sitzt im grünen Poloshirt am Grün im Gras, links neben ihm Franzi, rechts Hermann, im Hintergrund Fahne und Golftrolley" loading="lazy">
+      <figcaption><span class="board">Franzi · Philipp · Hermann</span><span class="ki">KI-Visualisierung</span></figcaption>
+    </figure>
+    <div class="on-green">
+      <blockquote>
+        <p>„Zehn Golf-Apps. Eine reicht.“</p>
+        <footer>Philipp, warum es KAVEO GOLF gibt</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="weiter weiter--papier" aria-labelledby="artikel-titel">
+    <div class="reihe-kopf">
+      <div>
+        <p class="ueberzeile board">Artikel von Philipp</p>
+        <h2 class="hl" id="artikel-titel">Geschrieben vom Platz.</h2>
+      </div>
+      <a href="/blog/">Alle Artikel im Blog</a>
+    </div>
+    <div class="themen" role="group" aria-label="Themen" id="au-themen">
+      <button type="button" class="chip" data-kat="Alle" aria-pressed="true">Alle</button>
+      <button type="button" class="chip" data-kat="Liga &amp; Freunde" aria-pressed="false">Liga &amp; Freunde</button>
+      <button type="button" class="chip" data-kat="Runde &amp; Spielformen" aria-pressed="false">Runde &amp; Spielformen</button>
+    </div>
+    <div class="raster" id="au-raster">
+      <article class="karte" data-kat="Runde &amp; Spielformen">
+        <div class="karte__bild"><img src="/zs/img/blog-zaehlspiel-header.webp" width="1344" height="752" alt="Scorekarte, Bleistift, Golfball und Tees in der Ablage am Lenkrad eines Golfcarts" loading="lazy"><span class="karte__kat board">Runde &amp; Spielformen</span><span class="ki">KI-Visualisierung</span></div>
+        <div class="karte__text">
+          <p class="karte__meta">Ratgeber · 14.10.2026 · 5 Min. Lesezeit</p>
+          <h3>Zählspiel Brutto und Netto erklärt</h3>
+          <a class="lesen" href="/blog/zaehlspiel-brutto-netto/" aria-label="Lesen: Zählspiel Brutto und Netto erklärt">Lesen <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></a>
+        </div>
+      </article>
+      <article class="karte" data-kat="Liga &amp; Freunde">
+        <div class="karte__bild"><img src="/zs/img/blog-header-a.webp" width="1600" height="894" alt="Golfhandschuh, Notizbuch, Bleistift und Tees auf einer Holzbank, dahinter ein Fairway im Morgennebel" loading="lazy"><span class="karte__kat board">Liga &amp; Freunde</span><span class="ki">KI-Visualisierung</span></div>
+        <div class="karte__text">
+          <p class="karte__meta">Geschichte · 14.10.2026 · 2 Min. Lesezeit</p>
+          <h3>Wie aus einer Excel-Tabelle eine App wurde</h3>
+          <a class="lesen" href="/blog/excel-tabelle-app/" aria-label="Lesen: Wie aus einer Excel-Tabelle eine App wurde">Lesen <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="kontakt">
+    <div class="kontakt__links">
+      <h2 class="hl">Schreib mir.</h2>
+      <p>Fragen, Ideen oder Kritik gern an <a href="mailto:info@kaveo-golf.app">info@kaveo-golf.app</a>.</p>
+      <a class="cta" href="https://app.kaveo-golf.app/register">Jetzt registrieren
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg></a>
+    </div>
+    <div class="kontakt__rechts">
+      <p class="board">KAVEO GOLF folgen</p>
+      <div class="social">
+        <a href="https://www.instagram.com/kaveogolf/" aria-label="KAVEO GOLF auf Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" aria-label="KAVEO GOLF auf YouTube"><svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a>
+        <a href="https://www.tiktok.com/@kaveogolf" aria-label="KAVEO GOLF auf TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61594981341610" aria-label="KAVEO GOLF auf Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a>
+      </div>
+      <p>Neue Artikel, Einblicke in die Entwicklung und Videos vom Platz.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+      <img src="/zs/img/logo-lockup-512.webp" width="512" height="131" alt="KAVEO GOLF" loading="lazy" decoding="async">
+      <nav aria-label="Rechtliches"><a href="/ueber-uns.html">Über uns</a><a href="/faq.html">FAQ</a><a href="/blog/">Blog</a><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></nav>
+      <div class="social">
+        <a href="https://www.facebook.com/profile.php?id=61594981341610" aria-label="KAVEO GOLF auf Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a>
+        <a href="https://www.instagram.com/kaveogolf/" aria-label="KAVEO GOLF auf Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" aria-label="KAVEO GOLF auf YouTube"><svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a>
+        <a href="https://www.tiktok.com/@kaveogolf" aria-label="KAVEO GOLF auf TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a>
+      </div>
+      <span class="small">© 2026 KAVEO GOLF</span>
+    </footer>
+
+<script>
+  // Themenfilter für die Artikel von Philipp (wie im freigegebenen Entwurf)
+  (function () {
+    var chips = document.querySelectorAll("#au-themen .chip");
+    var karten = document.querySelectorAll("#au-raster .karte");
+    chips.forEach(function (c) {
+      c.addEventListener("click", function () {
+        var k = c.dataset.kat;
+        chips.forEach(function (o) { o.setAttribute("aria-pressed", o === c ? "true" : "false"); });
+        karten.forEach(function (a) { a.hidden = !(k === "Alle" || a.dataset.kat === k); });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

@@ -22,6 +22,9 @@ Die Daten liegen in einer Datenbank in Frankfurt. Kein Tracking, keine Werbung, 
 - [Startseite](https://kaveo-golf.app/): Überblick, Funktionen und Plan
 - [Über uns](https://kaveo-golf.app/ueber-uns.html): Wer hinter KAVEO GOLF steht und warum
 - [FAQ](https://kaveo-golf.app/faq.html): Kosten, Daten, Handy, Gäste
+- [Blog](https://kaveo-golf.app/blog/): Ratgeber zu den Spielformen und Geschichten rund um KAVEO GOLF
+  - [Zählspiel Brutto und Netto erklärt](https://kaveo-golf.app/blog/zaehlspiel-brutto-netto/)
+  - [Wie aus einer Excel-Tabelle eine App wurde](https://kaveo-golf.app/blog/excel-tabelle-app/)
 - [Registrierung](https://app.kaveo-golf.app/register)
 - [Impressum](https://kaveo-golf.app/impressum/) · [Datenschutz](https://kaveo-golf.app/datenschutz/)
 

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wie aus einer Excel-Tabelle eine App wurde – KAVEO GOLF Blog</title>
+<meta name="description" content="Unsere Liga, eine Tabelle und Scores, die nie stimmten. So fing KAVEO GOLF an.">
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preload" href="/zs/fonts/Archivo-Variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/zs/unterseiten.css?v=20261012b">
+<link rel="stylesheet" href="/zs/blog.css?v=20261012b">
+<link rel="canonical" href="https://kaveo-golf.app/blog/excel-tabelle-app/" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="KAVEO GOLF" />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:url" content="https://kaveo-golf.app/blog/excel-tabelle-app/" />
+<meta property="og:title" content="Wie aus einer Excel-Tabelle eine App wurde – KAVEO GOLF Blog" />
+<meta property="og:description" content="Unsere Liga, eine Tabelle und Scores, die nie stimmten. So fing KAVEO GOLF an." />
+<meta property="og:image" content="https://kaveo-golf.app/zs/img/og-blog-excel.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Golfhandschuh, Notizbuch und Tees auf einer Holzbank am Fairway (KI-Visualisierung)" />
+<meta property="article:published_time" content="2026-10-14" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#0d0d0d" />
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://kaveo-golf.app/#organisation","name":"KAVEO GOLF","url":"https://kaveo-golf.app/","logo":"https://kaveo-golf.app/assets/logo-lockup.webp","email":"info@kaveo-golf.app","founder":{"@type":"Person","name":"Philipp Butkus"},"address":{"@type":"PostalAddress","addressLocality":"Overath","addressCountry":"DE"},"sameAs":["https://www.facebook.com/profile.php?id=61594981341610","https://www.instagram.com/kaveogolf/","https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw","https://www.tiktok.com/@kaveogolf"]},{"@type":"WebSite","@id":"https://kaveo-golf.app/#website","url":"https://kaveo-golf.app/","name":"KAVEO GOLF","inLanguage":"de","publisher":{"@id":"https://kaveo-golf.app/#organisation"}},{"@type":"BlogPosting","@id":"https://kaveo-golf.app/blog/excel-tabelle-app/#artikel","mainEntityOfPage":"https://kaveo-golf.app/blog/excel-tabelle-app/","headline":"Wie aus einer Excel-Tabelle eine App wurde","description":"Unsere Liga, eine Tabelle und Scores, die nie stimmten. So fing KAVEO GOLF an.","image":["https://kaveo-golf.app/zs/img/og-blog-excel.jpg"],"datePublished":"2026-10-14","dateModified":"2026-10-14","inLanguage":"de","author":{"@type":"Person","@id":"https://kaveo-golf.app/blog/philipp/#person","name":"Philipp Butkus","url":"https://kaveo-golf.app/blog/philipp/"},"publisher":{"@id":"https://kaveo-golf.app/#organisation"},"isPartOf":{"@id":"https://kaveo-golf.app/blog/#blog"}}]}</script>
+</head>
+<body>
+
+<nav class="plate board" aria-label="Seiten">
+  <a class="k" href="/" aria-label="KAVEO GOLF Startseite"><img src="/zs/img/k-kreis-160.webp" width="160" height="160" alt=""></a>
+  <a href="/">Start</a><a href="/ueber-uns.html">Über uns</a><a href="/faq.html">FAQ</a><a href="/blog/" aria-current="page">Blog</a>
+</nav>
+
+<main>
+  <header class="duel kopf">
+    <div class="side paper">
+      <nav class="krumen" aria-label="Brotkrumen">
+        <a href="/blog/">Blog</a><span aria-hidden="true">/</span><span>Liga &amp; Freunde</span>
+      </nav>
+      <div class="etiketten board">
+        <span class="etikett etikett--dunkel">Liga &amp; Freunde</span>
+        <span class="etikett">Geschichte</span>
+      </div>
+      <h1 class="hl">Wie aus einer Excel-Tabelle eine App wurde</h1>
+      <p class="lede">Unsere Liga, eine Tabelle und Scores, die nie stimmten. So fing KAVEO GOLF an.</p>
+      <div class="zeile">
+        <a class="autor-mini" href="/blog/philipp/">
+          <img src="/zs/img/philipp-golfplatz.webp" width="760" height="760" alt="">
+          <span><small>Von</small><strong>Philipp</strong><small class="ki-text" aria-hidden="true">Bild: KI-Visualisierung</small></span>
+        </a>
+        <dl class="daten">
+          <div><dt>Veröffentlicht</dt><dd>14.10.2026</dd></div>
+          <div><dt>Lesezeit</dt><dd><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>2 Min.</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="side on-green seam-line">
+      <figure class="titelbild">
+        <div class="rahmen"><img src="/zs/img/blog-header-a.webp" width="1600" height="894" alt="Golfhandschuh, Notizbuch, Bleistift und Tees auf einer Holzbank, dahinter ein Fairway im Morgennebel" fetchpriority="high"><span class="ki">KI-Visualisierung</span></div>
+        <figcaption>Früh am Platz: Notizbuch statt Excel.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section class="band zweier kurz-allein" aria-label="Das Wichtigste in Kürze">
+    <div class="tafel">
+      <div class="tafel__kopf board"><span>Das Wichtigste in Kürze</span><span>3 Punkte</span></div>
+      <ol>
+        <li><span class="nr" aria-hidden="true">1</span><span class="txt">Die Liga unter Freunden lief über eine Excel-Tabelle – und die Scores kamen falsch, unvollständig oder gar nicht an.</span></li>
+        <li><span class="nr" aria-hidden="true">2</span><span class="txt">Score, Wetter, Regeln: Statt zehn Golf-Apps bringt KAVEO GOLF das an einen Ort.</span></li>
+        <li><span class="nr" aria-hidden="true">3</span><span class="txt">Die App ist grundsätzlich kostenlos und wächst Stück für Stück.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="lesen-bereich">
+    <aside class="seitenleiste">
+      <nav class="inhalt" aria-label="Inhalt">
+        <p class="board">Inhalt</p>
+        <a href="#kap1"><span>01</span>Es fing mit einer Excel-Tabelle an</a>
+        <a href="#kap2"><span>02</span>Zehn Golf-Apps. Eine reicht.</a>
+        <a href="#kap3"><span>03</span>Stück für Stück. Kostenlos.</a>
+        <a href="#faq"><span>?</span>Häufige Fragen</a>
+      </nav>
+      <div class="teilen">
+        <p class="board">Mit deiner Golfgruppe teilen</p>
+        <div>
+          <button type="button" class="knopf" id="link-kopieren"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg><span>Link kopieren</span></button>
+          <a class="knopf" id="whatsapp" href="https://wa.me/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Per WhatsApp</a>
+        </div>
+      </div>
+    </aside>
+
+    <article class="text">
+      <section id="kap1">
+        <p class="kapitel board">01 · Wie alles anfing</p>
+        <h2 class="hl">Es fing mit einer Excel-Tabelle an.</h2>
+        <p>Mit meinen Freunden spiele ich eine eigene Liga. Die Tabelle dazu habe ich in Excel geführt. Und nach jeder Runde dasselbe: Die Scores kamen falsch, unvollständig oder gar nicht bei mir an. Irgendwann war klar: Das muss einfacher gehen.</p>
+        <figure>
+          <div class="rahmen"><img src="/zs/img/zaehlkarte.webp" width="1100" height="1366" alt="Eine zerknitterte Papier-Zählkarte, ein Bleistift und ein Handy auf einer Holzbank am Abschlag" loading="lazy"></div>
+          <figcaption>Zählkarte, Bleistift, Handy – und am Ende stimmt die Tabelle trotzdem nicht.</figcaption>
+        </figure>
+      </section>
+
+      <section id="kap2">
+        <p class="kapitel board">02 · Zehn Apps</p>
+        <h2 class="hl">Zehn Golf-Apps. Eine reicht.</h2>
+        <p>Dazu kommt: Auf meinem Handy liegen gefühlt zehn Golf-Apps. Eine für den Score, eine fürs Wetter, eine für die Regeln. KAVEO GOLF bringt das an einen Ort.</p>
+        <blockquote class="zitat">
+          <p>„Ehrlich gesagt geht mir das auf den Keks.“</p>
+          <footer>Philipp über seine zehn Golf-Apps</footer>
+        </blockquote>
+        <figure class="app-bild on-green">
+          <div class="handy"><img src="/zs/screens/07_runde_spielen.webp" width="390" height="760" alt="KAVEO GOLF App: Ansicht Runde spielen" loading="lazy"></div>
+          <figcaption><span class="board">In der App</span>„Runde spielen“: Spielform wählen, Mitspieler dazu, los. Die Punkte rechnet die App.</figcaption>
+        </figure>
+      </section>
+
+      <section id="kap3">
+        <p class="kapitel board">03 · Wie ich baue</p>
+        <h2 class="hl">Stück für Stück. Kostenlos.</h2>
+        <p>KAVEO GOLF ist grundsätzlich kostenlos. Ich baue die App Stück für Stück – zuerst das, was auf der Runde wirklich hilft: Runde spielen, Regeln finden, das Wetter lesen. Was schon läuft und was noch kommt, steht ehrlich unter <a href="/#plan">„Der Plan“</a>.</p>
+        <figure>
+          <div class="rahmen rahmen--breit"><img src="/zs/img/freunde-quer.webp" width="2200" height="1228" alt="Vier Golfer und ein Hund verlassen im Abendlicht das Grün" loading="lazy"></div>
+          <figcaption>Am Ende zählt die Runde mit den Freunden – und der Hund ist fast immer dabei.</figcaption>
+        </figure>
+      </section>
+
+      <section class="autorbox" aria-label="Über den Autor">
+        <div class="foto">
+          <img src="/zs/img/philipp-golfplatz.webp" width="760" height="760" alt="Philipp im grünen KAVEO-Poloshirt auf einem Golfplatz" loading="lazy">
+          <span class="ki">KI-Visualisierung</span>
+        </div>
+        <div>
+          <p class="board">Über den Autor</p>
+          <p class="name">Philipp</p>
+          <p class="bio">Spielt Golf, seit er 14 ist, heute im Golfclub Schloss Auel – fast immer mit Hund. Er baut KAVEO GOLF allein, aus Overath.</p>
+          <a href="/blog/philipp/">Mehr über Philipp</a>
+        </div>
+      </section>
+    </article>
+  </div>
+
+  <section class="faq" id="faq" aria-labelledby="faq-titel">
+    <div class="faq__links">
+      <span class="tag board">FAQ</span>
+      <h2 class="hl hl--lg" id="faq-titel">Häufige Fragen.</h2>
+      <p>Noch eine Frage? Schreib an <a href="mailto:info@kaveo-golf.app">info@kaveo-golf.app</a>.</p>
+    </div>
+    <div class="karte-faq">
+      <div class="karte-faq__kopf board"><span>KAVEO GOLF</span><span>Fragen</span></div>
+      <details open><summary>Was kostet KAVEO GOLF?</summary><p>KAVEO GOLF ist kostenlos nutzbar.</p></details>
+      <details><summary>Können Gäste ohne Konto mitspielen?</summary><p>Ja. Bis zu drei Gäste spielen in deiner Runde mit, auch ohne eigenes Konto.</p></details>
+      <details><summary>Läuft die App auf meinem Handy?</summary><p>Ja. KAVEO GOLF läuft schon heute auf deinem Handy. Bald gibt es die App auch im Apple App Store und bei Google Play.</p></details>
+      <details><summary>Was passiert mit meinen Daten?</summary><p>Deine Daten liegen in einer Datenbank in Frankfurt. Kein Tracking, keine Werbung, kein Verkauf von Daten. Alle Details stehen in der <a href="/datenschutz/">Datenschutzerklärung</a>.</p></details>
+    </div>
+  </section>
+
+  <section class="weiter" aria-labelledby="weiter-titel">
+    <div class="reihe-kopf">
+      <h2 class="hl" id="weiter-titel">Weiterlesen</h2>
+      <a href="/blog/">Alle Artikel</a>
+    </div>
+    <div class="raster">
+      <article class="karte">
+        <div class="karte__bild"><img src="/zs/img/blog-zaehlspiel-header.webp" width="1344" height="752" alt="Scorekarte, Bleistift, Golfball und Tees in der Ablage am Lenkrad eines Golfcarts" loading="lazy"><span class="karte__kat board">Runde &amp; Spielformen</span><span class="ki">KI-Visualisierung</span></div>
+        <div class="karte__text">
+          <p class="karte__meta">Ratgeber · 5 Min. Lesezeit</p>
+          <h3>Zählspiel Brutto und Netto erklärt</h3>
+          <a class="lesen" href="/blog/zaehlspiel-brutto-netto/" aria-label="Lesen: Zählspiel Brutto und Netto erklärt">Lesen <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="schluss on-green">
+    <div>
+      <h2 class="hl">Spiel mit.</h2>
+      <p>Leg dir ein Konto an und sag mir, was dir fehlt. Fragen, Ideen oder Kritik gern an <a href="mailto:info@kaveo-golf.app">info@kaveo-golf.app</a>.</p>
+      <a class="cta" href="https://app.kaveo-golf.app/register">Jetzt registrieren
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+      <img src="/zs/img/logo-lockup-512.webp" width="512" height="131" alt="KAVEO GOLF" loading="lazy" decoding="async">
+      <nav aria-label="Rechtliches"><a href="/ueber-uns.html">Über uns</a><a href="/faq.html">FAQ</a><a href="/blog/">Blog</a><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></nav>
+      <div class="social">
+        <a href="https://www.facebook.com/profile.php?id=61594981341610" aria-label="KAVEO GOLF auf Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21z"/></svg></a>
+        <a href="https://www.instagram.com/kaveogolf/" aria-label="KAVEO GOLF auf Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/><path d="M16.3 2.5H7.7A5.2 5.2 0 0 0 2.5 7.7v8.6a5.2 5.2 0 0 0 5.2 5.2h8.6a5.2 5.2 0 0 0 5.2-5.2V7.7a5.2 5.2 0 0 0-5.2-5.2zm3.5 13.8a3.5 3.5 0 0 1-3.5 3.5H7.7a3.5 3.5 0 0 1-3.5-3.5V7.7a3.5 3.5 0 0 1 3.5-3.5h8.6a3.5 3.5 0 0 1 3.5 3.5z"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCNatO_8OyaDT5qXbI8M-oFw" aria-label="KAVEO GOLF auf YouTube"><svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a>
+        <a href="https://www.tiktok.com/@kaveogolf" aria-label="KAVEO GOLF auf TikTok"><svg viewBox="0 0 24 24"><path d="M16.6 2.5h-3.1v12.6a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a5.8 5.8 0 1 0 5 5.8V8.9a7.6 7.6 0 0 0 4.4 1.4V7.2a4.4 4.4 0 0 1-4.4-4.4z"/></svg></a>
+      </div>
+      <span class="small">© 2026 KAVEO GOLF</span>
+    </footer>
+
+<script>
+  // Teilen: Link kopieren und WhatsApp mit der Adresse dieser Seite
+  (function () {
+    var url = location.href.split("#")[0];
+    var wa = document.getElementById("whatsapp");
+    wa.href = "https://wa.me/?text=" + encodeURIComponent(document.title + " " + url);
+    var b = document.getElementById("link-kopieren"), t = b.querySelector("span");
+    b.addEventListener("click", function () {
+      var fertig = function () { t.textContent = "Link kopiert"; setTimeout(function () { t.textContent = "Link kopieren"; }, 2500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(fertig, function () { t.textContent = "Kopieren nicht möglich"; });
+      else t.textContent = "Kopieren nicht möglich";
+    });
+  })();
+  // FAQ: immer nur eine Frage offen (wie im Entwurf)
+  (function () {
+    var ds = document.querySelectorAll(".karte-faq details");
+    ds.forEach(function (d) { d.addEventListener("toggle", function () { if (d.open) ds.forEach(function (o) { if (o !== d) o.open = false; }); }); });
+  })();
+</script>
+</body>
+</html>

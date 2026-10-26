@@ -92,6 +92,8 @@ a { color: inherit; text-underline-offset: 3px; }
 .legal-text h2:first-child { margin-top: 0; }
 .legal-text h3 { font: 800 1.15rem/1.2 "Archivo", sans-serif; font-stretch: 82%; margin: 2rem 0 .6rem; }
 .legal-text p, .legal-text ul, .legal-text ol { margin: 0 0 1rem; }
+.legal-text li > ul, .legal-text li > p { margin: .3rem 0 0; }
+.legal-text ul:has(> li > ul) > li + li { margin-top: .6rem; }
 .legal-text a { color: var(--green); font-weight: 600; overflow-wrap: anywhere; }
 .legal-text address { font-style: normal; margin: 0 0 1rem; padding: 1rem 1.2rem; background: #FBF9F4; border-left: 4px solid var(--green); }
 .legal-text .tablewrap { overflow-x: auto; margin: 0 0 1.4rem; background: #FBF9F4; box-shadow: 0 1px 0 rgba(35,34,31,.15); }

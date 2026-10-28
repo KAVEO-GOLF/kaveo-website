@@ -9,11 +9,12 @@ KAVEO GOLF wird von Philipp Butkus entwickelt, Golfer seit dem 14. Lebensjahr, a
 - Regelhilfe: 66 eigene Erklärtexte zu den allgemeinen offiziellen Golfregeln, gefunden über eine Platzzeichnung mit 8 Bereichen oder die Suche. Die Platzregeln des jeweiligen Clubs gelten zusätzlich.
 - Golfwetter: sieben Tage im Voraus (die ersten drei Stunde für Stunde) mit „Gut spielbar“, Wind, Böen, Regen, Tageslicht und dem letzten sinnvollen Start für 9 und 18 Löcher.
 - KAVEO-Mitgliedskarte: Profil mit QR-Code und Privatsphäre-Schaltern. Kein Verbands- oder Clubausweis.
+- Gruppen und Turniere: Gruppen mit eigenem Gruppenchat; Turniere privat oder in einer Gruppe, mit Rangliste und Live-Anzeige.
 - Sprachen: Deutsch und Englisch.
 
 ## Geplant
 - Für den Start: Freunde (Anfragen, Suche, Blockieren), gemeinsame Runden, Scorekarte als Bild teilen.
-- Später: Live-Runde auf mehreren Geräten, Rundenanalyse mit Trends, Turniere und Gruppen.
+- Später: Live-Runde auf mehreren Geräten, Rundenanalyse mit Trends.
 
 ## Daten
 Die Daten liegen in einer Datenbank in Frankfurt. Kein Tracking, keine Werbung, kein Verkauf von Daten. Details: https://kaveo-golf.app/datenschutz/
